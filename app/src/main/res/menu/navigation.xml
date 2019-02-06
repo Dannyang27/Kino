@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/now_playing_item"
+        android:icon="@drawable/now"
+        android:title="@string/now_playing_item" />
+
+    <item
+        android:id="@+id/upcoming_item"
+        android:icon="@drawable/fire"
+        android:title="@string/upcoming_item" />
+
+    <item
+        android:id="@+id/search_item"
+        android:icon="@drawable/search"
+        android:title="@string/search_item" />
+
+    <!--<item-->
+        <!--android:id="@+id/watch_list_item"-->
+        <!--android:icon="@drawable/bookmark"-->
+        <!--android:title="@string/watch_list_item" />-->
+
+    <!--<item-->
+        <!--android:id="@+id/favorite_item"-->
+        <!--android:icon="@drawable/fav"-->
+        <!--android:title="@string/favorite_item" />-->
+
+</menu>
