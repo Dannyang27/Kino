@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.R
+import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
 
 class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
@@ -34,9 +35,9 @@ class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
                 .load(url)
                 .into(holder.poster)
 
-        holder.releaseDate.text= movies[position].releaseDate
+        holder.releaseDate.text= movies[position].releaseDate.substring(0, 4)
         holder.title.text= movies[position].title
-        holder.genre.text= movies[position]?.genreIds?.get(0)?.toString() ?: "Genres not found"
+        holder.genre.text= GenresUtils.getGenres(movies[position].genreIds)
 
         holder.itemView.setOnClickListener {
             Toast.makeText(holder.releaseDate.context, "${movies[position].title}", Toast.LENGTH_SHORT).show()

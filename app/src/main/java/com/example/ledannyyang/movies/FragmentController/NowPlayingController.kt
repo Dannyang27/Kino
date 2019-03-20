@@ -30,7 +30,7 @@ class NowPlayingController : Fragment(){
         viewManager = LinearLayoutManager(activity)
         viewAdapter = NowPlayingAdapter(nowPlayingItems)
 
-        val nowPlaying = RetrofitService(viewAdapter, nowPlayingItems).getNowPlaying(region = "ES")
+        val nowPlaying = RetrofitService(viewAdapter, nowPlayingItems).getNowPlaying(page = 1, region = "ES")
 
         recyclerView = view.findViewById<RecyclerView>(R.id.now_playing_rv).apply{
             setHasFixedSize(true)
