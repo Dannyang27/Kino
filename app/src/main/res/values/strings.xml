@@ -5,4 +5,6 @@
     <string name="search_item">Search</string>
     <string name="watch_list_item">Watchlist</string>
     <string name="favorite_item">Fav</string>
+    <string name="search_tv">Search</string>
+    <string name="billboard">Billboard</string>
 </resources>

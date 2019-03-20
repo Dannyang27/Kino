@@ -4,14 +4,21 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.R
+import com.squareup.picasso.Picasso
 
-class NowPlayingAdapter(private val myDataSet: Array<String>) :
+class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
     RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>(){
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
-        val textView = view.findViewById(R.id.nowplaying_tv) as TextView
+        val poster = view.findViewById(R.id.poster) as ImageView
+        val releaseDate = view.findViewById(R.id.release_date) as TextView
+        val title = view.findViewById(R.id.title) as TextView
+        val genre = view.findViewById(R.id.genre) as TextView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingAdapter.NowPlayingViewHolder {
@@ -22,8 +29,19 @@ class NowPlayingAdapter(private val myDataSet: Array<String>) :
     }
 
     override fun onBindViewHolder(holder: NowPlayingViewHolder, position: Int) {
-        holder.textView.text= myDataSet[position]
+        val url = "https://image.tmdb.org/t/p/w500/${movies[position].posterPath}"
+        Picasso.with(holder.poster.context)
+                .load(url)
+                .into(holder.poster)
+
+        holder.releaseDate.text= movies[position].releaseDate
+        holder.title.text= movies[position].title
+        holder.genre.text= movies[position]?.genreIds?.get(0)?.toString() ?: "Genres not found"
+
+        holder.itemView.setOnClickListener {
+            Toast.makeText(holder.releaseDate.context, "${movies[position].title}", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    override fun getItemCount(): Int = myDataSet.size
+    override fun getItemCount(): Int = movies.size
 }

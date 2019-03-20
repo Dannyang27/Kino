@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.now_playing_item -> {
-                toolbar.title = "Now Playing"
+                toolbar.title = "BillBoard"
                 val nowPlayingFragment = NowPlayingController.newInstance()
                 openFragment(nowPlayingFragment)
                 return@OnNavigationItemSelectedListener true

@@ -1,11 +1,13 @@
 package com.example.ledannyyang.movies.Retrofit
 
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlaying
+import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovie
 import com.example.ledannyyang.movies.Model.Review.Review
 import com.example.ledannyyang.movies.Model.SimilarMovie.SimilarMovie
@@ -15,11 +17,13 @@ import com.example.ledannyyang.movies.Model.Video.Video
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitService private constructor(){
+class RetrofitService(adapter : RecyclerView.Adapter<*>? = null, items: MutableList<NowPlayingItem>? = null){
 
     val API = "APIQUERY"
     val baseUrl = "https://api.themoviedb.org"
     val api_key = "6ee8506f55fda3da84e75f9a5f8baa76"
+    val rvAdapter = adapter
+    val items = items
 
     val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -65,6 +69,9 @@ class RetrofitService private constructor(){
                 nowPlayingResult = response?.body()?.copy()
                 nowPlayingResult?.results?.iterator()?.forEach {
                     Log.d(API, "Movie Id = ${it.id}, title = ${it.originalTitle}\n")
+                    Log.d(API, "${rvAdapter != null} and items size = ${items?.size}")
+                    items?.add(it)
+                    rvAdapter?.notifyDataSetChanged()
                 }
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {
