@@ -2,6 +2,7 @@ package com.example.ledannyyang.movies.Retrofit
 
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
@@ -17,13 +18,11 @@ import com.example.ledannyyang.movies.Model.Video.Video
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitService(adapter : RecyclerView.Adapter<*>? = null, items: MutableList<NowPlayingItem>? = null){
+object RetrofitClient{
 
     val API = "APIQUERY"
     val baseUrl = "https://api.themoviedb.org"
     val api_key = "6ee8506f55fda3da84e75f9a5f8baa76"
-    val rvAdapter = adapter
-    val items = items
 
     val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -31,10 +30,6 @@ class RetrofitService(adapter : RecyclerView.Adapter<*>? = null, items: MutableL
             .build()
 
     val service = retrofit.create(GithubService::class.java)
-
-    companion object {
-        val INSTANCE: RetrofitService = RetrofitService()
-    }
 
     fun getMovieDetail(id: Int, language:String = "en-US") : MovieDetail? {
 
@@ -69,9 +64,9 @@ class RetrofitService(adapter : RecyclerView.Adapter<*>? = null, items: MutableL
                 nowPlayingResult = response?.body()?.copy()
                 nowPlayingResult?.results?.iterator()?.forEach {
                     Log.d(API, "Movie Id = ${it.id}, title = ${it.originalTitle}\n")
-                    Log.d(API, "${rvAdapter != null} and items size = ${items?.size}")
-                    items?.add(it)
-                    rvAdapter?.notifyDataSetChanged()
+                    Log.d(API, "${NowPlayingController.viewAdapter != null} and items size = ${NowPlayingController.nowPlayingItems?.size}")
+                    NowPlayingController.nowPlayingItems?.add(it)
+                    NowPlayingController.viewAdapter?.notifyDataSetChanged()
                 }
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {

@@ -13,15 +13,16 @@ import android.widget.Toast
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.NowPlaying.NowPlayingAdapter
-import com.example.ledannyyang.movies.Retrofit.RetrofitService
+import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import kotlinx.android.synthetic.main.fragment_now_playing.*
 
 class NowPlayingController : Fragment(){
 
-    private lateinit var recyclerView : RecyclerView
-    private lateinit var viewAdapter : RecyclerView.Adapter<*>
+    //private lateinit var recyclerView : RecyclerView
+    //private lateinit var viewAdapter : RecyclerView.Adapter<*>
     private lateinit var viewManager : RecyclerView.LayoutManager
-    private val nowPlayingItems = mutableListOf<NowPlayingItem>()
+    //private val nowPlayingItems = mutableListOf<NowPlayingItem>()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_now_playing, container, false)
@@ -30,7 +31,7 @@ class NowPlayingController : Fragment(){
         viewManager = LinearLayoutManager(activity)
         viewAdapter = NowPlayingAdapter(nowPlayingItems)
 
-        val nowPlaying = RetrofitService(viewAdapter, nowPlayingItems).getNowPlaying(page = 1, region = "ES")
+        val nowPlaying = RetrofitClient.getNowPlaying(page = 1, region = "ES")
 
         recyclerView = view.findViewById<RecyclerView>(R.id.now_playing_rv).apply{
             setHasFixedSize(true)
@@ -42,6 +43,9 @@ class NowPlayingController : Fragment(){
     }
 
     companion object {
+        lateinit var recyclerView : RecyclerView
+        lateinit var viewAdapter : RecyclerView.Adapter<*>
+        val nowPlayingItems = mutableListOf<NowPlayingItem>()
         fun newInstance(): NowPlayingController = NowPlayingController()
     }
 }

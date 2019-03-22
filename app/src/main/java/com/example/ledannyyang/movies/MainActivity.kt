@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
-import com.example.ledannyyang.movies.Retrofit.RetrofitService
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
