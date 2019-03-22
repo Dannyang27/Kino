@@ -59,7 +59,7 @@ object RetrofitClient{
         call.enqueue(object : Callback<NowPlaying>{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 response?.body()?.copy()?.results?.iterator()?.forEach {
-                    Log.d(API, "Movie Id = ${it.id}, title = ${it.originalTitle}, vote_avg = ${it.voteAverage}\n")
+                    Log.d(API, "Movie Id = ${it.id}, title = ${it.originalTitle}, vote_avg = ${it.genreIds.toString()}\n")
                     NowPlayingController.nowPlayingItems?.add(it)
                     NowPlayingController.viewAdapter?.notifyDataSetChanged()
                 }

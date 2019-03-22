@@ -50,10 +50,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         toolbar = supportActionBar!!
-        val bottomNavigation : BottomNavigationView = navigationBar
         navigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        toolbar.title = "Now Playing"
+        toolbar.title = "BillBoard"
         val nowPlaying = NowPlayingController.newInstance()
         openFragment(nowPlaying)
 
