@@ -13,7 +13,7 @@ import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
 
 class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
-    RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>(){
+        RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>(){
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
         val poster = view.findViewById(R.id.poster) as ImageView

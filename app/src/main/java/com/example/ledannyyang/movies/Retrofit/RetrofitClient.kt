@@ -1,6 +1,5 @@
 package com.example.ledannyyang.movies.Retrofit
 
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
@@ -8,7 +7,6 @@ import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlaying
-import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovie
 import com.example.ledannyyang.movies.Model.Review.Review
 import com.example.ledannyyang.movies.Model.SimilarMovie.SimilarMovie
@@ -54,17 +52,14 @@ object RetrofitClient{
         return movieDetailResult
     }
 
-    fun getNowPlaying(language:String = "en-US", page: Int = 1, region: String) : NowPlaying? {
+    fun getNowPlaying(language:String = "en-US", page: Int = 1, region: String){
 
         val call = service.getNowPlaying(language,page.toString(), region)
-        var nowPlayingResult : NowPlaying? = null
 
         call.enqueue(object : Callback<NowPlaying>{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
-                nowPlayingResult = response?.body()?.copy()
-                nowPlayingResult?.results?.iterator()?.forEach {
-                    Log.d(API, "Movie Id = ${it.id}, title = ${it.originalTitle}\n")
-                    Log.d(API, "${NowPlayingController.viewAdapter != null} and items size = ${NowPlayingController.nowPlayingItems?.size}")
+                response?.body()?.copy()?.results?.iterator()?.forEach {
+                    Log.d(API, "Movie Id = ${it.id}, title = ${it.originalTitle}, vote_avg = ${it.voteAverage}\n")
                     NowPlayingController.nowPlayingItems?.add(it)
                     NowPlayingController.viewAdapter?.notifyDataSetChanged()
                 }
@@ -73,8 +68,6 @@ object RetrofitClient{
                 Log.d(API, "Could not get Now Playing movies")
             }
         })
-
-        return nowPlayingResult
     }
 
     fun getTopRated(language: String = "en-US", page: Int = 1) : TopRated?{
