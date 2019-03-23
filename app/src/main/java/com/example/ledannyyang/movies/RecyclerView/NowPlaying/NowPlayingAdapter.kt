@@ -20,6 +20,7 @@ class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
         val releaseDate = view.findViewById(R.id.release_date) as TextView
         val title = view.findViewById(R.id.title) as TextView
         val genre = view.findViewById(R.id.genre) as TextView
+        val vote = view.findViewById(R.id.vote_avg) as TextView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingAdapter.NowPlayingViewHolder {
@@ -30,17 +31,19 @@ class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
     }
 
     override fun onBindViewHolder(holder: NowPlayingViewHolder, position: Int) {
-        val url = "https://image.tmdb.org/t/p/w500/${movies[position].posterPath}"
+        val movie  = movies[position]
+        val url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
         Picasso.with(holder.poster.context)
                 .load(url)
                 .into(holder.poster)
 
-        holder.releaseDate.text= movies[position].releaseDate.substring(0, 4)
-        holder.title.text= movies[position].title
+        holder.releaseDate.text= movie.releaseDate.substring(0, 4)
+        holder.title.text= movie.title
         holder.genre.text= GenresUtils.getGenres(movies[position].genreIds)
+        holder.vote.text = if(movie.voteAverage != 0.0) movie.voteAverage.toString() else "N/A"
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.releaseDate.context, "${movies[position].title}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(holder.releaseDate.context, "${movie.title}", Toast.LENGTH_SHORT).show()
         }
     }
 
