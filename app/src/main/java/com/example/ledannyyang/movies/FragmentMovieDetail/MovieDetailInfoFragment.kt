@@ -8,7 +8,18 @@ import android.view.ViewGroup
 import com.example.ledannyyang.movies.R
 
 class MovieDetailInfoFragment : Fragment(){
+
+    companion object {
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.movie_detail_info, container, false)
+        val view =  inflater.inflate(R.layout.movie_detail_info, container, false)
+
+
+
+
+
+        return view
     }
 }

@@ -209,7 +209,7 @@ object RetrofitClient{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                 creditResult = response?.body()?.copy()
                 creditResult?.cast?.iterator()?.forEach {
-                    Log.d(API, "Cast name ${it.castId}, Character = ${it.id}, cast id = ${it.creditId}")
+                    //Log.d(API, "Cast name ${it.castId}, Character = ${it.id}, cast id = ${it.creditId}")
                 }
             }
             override fun onFailure(call: Call<Credit>, t: Throwable) {
