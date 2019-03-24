@@ -2,6 +2,7 @@ package com.example.ledannyyang.movies.FragmentMovieDetail
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ class MovieDetailInfoFragment : Fragment(){
 
     companion object {
         lateinit var portrait: ImageView
+        lateinit var title: TextView
         lateinit var genre: TextView
         lateinit var duration: TextView
         lateinit var releasedDate: TextView
@@ -26,23 +28,29 @@ class MovieDetailInfoFragment : Fragment(){
         lateinit var homepage: TextView
         lateinit var sinopse: TextView
         fun setInfo( movie : MovieDetail){
+
             val url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
             Picasso.with(portrait.context)
                     .load(url)
                     .into(portrait)
 
-            genre.text = movie.genres?.get(0)?.name ?: "Unknown"
+            val genres = movie.genres?.map { it.name }
+
+            title.text = movie.title
+            genre.text = GenresUtils.removeBrackets(genres!!)
             duration.text = "${movie.runtime} min"
-            releasedDate.text = movie.releaseDate.substring(0,4)
+            releasedDate.text = movie.releaseDate
             director.text = "Unknown"
             homepage.text = movie.homepage
             sinopse.text = movie.overview
         }
     }
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view =  inflater.inflate(R.layout.movie_detail_info, container, false)
 
+        title = view.findViewById(R.id.movie_info_title_lbl)
         portrait = view.findViewById(R.id.movie_info_portrait)
         genre = view.findViewById(R.id.movie_info_genre_lbl)
         duration = view.findViewById(R.id.movie_info_duration_lbl)
