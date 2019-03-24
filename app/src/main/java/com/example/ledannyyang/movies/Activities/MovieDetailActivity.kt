@@ -23,8 +23,8 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
-        //val movieId = intent.getIntExtra( NowPlayingAdapter.NowPlayingViewHolder.ID, -1)
-        //RetrofitClient.getMovieDetail(movieId)
+//        val movieId = intent.getIntExtra( NowPlayingAdapter.NowPlayingViewHolder.ID, -1)
+//        RetrofitClient.getMovieDetail(movieId)
 //
         mPager = movie_detail_viewpager
         val pageAdapter = ScreenSlidePagerAdapter(supportFragmentManager)

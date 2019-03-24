@@ -36,7 +36,7 @@ object RetrofitClient{
         call.enqueue(object : Callback<MovieDetail>{
             override fun onResponse(call: Call<MovieDetail>?, response: Response<MovieDetail>?) {
                 val movieDetail = response?.body()?.copy()
-                Log.d(API, "Movie Detail Id = ${movieDetail?.id} Overview: ${movieDetail?.overview}")
+                Log.d(API, "Movie Detail Id = ${movieDetail?.id} Overview: ${movieDetail?.runtime}")
 
             }
             override fun onFailure(call: Call<MovieDetail>?, t: Throwable?) {
@@ -52,7 +52,6 @@ object RetrofitClient{
         call.enqueue(object : Callback<NowPlaying>{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 response?.body()?.copy()?.results?.iterator()?.forEach {
-                    Log.d(API, "Movie Id = ${it.id}, title = ${it.originalTitle}, vote_avg = ${it.genreIds.toString()}\n")
                     NowPlayingController.nowPlayingItems?.add(it)
                     NowPlayingController.viewAdapter?.notifyDataSetChanged()
                 }
