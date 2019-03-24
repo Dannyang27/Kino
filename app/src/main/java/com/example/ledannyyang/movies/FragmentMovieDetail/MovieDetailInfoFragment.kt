@@ -2,6 +2,8 @@ package com.example.ledannyyang.movies.FragmentMovieDetail
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +11,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
+import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
+import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovie
+import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovieItem
 import com.example.ledannyyang.movies.R
+import com.example.ledannyyang.movies.RecyclerView.MovieDetail.MoviePortraitAdapter
 import com.example.ledannyyang.movies.RecyclerView.NowPlaying.NowPlayingAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.movie_detail_info.*
 
 class MovieDetailInfoFragment : Fragment(){
+
+    private lateinit var recommendedRecyclerView : RecyclerView
+    private lateinit var similarRecyclerView : RecyclerView
+    private lateinit var recommendedViewManager : RecyclerView.LayoutManager
+    private lateinit var similarViewManager : RecyclerView.LayoutManager
 
     companion object {
         lateinit var portrait: ImageView
@@ -28,6 +38,14 @@ class MovieDetailInfoFragment : Fragment(){
         lateinit var homepage: TextView
         lateinit var sinopse: TextView
         lateinit var userscore: TextView
+
+        lateinit var recommendedMovieAdapter : RecyclerView.Adapter<*>
+        val recommendedMovieItems = mutableListOf<PortraitMovie>()
+
+        lateinit var similarMovieAdapter : RecyclerView.Adapter<*>
+        val similarMovieItems = mutableListOf<PortraitMovie>()
+
+
         fun setInfo( movie : MovieDetail){
 
             val url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
@@ -62,15 +80,31 @@ class MovieDetailInfoFragment : Fragment(){
         sinopse = view.findViewById(R.id.movie_info_sinopse)
         userscore = view.findViewById(R.id.movie_info_userscore)
 
+        recommendedViewManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        similarViewManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        recommendedMovieAdapter = MoviePortraitAdapter(recommendedMovieItems)
+        similarMovieAdapter = MoviePortraitAdapter(similarMovieItems)
+
         val movieId = activity?.intent?.getIntExtra( NowPlayingAdapter.NowPlayingViewHolder.ID, -1)
-        if(movieId != null)
-            RetrofitClient.getMovieDetail(movieId)
-
-//        val releasedDate = movie_info_date_lbl
-//        val director = movie_info_director_lbl
-//        val homepage = movie_info_homepage_lbl
 
 
+        recommendedRecyclerView = view.findViewById<RecyclerView>(R.id.recommendedRv).apply{
+            setHasFixedSize(true)
+            layoutManager = recommendedViewManager
+            adapter = recommendedMovieAdapter
+        }
+
+        similarRecyclerView = view.findViewById<RecyclerView>(R.id.similarRv).apply {
+            setHasFixedSize(true)
+            layoutManager = similarViewManager
+            adapter = similarMovieAdapter
+        }
+
+        movieId.let {
+            RetrofitClient.getMovieDetail(movieId!!)
+            RetrofitClient.getRecommendedMoviesById(movieId!!)
+            RetrofitClient.getSimilarMoviesById(movieId!!)
+        }
 
 
         return view

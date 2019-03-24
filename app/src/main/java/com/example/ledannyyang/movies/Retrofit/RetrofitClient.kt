@@ -8,6 +8,7 @@ import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlaying
+import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
 import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovie
 import com.example.ledannyyang.movies.Model.Review.Review
 import com.example.ledannyyang.movies.Model.SimilarMovie.SimilarMovie
@@ -110,15 +111,15 @@ object RetrofitClient{
         return upcomingResult
     }
 
-    fun getSimilarMoviesById( id: Int, language: String = "en-US", page : Int = 1) : SimilarMovie?{
+    fun getSimilarMoviesById( id: Int, language: String = "en-US", page : Int = 1){
         val call = service.getSimilarMoviesById( id.toString(), language, page.toString())
-        var similarMovieResult : SimilarMovie? = null
 
         call.enqueue(object : Callback<SimilarMovie>{
             override fun onResponse(call: Call<SimilarMovie>, response: Response<SimilarMovie>) {
-                similarMovieResult = response?.body()?.copy()
-                similarMovieResult?.results?.iterator()?.forEach {
-                    Log.d(API, "Similar movie id ${it.id}, title = ${it.title}")
+                response?.body()?.copy()?.results?.iterator()?.forEach {
+                    //Log.d(API, "Similar movie id ${it.id}, title = ${it.title}")
+                    MovieDetailInfoFragment.similarMovieItems?.add(PortraitMovie(it.id, it.posterPath))
+                    MovieDetailInfoFragment.similarMovieAdapter.notifyDataSetChanged()
                 }
             }
 
@@ -126,28 +127,24 @@ object RetrofitClient{
                 Log.d(API, "Could not get Similar Movies")
             }
         })
-
-        return similarMovieResult
     }
 
-    fun getRecommendedMoviesById( id: Int, language: String = "en-US", page : Int = 1) : RecommendedMovie?{
+    fun getRecommendedMoviesById( id: Int, language: String = "en-US", page : Int = 1){
         val call = service.getRecommendedMoviesById( id.toString(), language, page.toString())
-        var recommendedMovieResult : RecommendedMovie? = null
 
         call.enqueue(object : Callback<RecommendedMovie>{
+
+            override fun onResponse(call: Call<RecommendedMovie>, response: Response<RecommendedMovie>) {
+                response?.body()?.copy()?.results?.iterator()?.forEach {
+                    MovieDetailInfoFragment.recommendedMovieItems?.add(PortraitMovie(it.id, it.posterPath))
+                    MovieDetailInfoFragment.recommendedMovieAdapter.notifyDataSetChanged()
+                }
+            }
+
             override fun onFailure(call: Call<RecommendedMovie>, t: Throwable) {
                 Log.d(API, "Could not get Recommended Movies")
             }
-
-            override fun onResponse(call: Call<RecommendedMovie>, response: Response<RecommendedMovie>) {
-                recommendedMovieResult = response?.body()?.copy()
-                recommendedMovieResult?.results?.iterator()?.forEach {
-                    Log.d(API, "Recommended movie id ${it.id}, title = ${it.title}")
-                }
-            }
         })
-
-        return recommendedMovieResult
     }
 
     fun getReviewsById( id: Int, language: String = "en-US", page : Int = 1) : Review?{

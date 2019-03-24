@@ -10,8 +10,6 @@ import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragmen
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
 import com.example.ledannyyang.movies.R
-import com.example.ledannyyang.movies.RecyclerView.NowPlaying.NowPlayingAdapter
-import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 private const val NUM_PAGES = 3
@@ -23,9 +21,7 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
-//        val movieId = intent.getIntExtra( NowPlayingAdapter.NowPlayingViewHolder.ID, -1)
-//        RetrofitClient.getMovieDetail(movieId)
-//
+
         mPager = movie_detail_viewpager
         val pageAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         mPager.adapter = pageAdapter
