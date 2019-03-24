@@ -12,9 +12,9 @@
             android:orientation="vertical">
 
 
-            <WebView
-                android:layout_width="match_parent"
-                android:layout_height="250dp" />
+            <!--<WebView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="250dp" />-->
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/movie_detail_viewpager"

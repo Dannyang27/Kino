@@ -51,7 +51,7 @@
                             android:textSize="@dimen/font_size_medium"/>
 
                         <TextView
-                            android:id="@+id/genre_lbl"
+                            android:id="@+id/movie_info_genre_lbl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -67,7 +67,7 @@
                             android:textSize="@dimen/font_size_medium"/>
 
                         <TextView
-                            android:id="@+id/duration_lbl"
+                            android:id="@+id/movie_info_duration_lbl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -84,7 +84,7 @@
                             android:textSize="@dimen/font_size_medium"/>
 
                         <TextView
-                            android:id="@+id/date_lbl"
+                            android:id="@+id/movie_info_date_lbl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -101,7 +101,7 @@
                             android:textSize="@dimen/font_size_medium"/>
 
                         <TextView
-                            android:id="@+id/director_lbl"
+                            android:id="@+id/movie_info_director_lbl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -116,12 +116,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/homepage"
                             android:textSize="@dimen/font_size_medium"/>
-
-                        <TextView
-                            android:id="@+id/homepage_lbl"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
                     </LinearLayout>
+                    <TextView
+                        android:id="@+id/movie_info_homepage_lbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"/>
                 </LinearLayout>
 
 
@@ -136,30 +136,12 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/movie_info_sinopse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/sinopse_sample"
                 android:textSize="@dimen/font_size_medium" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/socialnetwork"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/socialNetworks"
-                    android:textSize="@dimen/font_size_medium" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

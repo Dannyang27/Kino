@@ -21,7 +21,6 @@ class NowPlayingController : Fragment(){
     private lateinit var viewManager : RecyclerView.LayoutManager
 
     companion object {
-
         lateinit var viewAdapter : RecyclerView.Adapter<*>
         val nowPlayingItems = mutableListOf<NowPlayingItem>()
         fun newInstance(): NowPlayingController = NowPlayingController()

@@ -31,7 +31,6 @@ class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
 
         init{
             view.setOnClickListener {
-                Toast.makeText(it.context, "${title.text}", Toast.LENGTH_SHORT).show()
                 val intent = Intent(it.context, MovieDetailActivity::class.java)
                 intent.putExtra( ID, movieId )
                 it.context.startActivity(intent)

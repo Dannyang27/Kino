@@ -2,6 +2,7 @@ package com.example.ledannyyang.movies.Retrofit
 
 import android.util.Log
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
+import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
@@ -38,6 +39,11 @@ object RetrofitClient{
             override fun onResponse(call: Call<MovieDetail>?, response: Response<MovieDetail>?) {
                 val movieDetail = response?.body()?.copy()
                 Log.d(API, "Movie Detail Id = ${movieDetail?.id} Overview: ${movieDetail?.runtime}")
+
+                movieDetail.let {
+                    MovieDetailInfoFragment.setInfo(it!!)
+                }
+
 
             }
             override fun onFailure(call: Call<MovieDetail>?, t: Throwable?) {
