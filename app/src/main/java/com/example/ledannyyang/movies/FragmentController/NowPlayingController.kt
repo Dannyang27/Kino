@@ -30,14 +30,11 @@ class NowPlayingController : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_now_playing, container, false)
 
-        Log.d("APIQUERY", "We are in onCreate" )
         viewManager = LinearLayoutManager(activity)
         viewAdapter = NowPlayingAdapter(nowPlayingItems)
 
         if(!RetrofitClient.nowplayingfetched)
             RetrofitClient.getNowPlaying(page = 1, region = "ES")
-
-        Log.d("APIQUERY", if(RetrofitClient.nowplayingfetched){"True"}else{"False"})
 
         recyclerView = view.findViewById<RecyclerView>(R.id.now_playing_rv).apply{
             setHasFixedSize(true)
