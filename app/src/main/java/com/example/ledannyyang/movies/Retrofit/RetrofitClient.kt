@@ -21,6 +21,7 @@ object RetrofitClient{
     val API = "APIQUERY"
     val baseUrl = "https://api.themoviedb.org"
     val api_key = "6ee8506f55fda3da84e75f9a5f8baa76"
+    var nowplayingfetched = false
 
     val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -51,6 +52,7 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<NowPlaying>{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
+                nowplayingfetched = true
                 response?.body()?.copy()?.results?.iterator()?.forEach {
                     NowPlayingController.nowPlayingItems?.add(it)
                     NowPlayingController.viewAdapter?.notifyDataSetChanged()
