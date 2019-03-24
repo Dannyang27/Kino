@@ -27,6 +27,7 @@ class MovieDetailInfoFragment : Fragment(){
         lateinit var director: TextView
         lateinit var homepage: TextView
         lateinit var sinopse: TextView
+        lateinit var userscore: TextView
         fun setInfo( movie : MovieDetail){
 
             val url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
@@ -43,6 +44,7 @@ class MovieDetailInfoFragment : Fragment(){
             director.text = "Unknown"
             homepage.text = movie.homepage
             sinopse.text = movie.overview
+            userscore.text =  userscore.text.toString().plus(movie.voteAverage)
         }
     }
 
@@ -58,6 +60,7 @@ class MovieDetailInfoFragment : Fragment(){
         director = view.findViewById(R.id.movie_info_director_lbl)
         homepage = view.findViewById(R.id.movie_info_homepage_lbl)
         sinopse = view.findViewById(R.id.movie_info_sinopse)
+        userscore = view.findViewById(R.id.movie_info_userscore)
 
         val movieId = activity?.intent?.getIntExtra( NowPlayingAdapter.NowPlayingViewHolder.ID, -1)
         if(movieId != null)

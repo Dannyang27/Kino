@@ -26,4 +26,6 @@
     <string name="recommendedmovies">Recommended Movies</string>
     <string name="similarmovies">Similar Movies</string>
     <string name="title">title</string>
+    <string name="movie_info_trailerbutton">Watch Trailer</string>
+    <string name="userscore">User Score: </string>
 </resources>
