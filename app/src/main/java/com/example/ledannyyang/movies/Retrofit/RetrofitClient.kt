@@ -15,6 +15,7 @@ import com.example.ledannyyang.movies.Model.SimilarMovie.SimilarMovie
 import com.example.ledannyyang.movies.Model.TopRated.TopRated
 import com.example.ledannyyang.movies.Model.Upcoming.Upcoming
 import com.example.ledannyyang.movies.Model.Video.Video
+import com.example.ledannyyang.movies.Utils.StringUtils
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -117,7 +118,6 @@ object RetrofitClient{
         call.enqueue(object : Callback<SimilarMovie>{
             override fun onResponse(call: Call<SimilarMovie>, response: Response<SimilarMovie>) {
                 response?.body()?.copy()?.results?.iterator()?.forEach {
-                    //Log.d(API, "Similar movie id ${it.id}, title = ${it.title}")
                     MovieDetailInfoFragment.similarMovieItems?.add(PortraitMovie(it.id, it.posterPath))
                     MovieDetailInfoFragment.similarMovieAdapter.notifyDataSetChanged()
                 }
@@ -221,6 +221,22 @@ object RetrofitClient{
         })
 
         return creditResult
+    }
+
+    fun getDirector( id: Int){
+        val call = service.getCredits( id.toString())
+
+        call.enqueue(object : Callback<Credit>{
+            override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
+                val director = response?.body()?.copy()?.crew?.filter { it.job.equals("Director") }?.map { it.name }
+                director.let{
+                    MovieDetailInfoFragment.setDirector(StringUtils.removeBrackets(director!!))
+                }
+            }
+            override fun onFailure(call: Call<Credit>, t: Throwable) {
+                Log.d(API, "Could not get Credits")
+            }
+        })
     }
 
     fun getCastDetail( id: Int, language: String = "en-US") : CastDetail?{

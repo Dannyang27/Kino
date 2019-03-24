@@ -21,6 +21,8 @@ class MoviePortraitAdapter(private val movies: MutableList<PortraitMovie>):
 
     override fun onBindViewHolder(holder: MoviePortraitViewHolder, position: Int) {
         val movie = movies[position]
+        holder.id = movie.id
+
         val url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
         Picasso.with(holder.portrait.context)
                 .load(url)

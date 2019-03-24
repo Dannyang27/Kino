@@ -19,6 +19,7 @@ import com.example.ledannyyang.movies.RecyclerView.MovieDetail.MoviePortraitAdap
 import com.example.ledannyyang.movies.RecyclerView.NowPlaying.NowPlayingAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.example.ledannyyang.movies.Utils.GenresUtils
+import com.example.ledannyyang.movies.Utils.StringUtils
 import com.squareup.picasso.Picasso
 
 class MovieDetailInfoFragment : Fragment(){
@@ -56,13 +57,18 @@ class MovieDetailInfoFragment : Fragment(){
             val genres = movie.genres?.map { it.name }
 
             title.text = movie.title
-            genre.text = GenresUtils.removeBrackets(genres!!)
+            genre.text = StringUtils.removeBrackets(genres!!)
             duration.text = "${movie.runtime} min"
             releasedDate.text = movie.releaseDate
-            director.text = "Unknown"
-            homepage.text = movie.homepage
+            homepage.text = movie.homepage ?: "N/A"
             sinopse.text = movie.overview
             userscore.text =  userscore.text.toString().plus(movie.voteAverage)
+
+
+        }
+
+        fun setDirector( name: String){
+            director.text = name
         }
     }
 
@@ -104,6 +110,7 @@ class MovieDetailInfoFragment : Fragment(){
             RetrofitClient.getMovieDetail(movieId!!)
             RetrofitClient.getRecommendedMoviesById(movieId!!)
             RetrofitClient.getSimilarMoviesById(movieId!!)
+            RetrofitClient.getDirector(movieId!!)
         }
 
 

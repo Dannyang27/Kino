@@ -13,7 +13,7 @@ data class MovieDetail(@SerializedName("adult")
                        @SerializedName("genres")
                        val genres: List<GenresItem>?,
                        @SerializedName("homepage")
-                       val homepage: String = "",
+                       val homepage: String? = "",
                        @SerializedName("id")
                        val id: Int = 0,
                        @SerializedName("imdb_id")
@@ -27,7 +27,7 @@ data class MovieDetail(@SerializedName("adult")
                        @SerializedName("popularity")
                        val popularity: Double = 0.0,
                        @SerializedName("poster_path")
-                       val posterPath: String = "",
+                       val posterPath: String? = "",
                        @SerializedName("production_companies")
                        val productionCompanies: List<ProductionCompaniesItem>?,
                        @SerializedName("production_countries")

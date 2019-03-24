@@ -21,8 +21,4 @@ object GenresUtils{
         }
         return result.joinToString{ it }
     }
-
-    fun removeBrackets(genres : List<String>) : String{
-        return genres.toString().substring(1, genres.toString().count()-1)
-    }
 }
