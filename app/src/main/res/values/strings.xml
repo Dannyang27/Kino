@@ -7,4 +7,9 @@
     <string name="favorite_item">Fav</string>
     <string name="search_tv">Search</string>
     <string name="billboard">Billboard</string>
+    <string name="sinopse">Sinopse</string>
+    <string name="sinopse_sample">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </string>
 </resources>

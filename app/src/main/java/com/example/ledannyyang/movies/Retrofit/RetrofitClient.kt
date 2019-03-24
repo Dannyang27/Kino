@@ -29,27 +29,20 @@ object RetrofitClient{
 
     val service = retrofit.create(GithubService::class.java)
 
-    fun getMovieDetail(id: Int, language:String = "en-US") : MovieDetail? {
+    fun getMovieDetail(id: Int, language:String = "en-US"){
 
         val call = service.getMovieDetail(id.toString(), language)
-        var movieDetailResult : MovieDetail? = null
 
         call.enqueue(object : Callback<MovieDetail>{
             override fun onResponse(call: Call<MovieDetail>?, response: Response<MovieDetail>?) {
-                movieDetailResult = response?.body()?.copy()
-                Log.d(API, "Movie Title = ${movieDetailResult?.title}")
-                movieDetailResult?.genres?.iterator()?.forEach {
-                    Log.d(API, it.name)
-                }
-                Log.d(API, "Movie Overview = ${movieDetailResult?.overview}")
+                val movieDetail = response?.body()?.copy()
+                Log.d(API, "Movie Detail Id = ${movieDetail?.id} Overview: ${movieDetail?.overview}")
 
             }
             override fun onFailure(call: Call<MovieDetail>?, t: Throwable?) {
                 Log.d(API, "Could not get details movies")
             }
         })
-
-        return movieDetailResult
     }
 
     fun getNowPlaying(language:String = "en-US", page: Int = 1, region: String){
