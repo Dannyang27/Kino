@@ -39,12 +39,6 @@ class MovieDetailCastFragment : Fragment(){
         }
 
         movieId.let { RetrofitClient.getCredits(movieId!!) }
-        Log.d("APIQUERY", "Llamando a getCredits()")
-
-
-
-
-
 
 
         return view

@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
+import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
@@ -147,23 +148,20 @@ object RetrofitClient{
         })
     }
 
-    fun getReviewsById( id: Int, language: String = "en-US", page : Int = 1) : Review?{
+    fun getReviewsById( id: Int, language: String = "en-US", page : Int = 1){
         val call = service.getReviewsById( id.toString(), language, page.toString())
-        var reviewsResult : Review? = null
 
         call.enqueue(object : Callback<Review>{
             override fun onResponse(call: Call<Review>, response: Response<Review>) {
-                reviewsResult = response?.body()?.copy()
-                reviewsResult?.results?.iterator()?.forEach {
-                    //Log.d(API, "Review by ${it.author}, content = ${it.content}")
+                response?.body()?.copy()?.results?.iterator()?.forEach {
+                    MovieDetailReviewFragment.reviews?.add(it)
+                    MovieDetailReviewFragment.reviewAdapter.notifyDataSetChanged()
                 }
             }
             override fun onFailure(call: Call<Review>, t: Throwable) {
                 Log.d(API, "Could not get Reviews from the Movie")
             }
         })
-
-        return reviewsResult
     }
 
     fun getVideosById( id: Int, language: String = "en-US") : Video?{
@@ -209,7 +207,7 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
-                response?.body()?.copy()?.cast?.sortedBy { it.order }?.take(10)?.iterator()?.forEach {
+                response?.body()?.copy()?.cast?.filter { !it.profilePath.isNullOrBlank()}?.sortedBy { it.order }?.take(10)?.iterator()?.forEach {
                     Log.d(API, "Cast name ${it.name}, Character = ${it.id}, cast profile = ${it.profilePath}")
                     MovieDetailCastFragment.credits?.add(it)
                     MovieDetailCastFragment.castAdapter.notifyDataSetChanged()
