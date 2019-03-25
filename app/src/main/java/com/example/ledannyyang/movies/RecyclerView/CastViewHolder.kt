@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.ledannyyang.movies.R
 
 class CastViewHolder(view : View) : RecyclerView.ViewHolder(view){
@@ -12,4 +13,9 @@ class CastViewHolder(view : View) : RecyclerView.ViewHolder(view){
     val creditName = view.findViewById(R.id.movie_cast_name) as TextView
     val character = view.findViewById(R.id.movie_cast_character) as TextView
 
+    init {
+        view.setOnClickListener {
+            Toast.makeText(portrait.context, "Credit ID: $id", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
