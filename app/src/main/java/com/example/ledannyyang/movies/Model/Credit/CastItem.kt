@@ -17,4 +17,4 @@ data class CastItem(@SerializedName("cast_id")
                     @SerializedName("order")
                     val order: Int = 0,
                     @SerializedName("profile_path")
-                    val profilePath: String = "")
+                    val profilePath: String? = "")

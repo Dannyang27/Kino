@@ -2,6 +2,7 @@ package com.example.ledannyyang.movies.Retrofit
 
 import android.util.Log
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
+import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.Credit.Credit
@@ -45,7 +46,6 @@ object RetrofitClient{
                 movieDetail.let {
                     MovieDetailInfoFragment.setInfo(it!!)
                 }
-
 
             }
             override fun onFailure(call: Call<MovieDetail>?, t: Throwable?) {
@@ -155,7 +155,7 @@ object RetrofitClient{
             override fun onResponse(call: Call<Review>, response: Response<Review>) {
                 reviewsResult = response?.body()?.copy()
                 reviewsResult?.results?.iterator()?.forEach {
-                    Log.d(API, "Review by ${it.author}, content = ${it.content}")
+                    //Log.d(API, "Review by ${it.author}, content = ${it.content}")
                 }
             }
             override fun onFailure(call: Call<Review>, t: Throwable) {
@@ -204,24 +204,23 @@ object RetrofitClient{
         return socialNetwork
     }
 
-    fun getCredits( id: Int) : Credit?{
+    fun getCredits( id: Int){
         val call = service.getCredits( id.toString())
-        var creditResult : Credit? = null
 
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
-                creditResult = response?.body()?.copy()
-                creditResult?.cast?.iterator()?.forEach {
-                    //Log.d(API, "Cast name ${it.castId}, Character = ${it.id}, cast id = ${it.creditId}")
+                response?.body()?.copy()?.cast?.sortedBy { it.order }?.take(10)?.iterator()?.forEach {
+                    Log.d(API, "Cast name ${it.name}, Character = ${it.id}, cast profile = ${it.profilePath}")
+                    MovieDetailCastFragment.credits?.add(it)
+                    MovieDetailCastFragment.castAdapter.notifyDataSetChanged()
                 }
             }
             override fun onFailure(call: Call<Credit>, t: Throwable) {
                 Log.d(API, "Could not get Credits")
             }
         })
-
-        return creditResult
     }
+
 
     fun getDirector( id: Int){
         val call = service.getCredits( id.toString())

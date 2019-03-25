@@ -15,4 +15,4 @@ data class CrewItem(@SerializedName("credit_id")
                     @SerializedName("name")
                     val name: String = "",
                     @SerializedName("profile_path")
-                    val profilePath: String = "")
+                    val profilePath: String? = "")
