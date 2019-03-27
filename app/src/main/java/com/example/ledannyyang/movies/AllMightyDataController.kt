@@ -6,10 +6,10 @@ import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
 import com.example.ledannyyang.movies.Model.Review.ReviewItem
 
 object AllMightyDataController{
-    val movieInfoMap: MutableMap<Int, MovieDetail> = mutableMapOf()
-    val movieInfoRecommendedMap: MutableMap<Int, List<PortraitMovie>> = mutableMapOf()
-    val movieInfoSimilarMap: MutableMap<Int, List<PortraitMovie>> = mutableMapOf()
+    val movieInfoMap = mapOf<Int, MovieDetail>()
+    val movieInfoRecommendedMap = mapOf<Int, List<PortraitMovie>>()
+    val movieInfoSimilarMap =  mapOf<Int, List<PortraitMovie>>()
     val movieInfoDirectorMap: MutableMap<Int, String> = mutableMapOf()
-    val movieCastMap: MutableMap<Int, CastItem> = mutableMapOf()
-    val movieReviewMap: MutableMap<Int, ReviewItem> = mutableMapOf()
+    val movieCastMap = mapOf<Int, MutableList<CastItem>>()
+    val movieReviewMap = mapOf<Int, MutableList<ReviewItem>>()
 }

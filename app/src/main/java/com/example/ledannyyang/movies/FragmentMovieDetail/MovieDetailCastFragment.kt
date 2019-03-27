@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Credit.CastItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.MovieDetail.CastAdapter
@@ -20,7 +21,7 @@ class MovieDetailCastFragment : Fragment(){
 
     companion object {
         lateinit var castAdapter : RecyclerView.Adapter<*>
-        val credits = mutableListOf<CastItem>()
+        var credits = mutableListOf<CastItem>()
     }
 
 
@@ -38,8 +39,15 @@ class MovieDetailCastFragment : Fragment(){
             adapter = castAdapter
         }
 
-        movieId.let { RetrofitClient.getCredits(movieId!!) }
-
+        movieId.let {
+            if(AllMightyDataController.movieCastMap.containsKey(movieId)){
+                credits = AllMightyDataController.movieCastMap[movieId]!!
+                castAdapter.notifyDataSetChanged()
+            }else{
+                credits.clear()
+                RetrofitClient.getCredits(movieId!!)
+            }
+        }
 
         return view
     }

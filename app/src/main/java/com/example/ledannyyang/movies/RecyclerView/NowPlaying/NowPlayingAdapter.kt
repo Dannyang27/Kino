@@ -33,7 +33,7 @@ class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
             view.setOnClickListener {
                 Toast.makeText(it.context, "$movieId", Toast.LENGTH_LONG).show()
                 val intent = Intent(it.context, MovieDetailActivity::class.java)
-                intent.putExtra( ID, movieId )
+                intent.putExtra( ID, movieId)
                 it.context.startActivity(intent)
             }
         }

@@ -106,38 +106,39 @@ class MovieDetailInfoFragment : Fragment(){
             adapter = similarMovieAdapter
         }
 
+        for( (key, value) in AllMightyDataController.movieInfoSimilarMap){
+            Log.d("APIQUERY", "Key: $key and Value: $value")
+        }
+
+
         loadMovieDetailInfo(movieId)
 
         return view
     }
 
-    fun loadMovieDetailInfo( id : Int?){
+    private fun loadMovieDetailInfo( id : Int?){
 
         id.let {
 
             if(AllMightyDataController.movieInfoMap.containsKey(id)){
-                Log.d("APIQUERY", "Movie already in map so no need to retrieve from RESTful")
                 setInfo(AllMightyDataController.movieInfoMap[id]!!)
             }else{
-                Log.d("APIQUERY", "Movie NOT in MAP -> Calling RetrofitClient")
                 RetrofitClient.getMovieDetail(id!!)
             }
 
             if(AllMightyDataController.movieInfoRecommendedMap.containsKey(id)){
-                Log.d("APIQUERY", "Recommended Movie already in map")
                 recommendedMovieItems = AllMightyDataController.movieInfoRecommendedMap[id]?.toMutableList()!!
                 recommendedMovieAdapter.notifyDataSetChanged()
             }else{
-                Log.d("APIQUERY", "REcommended NOT in MAP -> Calling RetrofitClient")
+                recommendedMovieItems.clear()
                 RetrofitClient.getRecommendedMoviesById(id!!)
             }
 
             if(AllMightyDataController.movieInfoSimilarMap.containsKey(id)){
-                Log.d("APIQUERY", "Similar Movie already in map")
                 similarMovieItems = AllMightyDataController.movieInfoSimilarMap[id]?.toMutableList()!!
                 similarMovieAdapter.notifyDataSetChanged()
             }else{
-                Log.d("APIQUERY", "Similar Movie NOT in MAP -> Calling RetrofitClient")
+                similarMovieItems.clear()
                 RetrofitClient.getSimilarMoviesById(id!!)
             }
 

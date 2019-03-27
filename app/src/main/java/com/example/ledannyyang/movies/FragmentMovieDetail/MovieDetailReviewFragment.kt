@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Review.ReviewItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.MovieDetail.ReviewAdapter
@@ -21,7 +22,7 @@ class MovieDetailReviewFragment : Fragment(){
 
     companion object {
         lateinit var reviewAdapter: RecyclerView.Adapter<*>
-        val reviews = mutableListOf<ReviewItem>()
+        var reviews = mutableListOf<ReviewItem>()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -40,7 +41,13 @@ class MovieDetailReviewFragment : Fragment(){
         }
 
         movieId.let {
-            RetrofitClient.getReviewsById(movieId!!)
+            if(AllMightyDataController.movieReviewMap.containsKey(movieId)){
+                reviews = AllMightyDataController.movieReviewMap[movieId]!!
+                reviewAdapter.notifyDataSetChanged()
+            }else{
+                reviews.clear()
+                RetrofitClient.getReviewsById(movieId!!)
+            }
         }
 
         return view

@@ -43,11 +43,11 @@ object RetrofitClient{
         call.enqueue(object : Callback<MovieDetail>{
             override fun onResponse(call: Call<MovieDetail>?, response: Response<MovieDetail>?) {
                 val movieDetail = response?.body()?.copy()
-                Log.d(API, "Movie Detail Id = ${movieDetail?.id} Overview: ${movieDetail?.runtime}")
+                //Log.d(API, "Movie Detail Id = ${movieDetail?.id} Overview: ${movieDetail?.runtime}")
 
                 movieDetail.let {
                     MovieDetailInfoFragment.setInfo(it!!)
-                    AllMightyDataController.movieInfoMap.put(movieDetail?.id!!, it)
+                    AllMightyDataController.movieInfoMap.plus(Pair(id, it))
                 }
 
             }
@@ -65,9 +65,9 @@ object RetrofitClient{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 nowplayingfetched = true
                 response?.body()?.copy()?.results?.iterator()?.forEach {
-                    NowPlayingController.nowPlayingItems?.add(it)
+                    NowPlayingController.nowPlayingItems.add(it)
                 }
-                NowPlayingController.viewAdapter?.notifyDataSetChanged()
+                NowPlayingController.viewAdapter.notifyDataSetChanged()
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {
                 Log.d(API, "Could not get Now Playing movies")
@@ -82,7 +82,7 @@ object RetrofitClient{
 
         call.enqueue(object: Callback<TopRated>{
             override fun onResponse(call: Call<TopRated>, response: Response<TopRated>) {
-                topRatedResult = response?.body()?.copy()
+                topRatedResult = response.body()?.copy()
                 topRatedResult?.results?.iterator()?.forEach {
                     Log.d(API, "TopRated movie id ${it.id}, title = ${it.title}")
                 }
@@ -102,7 +102,7 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<Upcoming>{
             override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
-                upcomingResult = response?.body()?.copy()
+                upcomingResult = response.body()?.copy()
                 upcomingResult?.results?.iterator()?.forEach {
                     Log.d(API, "Upcoming movie id ${it.id}, title = ${it.title}")
                 }
@@ -120,12 +120,11 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<SimilarMovie>{
             override fun onResponse(call: Call<SimilarMovie>, response: Response<SimilarMovie>) {
-                MovieDetailInfoFragment.similarMovieItems.clear()
-                response?.body()?.copy()?.results?.iterator()?.forEach {
-                    MovieDetailInfoFragment.similarMovieItems?.add(PortraitMovie(it.id, it.posterPath))
+                response.body()?.copy()?.results?.iterator()?.forEach {
+                    MovieDetailInfoFragment.similarMovieItems.add(PortraitMovie(it.id, it.posterPath))
                 }
                 MovieDetailInfoFragment.similarMovieAdapter.notifyDataSetChanged()
-                AllMightyDataController.movieInfoSimilarMap.put(id, MovieDetailInfoFragment.similarMovieItems)
+                AllMightyDataController.movieInfoSimilarMap.plus(Pair(id, MovieDetailInfoFragment.similarMovieItems))
             }
 
             override fun onFailure(call: Call<SimilarMovie>, t: Throwable) {
@@ -140,12 +139,11 @@ object RetrofitClient{
         call.enqueue(object : Callback<RecommendedMovie>{
 
             override fun onResponse(call: Call<RecommendedMovie>, response: Response<RecommendedMovie>) {
-                MovieDetailInfoFragment.recommendedMovieItems.clear()
-                response?.body()?.copy()?.results?.iterator()?.forEach {
-                    MovieDetailInfoFragment.recommendedMovieItems?.add(PortraitMovie(it.id, it.posterPath))
+                response.body()?.copy()?.results?.iterator()?.forEach {
+                    MovieDetailInfoFragment.recommendedMovieItems.add(PortraitMovie(it.id, it.posterPath))
                 }
                 MovieDetailInfoFragment.recommendedMovieAdapter.notifyDataSetChanged()
-                AllMightyDataController.movieInfoRecommendedMap.put(id, MovieDetailInfoFragment.recommendedMovieItems)
+                AllMightyDataController.movieInfoRecommendedMap.plus(Pair(id, MovieDetailInfoFragment.recommendedMovieItems))
             }
 
             override fun onFailure(call: Call<RecommendedMovie>, t: Throwable) {
@@ -159,10 +157,11 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<Review>{
             override fun onResponse(call: Call<Review>, response: Response<Review>) {
-                response?.body()?.copy()?.results?.iterator()?.forEach {
-                    MovieDetailReviewFragment.reviews?.add(it)
-                    MovieDetailReviewFragment.reviewAdapter.notifyDataSetChanged()
+                response.body()?.copy()?.results?.iterator()?.forEach {
+                    MovieDetailReviewFragment.reviews.add(it)
                 }
+                MovieDetailReviewFragment.reviewAdapter.notifyDataSetChanged()
+                AllMightyDataController.movieReviewMap.plus(Pair(id, MovieDetailReviewFragment.reviews))
             }
             override fun onFailure(call: Call<Review>, t: Throwable) {
                 Log.d(API, "Could not get Reviews from the Movie")
@@ -176,7 +175,7 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<Video>{
             override fun onResponse(call: Call<Video>, response: Response<Video>) {
-                videoResult = response?.body()?.copy()
+                videoResult = response.body()?.copy()
                 videoResult?.results?.iterator()?.forEach {
                     Log.d(API, "name by ${it.name}, key = ${it.key}")
                 }
@@ -195,7 +194,7 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<ExternalSocialNetwork>{
             override fun onResponse(call: Call<ExternalSocialNetwork>, response: Response<ExternalSocialNetwork>) {
-                socialNetwork = response?.body()?.copy()
+                socialNetwork = response.body()?.copy()
 
                 Log.d(API, "Instagram = @${socialNetwork?.instagramId}, Twitter = @${socialNetwork?.twitterId}")
 
@@ -213,11 +212,12 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
-                response?.body()?.copy()?.cast?.filter { !it.profilePath.isNullOrBlank()}?.sortedBy { it.order }?.take(10)?.iterator()?.forEach {
+                response.body()?.copy()?.cast?.filter { !it.profilePath.isNullOrBlank()}?.sortedBy { it.order }?.take(10)?.iterator()?.forEach {
                     //Log.d(API, "Cast name ${it.name}, Character = ${it.id}, cast profile = ${it.profilePath}")
-                    MovieDetailCastFragment.credits?.add(it)
-                    MovieDetailCastFragment.castAdapter.notifyDataSetChanged()
+                    MovieDetailCastFragment.credits.add(it)
                 }
+                MovieDetailCastFragment.castAdapter.notifyDataSetChanged()
+                AllMightyDataController.movieCastMap.plus(Pair(id, MovieDetailCastFragment.credits))
             }
             override fun onFailure(call: Call<Credit>, t: Throwable) {
                 Log.d(API, "Could not get Credits")
@@ -231,7 +231,7 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
-                val director = response?.body()?.copy()?.crew?.filter { it.job.equals("Director") }?.map { it.name }
+                val director = response.body()?.copy()?.crew?.filter { it.job.equals("Director") }?.map { it.name }
                 director.let{
                     val director = StringUtils.removeBrackets(director!!)
                     MovieDetailInfoFragment.setDirector(director)
@@ -250,7 +250,7 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<CastDetail>{
             override fun onResponse(call: Call<CastDetail>, response: Response<CastDetail>) {
-                castDetailResult = response?.body()?.copy()
+                castDetailResult = response.body()?.copy()
                 Log.d(API, "Name= ${castDetailResult?.deathday}  Biography = ${castDetailResult?.biography}")
             }
             override fun onFailure(call: Call<CastDetail>, t: Throwable) {
