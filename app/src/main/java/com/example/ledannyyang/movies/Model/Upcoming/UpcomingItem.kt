@@ -15,7 +15,7 @@ data class UpcomingItem(@SerializedName("vote_count")
                         @SerializedName("popularity")
                        val popularity: Double = 0.0,
                         @SerializedName("poster_path")
-                       val posterPath: String = "",
+                       val posterPath: String? = null,
                         @SerializedName("original_language")
                        val originalLanguage: String = "",
                         @SerializedName("original_title")
@@ -23,7 +23,7 @@ data class UpcomingItem(@SerializedName("vote_count")
                         @SerializedName("genre_ids")
                        val genreIds: List<Integer>?,
                         @SerializedName("backdrop_path")
-                       val backdropPath: String = "",
+                       val backdropPath: String? = null,
                         @SerializedName("adult")
                        val adult: Boolean = false,
                         @SerializedName("overview")

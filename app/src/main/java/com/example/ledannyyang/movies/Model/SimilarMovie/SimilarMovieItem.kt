@@ -21,12 +21,12 @@ data class SimilarMovieItem(@SerializedName("id")
                             @SerializedName("genre_ids")
                        val genreIds: List<Integer>?,
                             @SerializedName("backdrop_path")
-                       val backdropPath: String = "",
+                       val backdropPath: String? = null,
                             @SerializedName("adult")
                        val adult: Boolean = false,
                             @SerializedName("overview")
                        val overview: String = "",
                             @SerializedName("poster_path")
-                       val posterPath: String = "",
+                       val posterPath: String? = null,
                             @SerializedName("popularity")
                        val popularity: Double = 0.0)

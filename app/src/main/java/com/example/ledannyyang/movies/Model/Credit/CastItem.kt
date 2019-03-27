@@ -9,7 +9,7 @@ data class CastItem(@SerializedName("cast_id")
                     @SerializedName("credit_id")
                     val creditId: String = "",
                     @SerializedName("gender")
-                    val gender: Int = 0,
+                    val gender: Int? = null,
                     @SerializedName("id")
                     val id: Int = 0,
                     @SerializedName("name")
@@ -17,4 +17,4 @@ data class CastItem(@SerializedName("cast_id")
                     @SerializedName("order")
                     val order: Int = 0,
                     @SerializedName("profile_path")
-                    val profilePath: String? = "")
+                    val profilePath: String? = null)

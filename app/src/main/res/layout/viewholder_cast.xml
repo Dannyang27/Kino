@@ -44,10 +44,12 @@
 
                 <TextView
                     android:id="@+id/movie_cast_character"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TextView"
-                    android:textSize="@dimen/font_size_medium"/>
+                    android:textStyle="italic"
+                    android:textSize="@dimen/font_size_medium" />
+
             </LinearLayout>
 
         </LinearLayout>

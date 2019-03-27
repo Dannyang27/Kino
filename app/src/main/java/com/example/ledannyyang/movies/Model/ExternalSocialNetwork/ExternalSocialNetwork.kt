@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 data class ExternalSocialNetwork(@SerializedName("id")
                                  val id: Int = 0,
                                  @SerializedName("imdb_id")
-                                 val imdbId: String = "",
+                                 val imdbId: String? = "",
                                  @SerializedName("facebook_id")
-                                 val facebookId: String = "",
+                                 val facebookId: String? = null,
                                  @SerializedName("instagram_id")
-                                 val instagramId: String = "",
+                                 val instagramId: String? = null,
                                  @SerializedName("twitter_id")
-                                 val twitterId: String = "")
+                                 val twitterId: String? = null)

@@ -1,6 +1,7 @@
 package com.example.ledannyyang.movies.Retrofit
 
 import android.util.Log
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
@@ -46,6 +47,7 @@ object RetrofitClient{
 
                 movieDetail.let {
                     MovieDetailInfoFragment.setInfo(it!!)
+                    AllMightyDataController.movieInfoMap.put(movieDetail?.id!!, it)
                 }
 
             }
@@ -64,8 +66,8 @@ object RetrofitClient{
                 nowplayingfetched = true
                 response?.body()?.copy()?.results?.iterator()?.forEach {
                     NowPlayingController.nowPlayingItems?.add(it)
-                    NowPlayingController.viewAdapter?.notifyDataSetChanged()
                 }
+                NowPlayingController.viewAdapter?.notifyDataSetChanged()
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {
                 Log.d(API, "Could not get Now Playing movies")
@@ -118,10 +120,12 @@ object RetrofitClient{
 
         call.enqueue(object : Callback<SimilarMovie>{
             override fun onResponse(call: Call<SimilarMovie>, response: Response<SimilarMovie>) {
+                MovieDetailInfoFragment.similarMovieItems.clear()
                 response?.body()?.copy()?.results?.iterator()?.forEach {
                     MovieDetailInfoFragment.similarMovieItems?.add(PortraitMovie(it.id, it.posterPath))
-                    MovieDetailInfoFragment.similarMovieAdapter.notifyDataSetChanged()
                 }
+                MovieDetailInfoFragment.similarMovieAdapter.notifyDataSetChanged()
+                AllMightyDataController.movieInfoSimilarMap.put(id, MovieDetailInfoFragment.similarMovieItems)
             }
 
             override fun onFailure(call: Call<SimilarMovie>, t: Throwable) {
@@ -136,10 +140,12 @@ object RetrofitClient{
         call.enqueue(object : Callback<RecommendedMovie>{
 
             override fun onResponse(call: Call<RecommendedMovie>, response: Response<RecommendedMovie>) {
+                MovieDetailInfoFragment.recommendedMovieItems.clear()
                 response?.body()?.copy()?.results?.iterator()?.forEach {
                     MovieDetailInfoFragment.recommendedMovieItems?.add(PortraitMovie(it.id, it.posterPath))
-                    MovieDetailInfoFragment.recommendedMovieAdapter.notifyDataSetChanged()
                 }
+                MovieDetailInfoFragment.recommendedMovieAdapter.notifyDataSetChanged()
+                AllMightyDataController.movieInfoRecommendedMap.put(id, MovieDetailInfoFragment.recommendedMovieItems)
             }
 
             override fun onFailure(call: Call<RecommendedMovie>, t: Throwable) {
@@ -208,7 +214,7 @@ object RetrofitClient{
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                 response?.body()?.copy()?.cast?.filter { !it.profilePath.isNullOrBlank()}?.sortedBy { it.order }?.take(10)?.iterator()?.forEach {
-                    Log.d(API, "Cast name ${it.name}, Character = ${it.id}, cast profile = ${it.profilePath}")
+                    //Log.d(API, "Cast name ${it.name}, Character = ${it.id}, cast profile = ${it.profilePath}")
                     MovieDetailCastFragment.credits?.add(it)
                     MovieDetailCastFragment.castAdapter.notifyDataSetChanged()
                 }
@@ -227,11 +233,13 @@ object RetrofitClient{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                 val director = response?.body()?.copy()?.crew?.filter { it.job.equals("Director") }?.map { it.name }
                 director.let{
-                    MovieDetailInfoFragment.setDirector(StringUtils.removeBrackets(director!!))
+                    val director = StringUtils.removeBrackets(director!!)
+                    MovieDetailInfoFragment.setDirector(director)
+                    AllMightyDataController.movieInfoDirectorMap.put(id, director)
                 }
             }
             override fun onFailure(call: Call<Credit>, t: Throwable) {
-                Log.d(API, "Could not get Credits")
+                Log.d(API, "Could not get Director")
             }
         })
     }

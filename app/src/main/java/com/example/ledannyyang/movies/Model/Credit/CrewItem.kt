@@ -7,7 +7,7 @@ data class CrewItem(@SerializedName("credit_id")
                     @SerializedName("department")
                     val department: String = "",
                     @SerializedName("gender")
-                    val gender: Int = 0,
+                    val gender: Int? = null,
                     @SerializedName("id")
                     val id: Int = 0,
                     @SerializedName("job")
@@ -15,4 +15,4 @@ data class CrewItem(@SerializedName("credit_id")
                     @SerializedName("name")
                     val name: String = "",
                     @SerializedName("profile_path")
-                    val profilePath: String? = "")
+                    val profilePath: String? = null)

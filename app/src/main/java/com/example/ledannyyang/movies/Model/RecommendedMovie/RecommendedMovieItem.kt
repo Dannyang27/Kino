@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class RecommendedMovieItem(@SerializedName("adult")
                        val adult: Boolean = false,
                                 @SerializedName("backdrop_path")
-                       val backdropPath: String = "",
+                       val backdropPath: String? = null,
                                 @SerializedName("genre_ids")
                        val genreIds: List<Integer>?,
                                 @SerializedName("id")
@@ -17,7 +17,7 @@ data class RecommendedMovieItem(@SerializedName("adult")
                                 @SerializedName("overview")
                        val overview: String = "",
                                 @SerializedName("poster_path")
-                       val posterPath: String = "",
+                       val posterPath: String? = null,
                                 @SerializedName("release_date")
                        val releaseDate: String = "",
                                 @SerializedName("title")

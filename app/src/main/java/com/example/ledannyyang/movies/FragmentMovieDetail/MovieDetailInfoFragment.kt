@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
 import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovie
@@ -41,10 +42,10 @@ class MovieDetailInfoFragment : Fragment(){
         lateinit var userscore: TextView
 
         lateinit var recommendedMovieAdapter : RecyclerView.Adapter<*>
-        val recommendedMovieItems = mutableListOf<PortraitMovie>()
+        var recommendedMovieItems = mutableListOf<PortraitMovie>()
 
         lateinit var similarMovieAdapter : RecyclerView.Adapter<*>
-        val similarMovieItems = mutableListOf<PortraitMovie>()
+        var similarMovieItems = mutableListOf<PortraitMovie>()
 
 
         fun setInfo( movie : MovieDetail){
@@ -75,6 +76,7 @@ class MovieDetailInfoFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view =  inflater.inflate(R.layout.movie_detail_info, container, false)
+        val movieId = activity?.intent?.getIntExtra( NowPlayingAdapter.NowPlayingViewHolder.ID, -1)
 
         title = view.findViewById(R.id.movie_info_title_lbl)
         portrait = view.findViewById(R.id.movie_info_portrait)
@@ -88,11 +90,9 @@ class MovieDetailInfoFragment : Fragment(){
 
         recommendedViewManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         similarViewManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
         recommendedMovieAdapter = MoviePortraitAdapter(recommendedMovieItems)
         similarMovieAdapter = MoviePortraitAdapter(similarMovieItems)
-
-        val movieId = activity?.intent?.getIntExtra( NowPlayingAdapter.NowPlayingViewHolder.ID, -1)
-
 
         recommendedRecyclerView = view.findViewById<RecyclerView>(R.id.recommendedRv).apply{
             setHasFixedSize(true)
@@ -106,14 +106,46 @@ class MovieDetailInfoFragment : Fragment(){
             adapter = similarMovieAdapter
         }
 
-        movieId.let {
-            RetrofitClient.getMovieDetail(movieId!!)
-            RetrofitClient.getRecommendedMoviesById(movieId!!)
-            RetrofitClient.getSimilarMoviesById(movieId!!)
-            RetrofitClient.getDirector(movieId!!)
-        }
-
+        loadMovieDetailInfo(movieId)
 
         return view
+    }
+
+    fun loadMovieDetailInfo( id : Int?){
+
+        id.let {
+
+            if(AllMightyDataController.movieInfoMap.containsKey(id)){
+                Log.d("APIQUERY", "Movie already in map so no need to retrieve from RESTful")
+                setInfo(AllMightyDataController.movieInfoMap[id]!!)
+            }else{
+                Log.d("APIQUERY", "Movie NOT in MAP -> Calling RetrofitClient")
+                RetrofitClient.getMovieDetail(id!!)
+            }
+
+            if(AllMightyDataController.movieInfoRecommendedMap.containsKey(id)){
+                Log.d("APIQUERY", "Recommended Movie already in map")
+                recommendedMovieItems = AllMightyDataController.movieInfoRecommendedMap[id]?.toMutableList()!!
+                recommendedMovieAdapter.notifyDataSetChanged()
+            }else{
+                Log.d("APIQUERY", "REcommended NOT in MAP -> Calling RetrofitClient")
+                RetrofitClient.getRecommendedMoviesById(id!!)
+            }
+
+            if(AllMightyDataController.movieInfoSimilarMap.containsKey(id)){
+                Log.d("APIQUERY", "Similar Movie already in map")
+                similarMovieItems = AllMightyDataController.movieInfoSimilarMap[id]?.toMutableList()!!
+                similarMovieAdapter.notifyDataSetChanged()
+            }else{
+                Log.d("APIQUERY", "Similar Movie NOT in MAP -> Calling RetrofitClient")
+                RetrofitClient.getSimilarMoviesById(id!!)
+            }
+
+            if(AllMightyDataController.movieInfoDirectorMap.containsKey(id)){
+                setDirector(AllMightyDataController.movieInfoDirectorMap[id]!!)
+            }else{
+                RetrofitClient.getDirector(id!!)
+            }
+        }
     }
 }
