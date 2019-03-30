@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
-import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
@@ -31,8 +30,6 @@ class MovieDetailActivity : AppCompatActivity() {
 
         val tabLayout = movie_detail_tablayout
         tabLayout.setupWithViewPager(mPager)
-
-
     }
 
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
