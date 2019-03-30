@@ -21,7 +21,7 @@ data class UpcomingItem(@SerializedName("vote_count")
                         @SerializedName("original_title")
                        val originalTitle: String = "",
                         @SerializedName("genre_ids")
-                       val genreIds: List<Integer>?,
+                       val genreIds: List<Int>,
                         @SerializedName("backdrop_path")
                        val backdropPath: String? = null,
                         @SerializedName("adult")

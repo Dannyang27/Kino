@@ -3,6 +3,7 @@ package com.example.ledannyyang.movies.Retrofit
 import android.util.Log
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
+import com.example.ledannyyang.movies.FragmentController.UpcomingController
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
@@ -18,6 +19,7 @@ import com.example.ledannyyang.movies.Model.SimilarMovie.SimilarMovie
 import com.example.ledannyyang.movies.Model.TopRated.TopRated
 import com.example.ledannyyang.movies.Model.Upcoming.Upcoming
 import com.example.ledannyyang.movies.Model.Video.Video
+import com.example.ledannyyang.movies.RecyclerView.Upcoming.UpcomingAdapter
 import com.example.ledannyyang.movies.Utils.StringUtils
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,6 +30,7 @@ object RetrofitClient{
     val baseUrl = "https://api.themoviedb.org"
     val api_key = "6ee8506f55fda3da84e75f9a5f8baa76"
     var nowplayingfetched = false
+    var upcomingfetched = false
 
     val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -96,23 +99,22 @@ object RetrofitClient{
         return topRatedResult
     }
 
-    fun getUpcoming(language: String = "en-US", page: Int = 1) : Upcoming?{
+    fun getUpcoming(language: String = "en-US", page: Int = 1){
         val call = service.getUpcoming(language, page.toString())
-        var upcomingResult : Upcoming? = null
 
         call.enqueue(object : Callback<Upcoming>{
             override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
-                upcomingResult = response.body()?.copy()
-                upcomingResult?.results?.iterator()?.forEach {
-                    Log.d(API, "Upcoming movie id ${it.id}, title = ${it.title}")
+                upcomingfetched = true
+                response.body()?.copy()?.results?.iterator()?.forEach {
+                    //Log.d(API, "Upcoming movie id ${it.id}, title = ${it.title}")
+                    UpcomingController.upcomingItems?.add(it)
                 }
+                UpcomingController.viewAdapter.notifyDataSetChanged()
             }
             override fun onFailure(call: Call<Upcoming>, t: Throwable) {
                 Log.d(API, "Could not get Upcoming Movies")
             }
         })
-
-        return upcomingResult
     }
 
     fun getSimilarMoviesById( id: Int, language: String = "en-US", page : Int = 1){
