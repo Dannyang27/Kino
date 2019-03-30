@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
 import com.example.ledannyyang.movies.MainActivity
 import com.example.ledannyyang.movies.R
+import com.example.ledannyyang.movies.enums.MovieTypes
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 private const val NUM_PAGES = 3

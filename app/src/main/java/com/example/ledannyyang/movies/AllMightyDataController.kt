@@ -4,6 +4,7 @@ import com.example.ledannyyang.movies.Model.Credit.CastItem
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
 import com.example.ledannyyang.movies.Model.Review.ReviewItem
+import com.example.ledannyyang.movies.enums.MovieTypes
 
 object AllMightyDataController{
     val movieInfoMap = mapOf<Int, MovieDetail>()
@@ -12,6 +13,8 @@ object AllMightyDataController{
     val movieInfoDirectorMap: MutableMap<Int, String> = mutableMapOf()
     val movieCastMap = mapOf<Int, MutableList<CastItem>>()
     val movieReviewMap = mapOf<Int, MutableList<ReviewItem>>()
+
+    var movieDetailFrom = MovieTypes.NOWPLAYING
 
     const val currentMovieID = "MOVIE_ID"
 }

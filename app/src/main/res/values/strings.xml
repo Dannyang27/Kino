@@ -29,4 +29,7 @@
     <string name="movie_info_trailerbutton">Watch Trailer</string>
     <string name="userscore">User Score: </string>
     <string name="asCast">As </string>
+    <string name="upcoming_title">Upcoming Movies</string>
+    <string name="search_title">Search</string>
+    <string name="billboard_title">BillBoard</string>
 </resources>
