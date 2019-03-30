@@ -37,7 +37,8 @@ interface GithubService {
     // Gets Upcoming Movies as per region
     @GET("/3/movie/upcoming?api_key=6ee8506f55fda3da84e75f9a5f8baa76")
     fun getUpcoming(@Query("language") language : String,
-                    @Query("page") page : String) : Call<Upcoming>
+                    @Query("page") page : String,
+                    @Query("region") region: String) : Call<Upcoming>
 
     // Gets a list of movies that are similar to the id provided
     @GET("/3/movie/{id}/similar?api_key=6ee8506f55fda3da84e75f9a5f8baa76")

@@ -60,9 +60,9 @@ object RetrofitClient{
         })
     }
 
-    fun getNowPlaying(language:String = "en-US", page: Int = 1, region: String){
+    fun getNowPlaying(language:String = "en-US", page: Int = 1, region: String = "ES"){
 
-        val call = service.getNowPlaying(language,page.toString(), region)
+        val call = service.getNowPlaying(language, page.toString(), region)
 
         call.enqueue(object : Callback<NowPlaying>{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
@@ -99,8 +99,8 @@ object RetrofitClient{
         return topRatedResult
     }
 
-    fun getUpcoming(language: String = "en-US", page: Int = 1){
-        val call = service.getUpcoming(language, page.toString())
+    fun getUpcoming(language: String = "en-US", page: Int = 1, region: String = "ES"){
+        val call = service.getUpcoming(language, page.toString(), region)
 
         call.enqueue(object : Callback<Upcoming>{
             override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {

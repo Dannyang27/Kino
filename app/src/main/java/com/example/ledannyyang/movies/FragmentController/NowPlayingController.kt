@@ -34,7 +34,7 @@ class NowPlayingController : Fragment(){
         viewAdapter = NowPlayingAdapter(nowPlayingItems)
 
         if(!RetrofitClient.nowplayingfetched)
-            RetrofitClient.getNowPlaying(page = 1, region = "ES")
+            RetrofitClient.getNowPlaying(page = 1)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.now_playing_rv).apply{
             setHasFixedSize(true)
