@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.ledannyyang.movies.Activities.MovieDetailActivity
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
@@ -25,15 +26,11 @@ class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
         val genre = view.findViewById(R.id.genre) as TextView
         val vote = view.findViewById(R.id.vote_avg) as TextView
 
-        companion object {
-            val ID = "MOVIE_ID"
-        }
-
         init{
             view.setOnClickListener {
                 Toast.makeText(it.context, "$movieId", Toast.LENGTH_LONG).show()
                 val intent = Intent(it.context, MovieDetailActivity::class.java)
-                intent.putExtra( ID, movieId)
+                intent.putExtra(AllMightyDataController.currentMovieID, movieId)
                 it.context.startActivity(intent)
             }
         }

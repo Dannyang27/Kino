@@ -1,14 +1,17 @@
 package com.example.ledannyyang.movies.Activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
+import com.example.ledannyyang.movies.MainActivity
 import com.example.ledannyyang.movies.R
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
@@ -56,5 +59,10 @@ class MovieDetailActivity : AppCompatActivity() {
 
             return title
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }

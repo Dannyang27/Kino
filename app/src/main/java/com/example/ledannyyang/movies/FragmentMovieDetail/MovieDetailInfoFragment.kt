@@ -76,7 +76,8 @@ class MovieDetailInfoFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view =  inflater.inflate(R.layout.movie_detail_info, container, false)
-        val movieId = activity?.intent?.getIntExtra( NowPlayingAdapter.NowPlayingViewHolder.ID, -1)
+        val movieId = activity?.intent?.getIntExtra( AllMightyDataController.currentMovieID, -1)
+
 
         title = view.findViewById(R.id.movie_info_title_lbl)
         portrait = view.findViewById(R.id.movie_info_portrait)
@@ -105,11 +106,6 @@ class MovieDetailInfoFragment : Fragment(){
             layoutManager = similarViewManager
             adapter = similarMovieAdapter
         }
-
-        for( (key, value) in AllMightyDataController.movieInfoSimilarMap){
-            Log.d("APIQUERY", "Key: $key and Value: $value")
-        }
-
 
         loadMovieDetailInfo(movieId)
 

@@ -12,4 +12,6 @@ object AllMightyDataController{
     val movieInfoDirectorMap: MutableMap<Int, String> = mutableMapOf()
     val movieCastMap = mapOf<Int, MutableList<CastItem>>()
     val movieReviewMap = mapOf<Int, MutableList<ReviewItem>>()
+
+    const val currentMovieID = "MOVIE_ID"
 }
