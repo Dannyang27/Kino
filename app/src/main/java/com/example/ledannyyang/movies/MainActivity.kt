@@ -91,4 +91,8 @@ class MainActivity : AppCompatActivity() {
 //        val castDetail = RetrofitService.INSTANCE.getCastDetail(117642)
 
     }
+
+    override fun onBackPressed() {
+        // not to do anything
+    }
 }

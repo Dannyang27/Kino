@@ -63,7 +63,7 @@ class MovieDetailInfoFragment : Fragment(){
             releasedDate.text = movie.releaseDate
             homepage.text = movie.homepage ?: "N/A"
             sinopse.text = movie.overview
-            userscore.text =  userscore.text.toString().plus(movie.voteAverage)
+            userscore.text =  userscore.text.toString().plus(" ${movie.voteAverage}")
 
 
         }

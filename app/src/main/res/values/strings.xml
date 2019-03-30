@@ -23,7 +23,7 @@
     <string name="homepage">Homepage:</string>
     <string name="genre">Genre:</string>
     <string name="socialNetworks">Social Networks</string>
-    <string name="recommendedmovies">Recommended Movies</string>
+    <string name="recommendedmovies">People who liked this also liked</string>
     <string name="similarmovies">Similar Movies</string>
     <string name="title">title</string>
     <string name="movie_info_trailerbutton">Watch Trailer</string>

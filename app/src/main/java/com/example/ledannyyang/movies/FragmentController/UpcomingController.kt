@@ -31,7 +31,7 @@ class UpcomingController : Fragment(){
         viewAdapter = UpcomingAdapter(upcomingItems)
 
         if(!RetrofitClient.upcomingfetched)
-            RetrofitClient.getUpcoming(page = 1)
+            RetrofitClient.getUpcoming(page = 1, region = "ES")
 
         recyclerView = view.findViewById<RecyclerView>(R.id.upcoming_recyclerview).apply{
             setHasFixedSize(true)
