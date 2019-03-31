@@ -8,7 +8,7 @@
     <string name="search_tv">Search</string>
     <string name="billboard">Billboard</string>
     <string name="sinopse">Sinopse</string>
-    <string name="sinopse_sample">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+    <string name="loremipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
         nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
@@ -36,4 +36,5 @@
     <string name="cast_name">Name</string>
     <string name="bday">27-09-1995</string>
     <string name="place_bday">Denia, Alicante</string>
+    <string name="biography_title">Biography</string>
 </resources>

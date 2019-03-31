@@ -1,6 +1,7 @@
 package com.example.ledannyyang.movies.Retrofit
 
 import android.util.Log
+import com.example.ledannyyang.movies.Activities.CastDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
@@ -244,6 +245,10 @@ object RetrofitClient{
         call.enqueue(object : Callback<CastDetail>{
             override fun onResponse(call: Call<CastDetail>, response: Response<CastDetail>) {
                 val castDetail = response.body()?.copy()
+                castDetail.let {
+                    CastDetailActivity.setCastInfo(castDetail!!)
+                }
+
                 Log.d(API, "Name= ${castDetail?.name}  Biography = ${castDetail?.biography}")
             }
             override fun onFailure(call: Call<CastDetail>, t: Throwable) {

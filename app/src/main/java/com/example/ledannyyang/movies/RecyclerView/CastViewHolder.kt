@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.ledannyyang.movies.Activities.CastDetailActivity
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.R
 
 class CastViewHolder(view : View) : RecyclerView.ViewHolder(view){
@@ -19,6 +20,7 @@ class CastViewHolder(view : View) : RecyclerView.ViewHolder(view){
         view.setOnClickListener {
             Toast.makeText(portrait.context, id.toString(), Toast.LENGTH_SHORT).show()
             val intent = Intent(it.context, CastDetailActivity::class.java)
+            intent.putExtra(AllMightyDataController.currentCastID, id)
             it.context.startActivity(intent)
         }
     }
