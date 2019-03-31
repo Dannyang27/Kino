@@ -268,8 +268,5 @@ object RetrofitClient{
                 Log.d(API, "Could not get Movie Credits")
             }
         })
-
-
-
     }
 }
