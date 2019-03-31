@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
+import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.example.ledannyyang.movies.enums.MovieTypes
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -76,23 +77,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         openFragment(fragment)
-
-
-//        val nowPlaying = RetrofitService.INSTANCE.getNowPlaying(region = "ES")
-//        val topRated = RetrofitService.INSTANCE.getTopRated()
-//        val upcoming = RetrofitService.INSTANCE.getUpcoming()
-//        val similarMovie = RetrofitService.INSTANCE.getSimilarMoviesById(297802)
-//        val recommendedMovie = RetrofitService.INSTANCE.getRecommendedMoviesById(297802)
-//        val reviews = RetrofitService.INSTANCE.getReviewsById(297802)
-//        val videos = RetrofitService.INSTANCE.getVideosById(297802)
-//        val socialNetwork = RetrofitService.INSTANCE.getExternalSocialNetwork(297802)
-//        val credit = RetrofitService.INSTANCE.getCredits(297802)
-//        val movieDetails = RetrofitService.INSTANCE.getMovieDetail(297802)
-//        val castDetail = RetrofitService.INSTANCE.getCastDetail(117642)
-
     }
 
     override fun onBackPressed() {
-        // not to do anything
+        //RetrofitClient.getMovieCredit("5c86e37f0e0a264310683e5a")
     }
 }

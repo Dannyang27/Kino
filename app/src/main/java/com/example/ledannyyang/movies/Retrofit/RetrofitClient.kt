@@ -8,6 +8,7 @@ import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragmen
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
+import com.example.ledannyyang.movies.Model.CastFilmography.MovieCredit
 import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
@@ -19,7 +20,6 @@ import com.example.ledannyyang.movies.Model.SimilarMovie.SimilarMovie
 import com.example.ledannyyang.movies.Model.TopRated.TopRated
 import com.example.ledannyyang.movies.Model.Upcoming.Upcoming
 import com.example.ledannyyang.movies.Model.Video.Video
-import com.example.ledannyyang.movies.RecyclerView.Upcoming.UpcomingAdapter
 import com.example.ledannyyang.movies.Utils.StringUtils
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -173,12 +173,10 @@ object RetrofitClient{
 
     fun getVideosById( id: Int, language: String = "en-US") : Video?{
         val call = service.getVideosById( id.toString(), language)
-        var videoResult : Video? = null
 
         call.enqueue(object : Callback<Video>{
             override fun onResponse(call: Call<Video>, response: Response<Video>) {
-                videoResult = response.body()?.copy()
-                videoResult?.results?.iterator()?.forEach {
+                response.body()?.copy()?.results?.iterator()?.forEach {
                     Log.d(API, "name by ${it.name}, key = ${it.key}")
                 }
             }
@@ -186,18 +184,14 @@ object RetrofitClient{
                 Log.d(API, "Could not get trailers from the Movie")
             }
         })
-
-        return videoResult
     }
 
-    fun getExternalSocialNetwork( id: Int) : ExternalSocialNetwork?{
+    fun getExternalSocialNetwork( id: Int){
         val call = service.getExternalSocialNetwork( id.toString())
-        var socialNetwork : ExternalSocialNetwork? = null
 
         call.enqueue(object : Callback<ExternalSocialNetwork>{
             override fun onResponse(call: Call<ExternalSocialNetwork>, response: Response<ExternalSocialNetwork>) {
-                socialNetwork = response.body()?.copy()
-
+                val socialNetwork = response.body()?.copy()
                 Log.d(API, "Instagram = @${socialNetwork?.instagramId}, Twitter = @${socialNetwork?.twitterId}")
 
             }
@@ -205,8 +199,6 @@ object RetrofitClient{
                 Log.d(API, "Could not get External Social Networks")
             }
         })
-
-        return socialNetwork
     }
 
     fun getCredits( id: Int){
@@ -246,20 +238,38 @@ object RetrofitClient{
         })
     }
 
-    fun getCastDetail( id: Int, language: String = "en-US") : CastDetail?{
+    fun getCastDetail( id: Int, language: String = "en-US"){
         val call = service.getCastDetail( id.toString(), language)
-        var castDetailResult : CastDetail? = null
 
         call.enqueue(object : Callback<CastDetail>{
             override fun onResponse(call: Call<CastDetail>, response: Response<CastDetail>) {
-                castDetailResult = response.body()?.copy()
-                Log.d(API, "Name= ${castDetailResult?.deathday}  Biography = ${castDetailResult?.biography}")
+                val castDetail = response.body()?.copy()
+                Log.d(API, "Name= ${castDetail?.name}  Biography = ${castDetail?.biography}")
             }
             override fun onFailure(call: Call<CastDetail>, t: Throwable) {
                 Log.d(API, "Could not get Cast Details")
             }
         })
+    }
 
-        return castDetailResult
+    fun getMovieCredit(creditId: String){
+        val call = service.getMovieCredit(creditId)
+
+        call.enqueue(object : Callback<MovieCredit>{
+            override fun onResponse(call: Call<MovieCredit>, response: Response<MovieCredit>) {
+                var movieCredit = response.body()?.copy()
+                movieCredit.let {
+                    it?.person?.castFilmography?.forEach {
+                        Log.d("APIQUERY", "Title: ${it.title}")
+                    }
+                }
+            }
+            override fun onFailure(call: Call<MovieCredit>, t: Throwable) {
+                Log.d(API, "Could not get Movie Credits")
+            }
+        })
+
+
+
     }
 }

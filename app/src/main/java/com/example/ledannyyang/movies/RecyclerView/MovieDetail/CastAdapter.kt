@@ -24,7 +24,7 @@ class CastAdapter(private val credits: MutableList<CastItem>):
         val credit = credits[position]
         holder.creditName.text = credit.name
         holder.character.text = credit.character
-        holder.id = credit.castId
+        holder.id = credit.id
 
         Picasso.with(holder.portrait.context)
                 .load("https://image.tmdb.org/t/p/w500/${credit?.profilePath}")

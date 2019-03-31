@@ -1,6 +1,7 @@
 package com.example.ledannyyang.movies.Retrofit
 
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
+import com.example.ledannyyang.movies.Model.CastFilmography.MovieCredit
 import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
@@ -75,4 +76,8 @@ interface GithubService {
     @GET("/3/person/{id}?api_key=6ee8506f55fda3da84e75f9a5f8baa76")
     fun getCastDetail(@Path("id") castId: String,
                       @Query("language") language: String) : Call<CastDetail>
+
+    // return cast filmography
+    @GET("/3/credit/{credit_id}?api_key=6ee8506f55fda3da84e75f9a5f8baa76")
+    fun getMovieCredit(@Path("credit_id") creditId: String) : Call<MovieCredit>
 }
