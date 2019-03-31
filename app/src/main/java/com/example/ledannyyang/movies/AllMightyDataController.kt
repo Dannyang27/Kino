@@ -17,4 +17,5 @@ object AllMightyDataController{
     var movieDetailFrom = MovieTypes.NOWPLAYING
 
     const val currentMovieID = "MOVIE_ID"
+    const val currentCastID = "CAST_ID"
 }
