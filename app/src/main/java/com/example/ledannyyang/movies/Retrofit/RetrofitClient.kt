@@ -40,69 +40,71 @@ object RetrofitClient{
 
     val service = retrofit.create(GithubService::class.java)
 
-    fun getMovieDetail(id: Int, language:String = "en-US"){
+    fun getMovieDetail(id: Int, language:String = "en-US") : Boolean {
 
         val call = service.getMovieDetail(id.toString(), language)
-
+        var success = false
         call.enqueue(object : Callback<MovieDetail>{
             override fun onResponse(call: Call<MovieDetail>?, response: Response<MovieDetail>?) {
                 val movieDetail = response?.body()?.copy()
-                //Log.d(API, "Movie Detail Id = ${movieDetail?.id} Overview: ${movieDetail?.runtime}")
-
                 movieDetail.let {
                     MovieDetailInfoFragment.setInfo(it!!)
                     AllMightyDataController.movieInfoMap.plus(Pair(id, it))
                 }
-
+                success = true
             }
             override fun onFailure(call: Call<MovieDetail>?, t: Throwable?) {
                 Log.d(API, "Could not get details movies")
+                success = false
             }
         })
+        return success
     }
 
-    fun getNowPlaying(language:String = "en-US", page: Int = 1, region: String = "ES"){
+    fun getNowPlaying(language:String = "en-US", page: Int = 1, region: String = "ES") : Boolean{
 
         val call = service.getNowPlaying(language, page.toString(), region)
-
+        var success = false
         call.enqueue(object : Callback<NowPlaying>{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
-                nowplayingfetched = true
                 response?.body()?.copy()?.results?.iterator()?.forEach {
                     NowPlayingController.nowPlayingItems.add(it)
                 }
                 NowPlayingController.viewAdapter.notifyDataSetChanged()
+                success = true
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {
                 Log.d(API, "Could not get Now Playing movies")
+                success = false
             }
         })
+        return success
     }
 
-    fun getTopRated(language: String = "en-US", page: Int = 1) : TopRated?{
+    fun getTopRated(language: String = "en-US", page: Int = 1): Boolean{
 
         val call = service.getTopRated(language, page.toString())
-        var topRatedResult : TopRated? = null
+        var success = false
 
         call.enqueue(object: Callback<TopRated>{
             override fun onResponse(call: Call<TopRated>, response: Response<TopRated>) {
-                topRatedResult = response.body()?.copy()
-                topRatedResult?.results?.iterator()?.forEach {
+                response.body()?.copy()?.results?.iterator()?.forEach {
                     Log.d(API, "TopRated movie id ${it.id}, title = ${it.title}")
                 }
+                success = true
             }
 
             override fun onFailure(call: Call<TopRated>, t: Throwable) {
                 Log.d(API, "Could not get top rated movies")
+                success = false
             }
         })
-
-        return topRatedResult
+        return success
     }
 
-    fun getUpcoming(language: String = "en-US", page: Int = 1, region: String = "ES"){
+    fun getUpcoming(language: String = "en-US", page: Int = 1, region: String = "ES"): Boolean{
         val call = service.getUpcoming(language, page.toString(), region)
-
+        var success = false
         call.enqueue(object : Callback<Upcoming>{
             override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
                 upcomingfetched = true
@@ -111,16 +113,19 @@ object RetrofitClient{
                     UpcomingController.upcomingItems?.add(it)
                 }
                 UpcomingController.viewAdapter.notifyDataSetChanged()
+                success = true
             }
             override fun onFailure(call: Call<Upcoming>, t: Throwable) {
                 Log.d(API, "Could not get Upcoming Movies")
+                success = false
             }
         })
+        return success
     }
 
-    fun getSimilarMoviesById( id: Int, language: String = "en-US", page : Int = 1){
+    fun getSimilarMoviesById( id: Int, language: String = "en-US", page : Int = 1): Boolean{
         val call = service.getSimilarMoviesById( id.toString(), language, page.toString())
-
+        var success = false
         call.enqueue(object : Callback<SimilarMovie>{
             override fun onResponse(call: Call<SimilarMovie>, response: Response<SimilarMovie>) {
                 response.body()?.copy()?.results?.iterator()?.forEach {
@@ -128,17 +133,20 @@ object RetrofitClient{
                 }
                 MovieDetailInfoFragment.similarMovieAdapter.notifyDataSetChanged()
                 AllMightyDataController.movieInfoSimilarMap.plus(Pair(id, MovieDetailInfoFragment.similarMovieItems))
+                success = true
             }
 
             override fun onFailure(call: Call<SimilarMovie>, t: Throwable) {
                 Log.d(API, "Could not get Similar Movies")
+                success = false
             }
         })
+        return success
     }
 
-    fun getRecommendedMoviesById( id: Int, language: String = "en-US", page : Int = 1){
+    fun getRecommendedMoviesById( id: Int, language: String = "en-US", page : Int = 1): Boolean{
         val call = service.getRecommendedMoviesById( id.toString(), language, page.toString())
-
+        var success = false
         call.enqueue(object : Callback<RecommendedMovie>{
 
             override fun onResponse(call: Call<RecommendedMovie>, response: Response<RecommendedMovie>) {
@@ -147,17 +155,20 @@ object RetrofitClient{
                 }
                 MovieDetailInfoFragment.recommendedMovieAdapter.notifyDataSetChanged()
                 AllMightyDataController.movieInfoRecommendedMap.plus(Pair(id, MovieDetailInfoFragment.recommendedMovieItems))
+                success = true
             }
 
             override fun onFailure(call: Call<RecommendedMovie>, t: Throwable) {
                 Log.d(API, "Could not get Recommended Movies")
+                success = false
             }
         })
+        return success
     }
 
-    fun getReviewsById( id: Int, language: String = "en-US", page : Int = 1){
+    fun getReviewsById( id: Int, language: String = "en-US", page : Int = 1) : Boolean {
         val call = service.getReviewsById( id.toString(), language, page.toString())
-
+        var success = false
         call.enqueue(object : Callback<Review>{
             override fun onResponse(call: Call<Review>, response: Response<Review>) {
                 response.body()?.copy()?.results?.iterator()?.forEach {
@@ -165,46 +176,54 @@ object RetrofitClient{
                 }
                 MovieDetailReviewFragment.reviewAdapter.notifyDataSetChanged()
                 AllMightyDataController.movieReviewMap.plus(Pair(id, MovieDetailReviewFragment.reviews))
+                success = true
             }
             override fun onFailure(call: Call<Review>, t: Throwable) {
                 Log.d(API, "Could not get Reviews from the Movie")
+                success = false
             }
         })
+        return success
     }
 
-    fun getVideosById( id: Int, language: String = "en-US"){
+    fun getVideosById( id: Int, language: String = "en-US"): Boolean{
         val call = service.getVideosById( id.toString(), language)
-
+        var success = false
         call.enqueue(object : Callback<Video>{
             override fun onResponse(call: Call<Video>, response: Response<Video>) {
                 response.body()?.copy()?.results?.iterator()?.forEach {
                     Log.d(API, "name by ${it.name}, key = ${it.key}")
                 }
+                success = true
             }
             override fun onFailure(call: Call<Video>, t: Throwable) {
                 Log.d(API, "Could not get trailers from the Movie")
+                success = false
             }
         })
+        return success
     }
 
-    fun getExternalSocialNetwork( id: Int){
+    fun getExternalSocialNetwork( id: Int) : Boolean{
         val call = service.getExternalSocialNetwork( id.toString())
-
+        var success = false
         call.enqueue(object : Callback<ExternalSocialNetwork>{
             override fun onResponse(call: Call<ExternalSocialNetwork>, response: Response<ExternalSocialNetwork>) {
                 val socialNetwork = response.body()?.copy()
                 Log.d(API, "Instagram = @${socialNetwork?.instagramId}, Twitter = @${socialNetwork?.twitterId}")
-
+                success = true
             }
             override fun onFailure(call: Call<ExternalSocialNetwork>, t: Throwable) {
                 Log.d(API, "Could not get External Social Networks")
+                success = false
             }
         })
+        return success
     }
 
-    fun getCredits( id: Int){
+    fun getCredits( id: Int): Boolean{
         val call = service.getCredits( id.toString())
-
+        var success = false
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                 response.body()?.copy()?.cast?.filter { !it.profilePath.isNullOrBlank()}?.sortedBy { it.order }?.take(10)?.iterator()?.forEach {
@@ -213,17 +232,20 @@ object RetrofitClient{
                 }
                 MovieDetailCastFragment.castAdapter.notifyDataSetChanged()
                 AllMightyDataController.movieCastMap.plus(Pair(id, MovieDetailCastFragment.credits))
+                success = true
             }
             override fun onFailure(call: Call<Credit>, t: Throwable) {
                 Log.d(API, "Could not get Credits")
+                success = false
             }
         })
+        return success
     }
 
 
-    fun getDirector( id: Int){
+    fun getDirector( id: Int) : Boolean{
         val call = service.getCredits( id.toString())
-
+        var success = false
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                 val director = response.body()?.copy()?.crew?.filter { it.job.equals("Director") }?.map { it.name }
@@ -232,46 +254,54 @@ object RetrofitClient{
                     MovieDetailInfoFragment.setDirector(director)
                     AllMightyDataController.movieInfoDirectorMap.put(id, director)
                 }
+                success = true
             }
             override fun onFailure(call: Call<Credit>, t: Throwable) {
                 Log.d(API, "Could not get Director")
+                success = false
             }
         })
+        return success
     }
 
-    fun getCastDetail( id: Int, language: String = "en-US"){
+    fun getCastDetail( id: Int, language: String = "en-US"): Boolean{
         val call = service.getCastDetail( id.toString(), language)
-
+        var success= false
         call.enqueue(object : Callback<CastDetail>{
             override fun onResponse(call: Call<CastDetail>, response: Response<CastDetail>) {
                 val castDetail = response.body()?.copy()
                 castDetail.let {
                     CastDetailActivity.setCastInfo(castDetail!!)
                 }
-
-                Log.d(API, "Name= ${castDetail?.name}  Biography = ${castDetail?.biography}")
+                success = true
             }
             override fun onFailure(call: Call<CastDetail>, t: Throwable) {
                 Log.d(API, "Could not get Cast Details")
+                success = false
             }
         })
+        return success
     }
 
-    fun getMovieCredit(creditId: String){
+    fun getMovieCredit(creditId: String) : Boolean{
         val call = service.getMovieCredit(creditId)
-
+        var success = false
         call.enqueue(object : Callback<MovieCredit>{
             override fun onResponse(call: Call<MovieCredit>, response: Response<MovieCredit>) {
                 var movieCredit = response.body()?.copy()
                 movieCredit.let {
                     it?.person?.castFilmography?.forEach {
-                        Log.d("APIQUERY", "Title: ${it.title}")
+                        CastDetailActivity.filmographyItems?.add(PortraitMovie(it.id, it.posterPath))
                     }
+                    CastDetailActivity.castAdapter.notifyDataSetChanged()
+                    success = true
                 }
             }
             override fun onFailure(call: Call<MovieCredit>, t: Throwable) {
                 Log.d(API, "Could not get Movie Credits")
+                success = false
             }
         })
+        return success
     }
 }
