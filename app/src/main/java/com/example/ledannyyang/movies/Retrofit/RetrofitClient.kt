@@ -171,7 +171,7 @@ object RetrofitClient{
         })
     }
 
-    fun getVideosById( id: Int, language: String = "en-US") : Video?{
+    fun getVideosById( id: Int, language: String = "en-US"){
         val call = service.getVideosById( id.toString(), language)
 
         call.enqueue(object : Callback<Video>{
