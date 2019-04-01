@@ -9,7 +9,6 @@ import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
 import com.example.ledannyyang.movies.FragmentController.WatchListController
-import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.example.ledannyyang.movies.enums.MovieTypes
 import kotlinx.android.synthetic.main.activity_main.*
 

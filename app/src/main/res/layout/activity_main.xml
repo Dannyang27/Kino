@@ -16,10 +16,11 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="12"
+            android:layout_weight="15"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <android.support.design.widget.BottomNavigationView
+            app:labelVisibilityMode="unlabeled"
             android:id="@+id/navigationBar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
