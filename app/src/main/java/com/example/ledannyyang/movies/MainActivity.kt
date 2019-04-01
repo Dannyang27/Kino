@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
+import com.example.ledannyyang.movies.FragmentController.WatchListController
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.example.ledannyyang.movies.enums.MovieTypes
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +31,13 @@ class MainActivity : AppCompatActivity() {
                 val upcomingFragment = UpcomingController.newInstance()
                 openFragment(upcomingFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.UPCOMING
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.watchlist_item -> {
+                toolbar.title = getString(R.string.watch_list_item)
+                val watchlistFragment = WatchListController.newInstance()
+                openFragment(watchlistFragment)
+                AllMightyDataController.movieDetailFrom = MovieTypes.WATCHLIST
                 return@OnNavigationItemSelectedListener true
             }
             R.id.search_item -> {
@@ -68,6 +76,11 @@ class MainActivity : AppCompatActivity() {
             MovieTypes.UPCOMING -> {
                 toolbar.title = getString(R.string.upcoming_title)
                 fragment = UpcomingController.newInstance()
+            }
+
+            MovieTypes.WATCHLIST -> {
+                toolbar.title = getString(R.string.watch_list_item)
+                fragment = WatchListController.newInstance()
             }
 
             else -> {
