@@ -26,8 +26,7 @@
                 android:textSize="40dp"
                 android:textStyle="bold"
                 android:textColor="@color/whitesmoke"
-                android:layout_alignParentTop="@id/cast_detail_portrait"
-                android:paddingTop="320dp"
+                android:layout_above="@id/cast_detail_bday"
                 android:paddingLeft="30dp"
                 />
 
@@ -38,7 +37,7 @@
                 android:text="@string/bday"
                 android:textColor="@color/whitesmoke"
                 android:textSize="@dimen/font_size_large"
-                android:layout_below="@id/cast_detail_name"
+                android:layout_above="@id/cast_detail_place_bday"
                 android:paddingLeft="30dp"/>
 
             <TextView
@@ -48,30 +47,34 @@
                 android:text="@string/place_bday"
                 android:textColor="@color/whitesmoke"
                 android:textSize="@dimen/font_size_large"
-                android:layout_below="@id/cast_detail_bday"
-                android:paddingLeft="30dp"/>
+                android:layout_alignBottom="@id/cast_detail_portrait"
+                android:paddingLeft="30dp"
+                android:layout_marginBottom="40dp"/>
 
             <TextView
                 android:id="@+id/filmography_title"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
                 android:layout_below="@id/cast_detail_portrait"
                 android:text="@string/filmography_title"
                 android:textSize="@dimen/font_size_verylarge"
-                android:padding="10dp"/>
+                android:paddingLeft="10dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/cast_detail_recyclerview"
                 android:layout_below="@id/filmography_title"
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="150dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
             </android.support.v7.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/biography_title"
                 android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:text="@string/biography_title"
                 android:textSize="@dimen/font_size_verylarge"
                 android:layout_below="@id/cast_detail_recyclerview"
@@ -83,7 +86,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/loremipsum"
                 android:textSize="@dimen/font_size_medium"
-                android:padding="10dp"
-                android:layout_below="@id/biography_title"/>
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_below="@id/biography_title"
+                android:layout_marginBottom="20dp"/>
         </RelativeLayout>
 </ScrollView>
