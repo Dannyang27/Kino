@@ -72,6 +72,7 @@ object RetrofitClient{
                 }
                 NowPlayingController.viewAdapter.notifyDataSetChanged()
                 success = true
+                nowplayingfetched = true
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {
                 Log.d(API, "Could not get Now Playing movies")
@@ -114,6 +115,7 @@ object RetrofitClient{
                 }
                 UpcomingController.viewAdapter.notifyDataSetChanged()
                 success = true
+                upcomingfetched = true
             }
             override fun onFailure(call: Call<Upcoming>, t: Throwable) {
                 Log.d(API, "Could not get Upcoming Movies")
