@@ -2,19 +2,15 @@ package com.example.ledannyyang.movies.FragmentController
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Movie
-import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
-import com.example.ledannyyang.movies.RecyclerView.NowPlaying.NowPlayingAdapter
+import com.example.ledannyyang.movies.RecyclerView.MainActivityAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 
 class NowPlayingController : Fragment(){
@@ -24,7 +20,7 @@ class NowPlayingController : Fragment(){
 
     companion object {
         lateinit var viewAdapter : RecyclerView.Adapter<*>
-        val nowPlayingItems = mutableListOf<Movie>()
+        var nowPlayingItems = mutableListOf<Movie>()
         fun newInstance(): NowPlayingController = NowPlayingController()
     }
 
@@ -32,10 +28,13 @@ class NowPlayingController : Fragment(){
         val view = inflater.inflate(R.layout.fragment_now_playing, container, false)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = NowPlayingAdapter(nowPlayingItems)
+        viewAdapter = MainActivityAdapter(nowPlayingItems)
 
-        if(!RetrofitClient.nowplayingfetched)
-            RetrofitClient.getNowPlaying(page = 1)
+        if(!RetrofitClient.nowplayingfetched) {
+            val isSuccess = RetrofitClient.getNowPlaying(page = 1)
+//            if(isSuccess)
+//                AllMightyDataController.nowplayingMovies = nowPlayingItems
+        }
 
         recyclerView = view.findViewById<RecyclerView>(R.id.now_playing_rv).apply{
             setHasFixedSize(true)

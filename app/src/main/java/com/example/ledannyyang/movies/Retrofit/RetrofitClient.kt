@@ -114,7 +114,9 @@ object RetrofitClient{
                 upcomingfetched = true
                 response.body()?.copy()?.results?.iterator()?.forEach {
                     //Log.d(API, "Upcoming movie id ${it.id}, title = ${it.title}")
-                    UpcomingController.upcomingItems?.add(it)
+                    val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
+                            it.voteAverage, it.releaseDate, it.posterPath)
+                    UpcomingController.upcomingItems?.add(movie)
                 }
                 UpcomingController.viewAdapter.notifyDataSetChanged()
                 success = true

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +12,9 @@ import android.widget.TextView
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
-import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovie
-import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovieItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.MovieDetail.MoviePortraitAdapter
-import com.example.ledannyyang.movies.RecyclerView.NowPlaying.NowPlayingAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
-import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.example.ledannyyang.movies.Utils.StringUtils
 import com.squareup.picasso.Picasso
 

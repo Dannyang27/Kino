@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Review.ReviewItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.MovieDetail.ReviewAdapter
-import com.example.ledannyyang.movies.RecyclerView.NowPlaying.NowPlayingAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 
 class MovieDetailReviewFragment : Fragment(){

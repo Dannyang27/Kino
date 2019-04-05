@@ -9,9 +9,9 @@ import com.example.ledannyyang.movies.Model.Review.ReviewItem
 import com.example.ledannyyang.movies.enums.MovieTypes
 
 object AllMightyDataController{
-    val nowplayingMovies = mutableListOf<Movie>()
-    val upcomingMovies = mutableListOf<Movie>()
-    val watchlistMovies = mutableListOf<Movie>()
+    var nowplayingMovies = mutableListOf<Movie>()
+    var upcomingMovies = mutableListOf<Movie>()
+    var watchlistMovies = mutableListOf<Movie>()
 
     val movieInfoMap = mapOf<Int, MovieDetail>()
     val castInfoMap = mapOf<Int, CastDetail>()

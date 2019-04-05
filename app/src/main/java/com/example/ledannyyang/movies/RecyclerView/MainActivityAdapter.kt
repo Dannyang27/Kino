@@ -1,4 +1,4 @@
-package com.example.ledannyyang.movies.RecyclerView.NowPlaying
+package com.example.ledannyyang.movies.RecyclerView
 
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -11,13 +11,12 @@ import android.widget.Toast
 import com.example.ledannyyang.movies.Activities.MovieDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Movie
-import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
 
-class NowPlayingAdapter(private val movies: MutableList<Movie>) :
-        RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>(){
+class MainActivityAdapter(private val movies: MutableList<Movie>) :
+        RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(){
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
         var movieId = -1
@@ -37,7 +36,7 @@ class NowPlayingAdapter(private val movies: MutableList<Movie>) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingAdapter.NowPlayingViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.viewholder_nowplaying, parent, false)
 
