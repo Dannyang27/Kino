@@ -116,12 +116,15 @@ object RetrofitClient{
         var success = false
         call.enqueue(object : Callback<Upcoming>{
             override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
-                upcomingfetched = true
-                response.body()?.copy()?.results?.iterator()?.forEach {
+                val upcomingMovie = response.body()?.copy()
+                AllMightyDataController.upcomingMoviesPages = upcomingMovie?.totalPages!!
+                Log.d("APIQUERY", "upcoming pages: " + AllMightyDataController.upcomingMoviesPages.toString())
+                upcomingMovie?.results?.iterator()?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                             it.voteAverage, it.releaseDate, it.posterPath)
                     UpcomingController.upcomingItems?.add(movie)
                 }
+                UpcomingController.page++
                 UpcomingController.viewAdapter.notifyDataSetChanged()
                 success = true
                 upcomingfetched = true

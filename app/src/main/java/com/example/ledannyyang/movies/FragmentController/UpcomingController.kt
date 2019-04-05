@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
@@ -21,6 +23,7 @@ class UpcomingController : Fragment(){
     companion object {
         lateinit var viewAdapter : RecyclerView.Adapter<*>
         var upcomingItems = mutableListOf<Movie>()
+        var page = 1
         fun newInstance(): UpcomingController = UpcomingController()
     }
 
@@ -31,13 +34,22 @@ class UpcomingController : Fragment(){
         viewAdapter = MainActivityAdapter(upcomingItems)
 
         if(!RetrofitClient.upcomingfetched)
-            RetrofitClient.getUpcoming(page = 1, region = "ES")
+            RetrofitClient.getUpcoming(page = page, region = "ES")
 
         recyclerView = view.findViewById<RecyclerView>(R.id.upcoming_recyclerview).apply{
             setHasFixedSize(true)
             layoutManager = viewManager
             addItemDecoration(HorizontalDivider(this.context))
             adapter = viewAdapter
+
+            addOnScrollListener(object: RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    val isBottomReached = !recyclerView.canScrollVertically(1)
+                    if (isBottomReached && AllMightyDataController.upcomingMoviesPages > page){
+                        RetrofitClient.getUpcoming(page = page, region = "ES")
+                    }
+                }
+            })
         }
 
         return view
