@@ -25,7 +25,11 @@ object GenresUtils{
     }
 
     fun getGenresFromString( genres : String) : String{
-        val genreList = genres.split(',').map { it.trim().toInt() }
-        return getGenres(genreList)
+        if(genres != ""){
+            val genreList = genres.split(',').map { it.trim().toInt() }
+            return getGenres(genreList)
+        }else{
+            return "N/A"
+        }
     }
 }

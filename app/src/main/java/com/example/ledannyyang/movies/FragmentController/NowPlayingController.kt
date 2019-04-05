@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Database.AnkoDatabase.AnkoDatabaseOpenHelper
 import com.example.ledannyyang.movies.Database.AnkoDatabase.MovieRepository
 import com.example.ledannyyang.movies.Model.Movie
@@ -24,6 +26,7 @@ class NowPlayingController : Fragment(){
     companion object {
         lateinit var viewAdapter : RecyclerView.Adapter<*>
         var nowPlayingItems = mutableListOf<Movie>()
+        var page = 1
         fun newInstance(): NowPlayingController = NowPlayingController()
     }
 
@@ -34,7 +37,7 @@ class NowPlayingController : Fragment(){
         viewAdapter = MainActivityAdapter(nowPlayingItems)
 
         if(!RetrofitClient.nowplayingfetched) {
-            val isSuccess = RetrofitClient.getNowPlaying(page = 1)
+            val isSuccess = RetrofitClient.getNowPlaying(page = page)
 //            if(isSuccess)
 //                AllMightyDataController.nowplayingMovies = nowPlayingItems
         }
@@ -44,36 +47,17 @@ class NowPlayingController : Fragment(){
             layoutManager = viewManager
             addItemDecoration(HorizontalDivider(this.context))
             adapter = viewAdapter
+            addOnScrollListener(object: RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                   val isBottomReached = !recyclerView.canScrollVertically(1)
+                    if (isBottomReached && AllMightyDataController.nowPlayingPages > page){
+                        Toast.makeText(activity?.application, "Bottom reached", Toast.LENGTH_SHORT).show()
+                        RetrofitClient.getNowPlaying(page = page)
+                    }
+                }
+            })
 
         }
-
-
-
-//        if(RetrofitClient.nowplayingfetched) {
-//            val ankoDb = AnkoDatabaseOpenHelper.getInstance(activity?.applicationContext!!)
-//            Log.d("APIQUERY", "Anko database created")
-//
-//            val m = nowPlayingItems[0]
-//
-//            createMovie(m)
-//            loadMovies()
-//            Log.d("APIQUERY", "Creating movie and inserting onto database")
-//        }
         return view
-    }
-//
-//    private fun loadMovies(){
-//        activity?.applicationContext.let {
-//            val movies = MovieRepository(activity?.applicationContext!!).findAll()
-//            movies.forEach {
-//                Log.d("APIQUERY", "Movie Title from database is: ${it.title} and id is ${it.id}")
-//            }
-//        }
-//    }
-
-    private fun createMovie(movie: Movie){
-        activity?.applicationContext.let {
-            MovieRepository(activity?.applicationContext!!).create(movie)
-        }
     }
 }

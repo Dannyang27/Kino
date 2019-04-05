@@ -13,6 +13,10 @@ object AllMightyDataController{
     var upcomingMovies = mutableListOf<Movie>()
     var watchlistMovies = mutableListOf<Movie>()
 
+    var nowPlayingPages = 1
+    var upcomingMoviesPages = 1
+
+
     val movieInfoMap = mapOf<Int, MovieDetail>()
     val castInfoMap = mapOf<Int, CastDetail>()
     val movieInfoRecommendedMap = mapOf<Int, List<PortraitMovie>>()
