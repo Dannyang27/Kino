@@ -22,7 +22,9 @@ class WatchlistDBHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_
                         DBContract.WatchlistEntry.TITLE + " TEXT," +
                         DBContract.WatchlistEntry.GENRES + " TEXT," +
                         DBContract.WatchlistEntry.SCORE + " TEXT," +
-                        DBContract.WatchlistEntry.YEAR_RELEASE + " TEXT)"
+                        DBContract.WatchlistEntry.YEAR_RELEASE + " TEXT," +
+                        DBContract.WatchlistEntry.POSTER_PATH + " TEXT)"
+
 
         private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${DBContract.WatchlistEntry.TABLE_NAME}"
     }
@@ -53,6 +55,7 @@ class WatchlistDBHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_
         values.put(DBContract.WatchlistEntry.GENRES, movie.genres)
         values.put(DBContract.WatchlistEntry.SCORE, movie.score)
         values.put(DBContract.WatchlistEntry.YEAR_RELEASE, movie.year)
+        values.put(DBContract.WatchlistEntry.POSTER_PATH, movie.posterPath)
 
         // Insert the new row, returning the primary key value of the new row
         val newRowId = db.insert(DBContract.WatchlistEntry.TABLE_NAME, null, values)
@@ -84,18 +87,19 @@ class WatchlistDBHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_
         var movieId: Int
         var title: String
         var genres: String
-        var score: String
+        var score: Double
         var year: String
+        var posterPath: String? = null
 
         if (cursor!!.moveToFirst()) {
             while (!cursor.isAfterLast) {
                 movieId = cursor.getInt(cursor.getColumnIndex(DBContract.WatchlistEntry.ID))
                 title = cursor.getString(cursor.getColumnIndex(DBContract.WatchlistEntry.TITLE))
                 genres = cursor.getString(cursor.getColumnIndex(DBContract.WatchlistEntry.GENRES))
-                score= cursor.getString(cursor.getColumnIndex(DBContract.WatchlistEntry.SCORE))
+                score= cursor.getDouble(cursor.getColumnIndex(DBContract.WatchlistEntry.SCORE))
                 year = cursor.getString(cursor.getColumnIndex(DBContract.WatchlistEntry.YEAR_RELEASE))
 
-                movies.add(Movie(movieId, title, genres, score, year))
+                movies.add(Movie(movieId, title, genres, score, year, posterPath))
                 cursor.moveToNext()
             }
         }

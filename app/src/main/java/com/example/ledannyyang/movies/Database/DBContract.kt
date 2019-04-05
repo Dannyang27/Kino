@@ -13,6 +13,7 @@ object DBContract {
             val GENRES = "genres"
             val SCORE = "score"
             val YEAR_RELEASE = "year_release"
+            val POSTER_PATH = "poster_path"
         }
     }
 }

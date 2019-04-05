@@ -10,12 +10,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.ledannyyang.movies.Activities.MovieDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
+import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
 
-class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
+class NowPlayingAdapter(private val movies: MutableList<Movie>) :
         RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>(){
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
@@ -50,10 +51,10 @@ class NowPlayingAdapter(private val movies: MutableList<NowPlayingItem>) :
                 .load(url)
                 .into(holder.poster)
         holder.movieId = movie.id
-        holder.releaseDate.text = movie.releaseDate.substring(0, 4)
+        holder.releaseDate.text = movie.year.substring(0, 4)
         holder.title.text = movie.title
-        holder.genre.text = GenresUtils.getGenres(movies[position].genreIds)
-        holder.vote.text = if(movie.voteAverage != 0.0) movie.voteAverage.toString() else "N/A"
+        holder.genre.text = GenresUtils.getGenresFromString(movie.genres)
+        holder.vote.text = if(movie.score != 0.0) movie.score.toString() else "N/A"
     }
 
     override fun getItemCount(): Int = movies.size

@@ -1,5 +1,7 @@
 package com.example.ledannyyang.movies.Utils
 
+import android.util.Log
+
 
 object GenresUtils{
 
@@ -20,5 +22,10 @@ object GenresUtils{
             }
         }
         return result.joinToString{ it }
+    }
+
+    fun getGenresFromString( genres : String) : String{
+        val genreList = genres.split(',').map { it.trim().toInt() }
+        return getGenres(genreList)
     }
 }

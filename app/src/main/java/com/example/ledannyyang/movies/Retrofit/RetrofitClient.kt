@@ -12,6 +12,7 @@ import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.CastFilmography.MovieCredit
 import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
+import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlaying
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
@@ -68,7 +69,9 @@ object RetrofitClient{
         call.enqueue(object : Callback<NowPlaying>{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 response?.body()?.copy()?.results?.iterator()?.forEach {
-                    NowPlayingController.nowPlayingItems.add(it)
+                    val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
+                                it.voteAverage, it.releaseDate, it.posterPath)
+                    NowPlayingController.nowPlayingItems.add(movie)
                 }
                 NowPlayingController.viewAdapter.notifyDataSetChanged()
                 success = true

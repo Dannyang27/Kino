@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.ledannyyang.movies.AllMightyDataController
+import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlayingItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
@@ -23,7 +24,7 @@ class NowPlayingController : Fragment(){
 
     companion object {
         lateinit var viewAdapter : RecyclerView.Adapter<*>
-        val nowPlayingItems = mutableListOf<NowPlayingItem>()
+        val nowPlayingItems = mutableListOf<Movie>()
         fun newInstance(): NowPlayingController = NowPlayingController()
     }
 
