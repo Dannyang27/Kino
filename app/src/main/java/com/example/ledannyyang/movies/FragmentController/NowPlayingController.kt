@@ -49,29 +49,27 @@ class NowPlayingController : Fragment(){
 
 
 
-        if(RetrofitClient.nowplayingfetched) {
-            val ankoDb = AnkoDatabaseOpenHelper.getInstance(activity?.applicationContext!!)
-            Log.d("APIQUERY", "Anko database created")
-
-            val m = nowPlayingItems[0]
-
-            createMovie(m)
-            loadMovies()
-            Log.d("APIQUERY", "Creating movie and inserting onto database")
-        }
-
-        //loadMovies()
+//        if(RetrofitClient.nowplayingfetched) {
+//            val ankoDb = AnkoDatabaseOpenHelper.getInstance(activity?.applicationContext!!)
+//            Log.d("APIQUERY", "Anko database created")
+//
+//            val m = nowPlayingItems[0]
+//
+//            createMovie(m)
+//            loadMovies()
+//            Log.d("APIQUERY", "Creating movie and inserting onto database")
+//        }
         return view
     }
-
-    private fun loadMovies(){
-        activity?.applicationContext.let {
-            val movies = MovieRepository(activity?.applicationContext!!).findAll()
-            movies.forEach {
-                Log.d("APIQUERY", "Movie Title from database is: ${it.title} and id is ${it.id}")
-            }
-        }
-    }
+//
+//    private fun loadMovies(){
+//        activity?.applicationContext.let {
+//            val movies = MovieRepository(activity?.applicationContext!!).findAll()
+//            movies.forEach {
+//                Log.d("APIQUERY", "Movie Title from database is: ${it.title} and id is ${it.id}")
+//            }
+//        }
+//    }
 
     private fun createMovie(movie: Movie){
         activity?.applicationContext.let {

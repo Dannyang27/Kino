@@ -10,10 +10,12 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.ledannyyang.movies.Activities.MovieDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
+import com.example.ledannyyang.movies.Database.AnkoDatabase.MovieRepository
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.viewholder_nowplaying.view.*
 
 class MainActivityAdapter(private val movies: MutableList<Movie>) :
         RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(){
@@ -54,6 +56,12 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
         holder.title.text = movie.title
         holder.genre.text = GenresUtils.getGenresFromString(movie.genres)
         holder.vote.text = if(movie.score != 0.0) movie.score.toString() else "N/A"
+
+        holder.itemView.setOnLongClickListener {
+                Toast.makeText(it.context, "Added to Watchlist", Toast.LENGTH_LONG).show()
+                MovieRepository(it.context).create(movie)
+                true
+        }
     }
 
     override fun getItemCount(): Int = movies.size

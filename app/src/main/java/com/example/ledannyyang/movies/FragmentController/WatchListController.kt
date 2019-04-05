@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.ledannyyang.movies.Database.AnkoDatabase.MovieRepository
 import com.example.ledannyyang.movies.Database.WatchlistDBHelper
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
@@ -41,6 +43,7 @@ class WatchListController : Fragment(){
             adapter = viewAdapter
         }
 
+        watchlistItems = MovieRepository(activity?.applicationContext!!).findAll()
 
         return view
     }

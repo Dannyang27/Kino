@@ -2,6 +2,7 @@ package com.example.ledannyyang.movies.Database.AnkoDatabase
 
 import android.content.Context
 import android.util.Log
+import com.example.ledannyyang.movies.FragmentController.WatchListController
 import com.example.ledannyyang.movies.Model.Movie
 import org.jetbrains.anko.db.*
 
@@ -22,7 +23,9 @@ class MovieRepository(val context: Context){
                         val posterPath = columns.getValue(Movie.COLUMN_POSTERPATH)
 
                         val m = Movie(id.toString().toInt(), title.toString(), genres.toString(), score.toString().toDouble(), year.toString(), posterPath.toString())
-                        movies.add(m)
+                        //movies.add(m)
+                        WatchListController.watchlistItems?.add(m)
+                        WatchListController.viewAdapter.notifyDataSetChanged()
                         return movies
                     }
                 })
@@ -53,7 +56,7 @@ class MovieRepository(val context: Context){
         Log.d("APIQUERY", "Update result code is $updateResult")
     }
 
-    fun delete() = context.database.use {
-        delete(Movie.TABLE_NAME, whereClause = "title = {How to Train Your Dragon: The Hidden World}")
+    fun delete(id : String) = context.database.use {
+//        delete(Movie.TABLE_NAME, whereClause = "title = How to Train Your Dragon: The Hidden World")
     }
 }
