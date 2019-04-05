@@ -2,12 +2,17 @@ package com.example.ledannyyang.movies
 
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.Credit.CastItem
+import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
 import com.example.ledannyyang.movies.Model.Review.ReviewItem
 import com.example.ledannyyang.movies.enums.MovieTypes
 
 object AllMightyDataController{
+    val nowplayingMovies = mutableListOf<Movie>()
+    val upcomingMovies = mutableListOf<Movie>()
+    val watchlistMovies = mutableListOf<Movie>()
+
     val movieInfoMap = mapOf<Int, MovieDetail>()
     val castInfoMap = mapOf<Int, CastDetail>()
     val movieInfoRecommendedMap = mapOf<Int, List<PortraitMovie>>()
