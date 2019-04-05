@@ -57,6 +57,7 @@ class WatchlistDBHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_
 
         val newRowId = db.insert(DBContract.WatchlistEntry.TABLE_NAME, null, values)
 
+
         return true
     }
 
@@ -70,8 +71,8 @@ class WatchlistDBHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_
         return true
     }
 
-    fun readWatchlist(): ArrayList<Movie> {
-        val movies = ArrayList<Movie>()
+    fun readWatchlist(): MutableList<Movie> {
+        val movies = mutableListOf<Movie>()
         val db = writableDatabase
         var cursor: Cursor?
         try {
@@ -95,6 +96,7 @@ class WatchlistDBHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_
                 genres = cursor.getString(cursor.getColumnIndex(DBContract.WatchlistEntry.GENRES))
                 score= cursor.getDouble(cursor.getColumnIndex(DBContract.WatchlistEntry.SCORE))
                 year = cursor.getString(cursor.getColumnIndex(DBContract.WatchlistEntry.YEAR_RELEASE))
+                posterPath = cursor.getString(cursor.getColumnIndex(DBContract.WatchlistEntry.POSTER_PATH))
 
                 movies.add(Movie(movieId, title, genres, score, year, posterPath))
                 cursor.moveToNext()

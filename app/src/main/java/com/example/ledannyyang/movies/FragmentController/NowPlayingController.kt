@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.ledannyyang.movies.Database.AnkoDatabase.AnkoDatabaseOpenHelper
+import com.example.ledannyyang.movies.Database.AnkoDatabase.MovieRepository
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
@@ -44,6 +47,35 @@ class NowPlayingController : Fragment(){
 
         }
 
+
+
+        if(RetrofitClient.nowplayingfetched) {
+            val ankoDb = AnkoDatabaseOpenHelper.getInstance(activity?.applicationContext!!)
+            Log.d("APIQUERY", "Anko database created")
+
+            val m = nowPlayingItems[0]
+
+            createMovie(m)
+            loadMovies()
+            Log.d("APIQUERY", "Creating movie and inserting onto database")
+        }
+
+        //loadMovies()
         return view
+    }
+
+    private fun loadMovies(){
+        activity?.applicationContext.let {
+            val movies = MovieRepository(activity?.applicationContext!!).findAll()
+            movies.forEach {
+                Log.d("APIQUERY", "Movie Title from database is: ${it.title} and id is ${it.id}")
+            }
+        }
+    }
+
+    private fun createMovie(movie: Movie){
+        activity?.applicationContext.let {
+            MovieRepository(activity?.applicationContext!!).create(movie)
+        }
     }
 }
