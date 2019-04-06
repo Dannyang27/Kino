@@ -30,7 +30,7 @@ class WatchListController : Fragment(){
         val view =  inflater.inflate(R.layout.fragment_watchlist, container, false)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainActivityAdapter(watchlistItems, activity?.application!!)
+        viewAdapter = MainActivityAdapter(watchlistItems)
 
         val database = WatchlistDBHelper(activity?.applicationContext!!)
         database.readWatchlist()

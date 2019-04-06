@@ -1,5 +1,6 @@
 package com.example.ledannyyang.movies.RecyclerView
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -17,7 +18,7 @@ import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
 
-class MainActivityAdapter(private val movies: MutableList<Movie>, ctx : Context) :
+class MainActivityAdapter(private val movies: MutableList<Movie>) :
         RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(){
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
@@ -40,12 +41,16 @@ class MainActivityAdapter(private val movies: MutableList<Movie>, ctx : Context)
             poster.setOnLongClickListener {
                 Toast.makeText(it.context, "Displaying image", Toast.LENGTH_LONG).show()
 
-                //TODO
+                val viewGroup = itemView.findViewById(android.R.id.content) as? ViewGroup
+                val dialogView = LayoutInflater.from(it.context).inflate(R.layout.portrait_dialog, viewGroup, false)
 
+                val alertBuilder = AlertDialog.Builder(it.context)
+                alertBuilder.setView(dialogView)
 
+                val alertDialog = alertBuilder.create()
+                alertDialog.show()
 
                 true
-
             }
         }
     }
@@ -74,9 +79,8 @@ class MainActivityAdapter(private val movies: MutableList<Movie>, ctx : Context)
                 MovieRepository(it.context).create(movie)
                 true
         }
+
     }
 
     override fun getItemCount(): Int = movies.size
-
-
 }

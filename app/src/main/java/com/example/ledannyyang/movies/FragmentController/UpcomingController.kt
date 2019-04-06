@@ -31,7 +31,7 @@ class UpcomingController : Fragment(){
         val view =  inflater.inflate(R.layout.fragment_upcoming, container, false)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainActivityAdapter(upcomingItems, activity?.application!!)
+        viewAdapter = MainActivityAdapter(upcomingItems)
 
         if(!RetrofitClient.upcomingfetched)
             RetrofitClient.getUpcoming(page = page, region = "ES")
