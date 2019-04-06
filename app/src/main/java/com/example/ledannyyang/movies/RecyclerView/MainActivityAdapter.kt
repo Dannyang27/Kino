@@ -1,5 +1,6 @@
 package com.example.ledannyyang.movies.RecyclerView
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -15,9 +16,8 @@ import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.viewholder_nowplaying.view.*
 
-class MainActivityAdapter(private val movies: MutableList<Movie>) :
+class MainActivityAdapter(private val movies: MutableList<Movie>, ctx : Context) :
         RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(){
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
@@ -34,6 +34,18 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
                 val intent = Intent(it.context, MovieDetailActivity::class.java)
                 intent.putExtra(AllMightyDataController.currentMovieID, movieId)
                 it.context.startActivity(intent)
+            }
+
+
+            poster.setOnLongClickListener {
+                Toast.makeText(it.context, "Displaying image", Toast.LENGTH_LONG).show()
+
+                //TODO
+
+
+
+                true
+
             }
         }
     }
@@ -65,4 +77,6 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
     }
 
     override fun getItemCount(): Int = movies.size
+
+
 }

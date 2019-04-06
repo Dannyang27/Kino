@@ -30,7 +30,7 @@ class NowPlayingController : Fragment(){
         val view = inflater.inflate(R.layout.fragment_now_playing, container, false)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainActivityAdapter(nowPlayingItems)
+        viewAdapter = MainActivityAdapter(nowPlayingItems, activity?.application!!)
 
         if(!RetrofitClient.nowplayingfetched) {
             val isSuccess = RetrofitClient.getNowPlaying(page = page)
