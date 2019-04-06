@@ -21,6 +21,8 @@ import com.squareup.picasso.Picasso
 class MainActivityAdapter(private val movies: MutableList<Movie>) :
         RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(){
 
+    val url = "https://image.tmdb.org/t/p/w500/"
+
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
         var movieId = -1
         val poster = view.findViewById(R.id.poster) as ImageView
@@ -43,6 +45,7 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
 
                 val viewGroup = itemView.findViewById(android.R.id.content) as? ViewGroup
                 val dialogView = LayoutInflater.from(it.context).inflate(R.layout.portrait_dialog, viewGroup, false)
+                val portrait = dialogView.findViewById(R.id.dialog_image) as ImageView
 
                 val alertBuilder = AlertDialog.Builder(it.context)
                 alertBuilder.setView(dialogView)
@@ -64,9 +67,9 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
 
     override fun onBindViewHolder(holder: NowPlayingViewHolder, position: Int) {
         val movie  = movies[position]
-        val url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
+
         Picasso.with(holder.poster.context)
-                .load(url)
+                .load(url.plus(movie.posterPath))
                 .into(holder.poster)
         holder.movieId = movie.id
         holder.releaseDate.text = movie.year.substring(0, 4)
