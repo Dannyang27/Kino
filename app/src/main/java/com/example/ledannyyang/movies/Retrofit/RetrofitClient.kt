@@ -203,9 +203,12 @@ object RetrofitClient{
         var success = false
         call.enqueue(object : Callback<Video>{
             override fun onResponse(call: Call<Video>, response: Response<Video>) {
-                response.body()?.copy()?.results?.iterator()?.forEach {
-                    Log.d(API, "name by ${it.name}, key = ${it.key}")
-                }
+//                response.body()?.copy()?.results?.iterator()?.forEach {
+//                    Log.d(API, "name by ${it.name}, key = ${it.key}")
+//                    MovieDetailInfoFragment.trailerKey = it.key
+//                }
+
+                MovieDetailInfoFragment.trailerKey = response.body()?.copy()?.results?.get(0)?.key!!
                 success = true
             }
             override fun onFailure(call: Call<Video>, t: Throwable) {

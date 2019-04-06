@@ -1,5 +1,6 @@
 package com.example.ledannyyang.movies.FragmentMovieDetail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -7,6 +8,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.ledannyyang.movies.AllMightyDataController
@@ -35,12 +40,15 @@ class MovieDetailInfoFragment : Fragment(){
         lateinit var homepage: TextView
         lateinit var sinopse: TextView
         lateinit var userscore: TextView
+        lateinit var trailer : Button
 
         lateinit var recommendedMovieAdapter : RecyclerView.Adapter<*>
         var recommendedMovieItems = mutableListOf<PortraitMovie>()
 
         lateinit var similarMovieAdapter : RecyclerView.Adapter<*>
         var similarMovieItems = mutableListOf<PortraitMovie>()
+
+        lateinit var trailerKey: String
 
 
         fun setInfo( movie : MovieDetail){
@@ -59,8 +67,6 @@ class MovieDetailInfoFragment : Fragment(){
             homepage.text = movie.homepage ?: "N/A"
             sinopse.text = movie.overview
             userscore.text =  userscore.text.toString().plus(" ${movie.voteAverage}")
-
-
         }
 
         fun setDirector( name: String){
@@ -73,7 +79,6 @@ class MovieDetailInfoFragment : Fragment(){
         val view =  inflater.inflate(R.layout.movie_detail_info, container, false)
         val movieId = activity?.intent?.getIntExtra( AllMightyDataController.currentMovieID, -1)
 
-
         title = view.findViewById(R.id.movie_info_title_lbl)
         portrait = view.findViewById(R.id.movie_info_portrait)
         genre = view.findViewById(R.id.movie_info_genre_lbl)
@@ -83,6 +88,9 @@ class MovieDetailInfoFragment : Fragment(){
         homepage = view.findViewById(R.id.movie_info_homepage_lbl)
         sinopse = view.findViewById(R.id.movie_info_sinopse)
         userscore = view.findViewById(R.id.movie_info_userscore)
+        trailer = view.findViewById(R.id.trailer_button)
+
+        trailer.setOnClickListener { showTrailer() }
 
         recommendedViewManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         similarViewManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -138,6 +146,25 @@ class MovieDetailInfoFragment : Fragment(){
             }else{
                 RetrofitClient.getDirector(id!!)
             }
+
+            RetrofitClient.getVideosById(id!!)
         }
+    }
+
+    private fun showTrailer(){
+            val viewGroup = view?.findViewById(android.R.id.content) as? ViewGroup
+            val dialogView = LayoutInflater.from(view?.context).inflate(R.layout.trailer_dialog, viewGroup, false)
+            val trailerWebView = dialogView.findViewById(R.id.trailer_webview) as WebView
+
+            trailerWebView.settings.javaScriptEnabled = true
+            trailerWebView.settings.pluginState = WebSettings.PluginState.ON
+            trailerWebView.loadUrl("https://www.youtube.com/embed/$trailerKey?autoplay=0&vq=small")
+            trailerWebView.webChromeClient = WebChromeClient()
+
+            val alertBuilder = AlertDialog.Builder(view?.context)
+            alertBuilder.setView(dialogView)
+
+            val alertDialog = alertBuilder.create()
+            alertDialog.show()
     }
 }
