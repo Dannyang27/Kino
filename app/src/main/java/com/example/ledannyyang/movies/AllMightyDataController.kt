@@ -31,4 +31,5 @@ object AllMightyDataController{
     const val currentMovieID = "MOVIE_ID"
     const val currentCastID = "CAST_ID"
     const val currentCreditID = "CREDIT_ID"
+    const val imageUrl = "https://image.tmdb.org/t/p/w500/"
 }

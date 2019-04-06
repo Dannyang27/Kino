@@ -18,10 +18,10 @@ import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
 
+
+
 class MainActivityAdapter(private val movies: MutableList<Movie>) :
         RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(){
-
-    val url = "https://image.tmdb.org/t/p/w500/"
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
         var movieId = -1
@@ -38,23 +38,6 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
                 intent.putExtra(AllMightyDataController.currentMovieID, movieId)
                 it.context.startActivity(intent)
             }
-
-
-            poster.setOnLongClickListener {
-                Toast.makeText(it.context, "Displaying image", Toast.LENGTH_LONG).show()
-
-                val viewGroup = itemView.findViewById(android.R.id.content) as? ViewGroup
-                val dialogView = LayoutInflater.from(it.context).inflate(R.layout.portrait_dialog, viewGroup, false)
-                val portrait = dialogView.findViewById(R.id.dialog_image) as ImageView
-
-                val alertBuilder = AlertDialog.Builder(it.context)
-                alertBuilder.setView(dialogView)
-
-                val alertDialog = alertBuilder.create()
-                alertDialog.show()
-
-                true
-            }
         }
     }
 
@@ -67,10 +50,11 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
 
     override fun onBindViewHolder(holder: NowPlayingViewHolder, position: Int) {
         val movie  = movies[position]
-
+        val urlImage = AllMightyDataController.imageUrl.plus(movie.posterPath)
         Picasso.with(holder.poster.context)
-                .load(url.plus(movie.posterPath))
+                .load(urlImage)
                 .into(holder.poster)
+
         holder.movieId = movie.id
         holder.releaseDate.text = movie.year.substring(0, 4)
         holder.title.text = movie.title
@@ -81,6 +65,26 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
                 Toast.makeText(it.context, "Added to Watchlist", Toast.LENGTH_LONG).show()
                 MovieRepository(it.context).create(movie)
                 true
+        }
+
+        holder.poster.setOnLongClickListener {
+            val viewGroup = holder.itemView.findViewById(android.R.id.content) as? ViewGroup
+            val dialogView = LayoutInflater.from(it.context).inflate(R.layout.portrait_dialog, viewGroup, false)
+            val portrait = dialogView.findViewById(R.id.dialog_image) as ImageView
+
+            Picasso.with(it.context)
+                    .load(urlImage)
+                    .into(portrait)
+
+
+
+            val alertBuilder = AlertDialog.Builder(it.context)
+            alertBuilder.setView(dialogView)
+
+            val alertDialog = alertBuilder.create()
+            alertDialog.show()
+
+            true
         }
 
     }
