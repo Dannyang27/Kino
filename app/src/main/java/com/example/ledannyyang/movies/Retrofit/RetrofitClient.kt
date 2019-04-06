@@ -70,8 +70,6 @@ object RetrofitClient{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 val nowPlaying = response?.body()?.copy()
                 AllMightyDataController.nowPlayingPages = nowPlaying?.totalPages!!
-                Log.d("APIQUERY", AllMightyDataController.nowPlayingPages.toString())
-
                 nowPlaying?.results?.iterator()?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                                 it.voteAverage, it.releaseDate, it.posterPath)
@@ -84,6 +82,32 @@ object RetrofitClient{
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {
                 Log.d(API, "Could not get Now Playing movies")
+                success = false
+            }
+        })
+        return success
+    }
+
+
+    fun getUpcoming(language: String = "en-US", page: Int = 1, region: String = "ES"): Boolean{
+        val call = service.getUpcoming(language, page.toString(), region)
+        var success = false
+        call.enqueue(object : Callback<Upcoming>{
+            override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
+                val upcomingMovie = response.body()?.copy()
+                AllMightyDataController.upcomingMoviesPages = upcomingMovie?.totalPages!!
+                upcomingMovie?.results?.iterator()?.forEach {
+                    val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
+                            it.voteAverage, it.releaseDate, it.posterPath)
+                    UpcomingController.upcomingItems?.add(movie)
+                }
+                UpcomingController.page++
+                UpcomingController.viewAdapter.notifyDataSetChanged()
+                success = true
+                upcomingfetched = true
+            }
+            override fun onFailure(call: Call<Upcoming>, t: Throwable) {
+                Log.d(API, "Could not get Upcoming Movies")
                 success = false
             }
         })
@@ -105,32 +129,6 @@ object RetrofitClient{
 
             override fun onFailure(call: Call<TopRated>, t: Throwable) {
                 Log.d(API, "Could not get top rated movies")
-                success = false
-            }
-        })
-        return success
-    }
-
-    fun getUpcoming(language: String = "en-US", page: Int = 1, region: String = "ES"): Boolean{
-        val call = service.getUpcoming(language, page.toString(), region)
-        var success = false
-        call.enqueue(object : Callback<Upcoming>{
-            override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
-                val upcomingMovie = response.body()?.copy()
-                AllMightyDataController.upcomingMoviesPages = upcomingMovie?.totalPages!!
-                Log.d("APIQUERY", "upcoming pages: " + AllMightyDataController.upcomingMoviesPages.toString())
-                upcomingMovie?.results?.iterator()?.forEach {
-                    val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
-                            it.voteAverage, it.releaseDate, it.posterPath)
-                    UpcomingController.upcomingItems?.add(movie)
-                }
-                UpcomingController.page++
-                UpcomingController.viewAdapter.notifyDataSetChanged()
-                success = true
-                upcomingfetched = true
-            }
-            override fun onFailure(call: Call<Upcoming>, t: Throwable) {
-                Log.d(API, "Could not get Upcoming Movies")
                 success = false
             }
         })

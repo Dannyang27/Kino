@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Credit.CastItem
 import com.example.ledannyyang.movies.R
+import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
 import com.example.ledannyyang.movies.RecyclerView.MovieDetail.CastAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 
@@ -34,6 +35,7 @@ class MovieDetailCastFragment : Fragment(){
         castRecyclerView = view.findViewById<RecyclerView>(R.id.cast_recyclerview).apply{
             setHasFixedSize(true)
             layoutManager = castViewManager
+            addItemDecoration(HorizontalDivider(this.context))
             adapter = castAdapter
         }
 
