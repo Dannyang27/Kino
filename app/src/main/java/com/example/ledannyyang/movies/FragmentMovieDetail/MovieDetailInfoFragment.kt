@@ -14,6 +14,7 @@ import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
@@ -48,7 +49,7 @@ class MovieDetailInfoFragment : Fragment(){
         lateinit var similarMovieAdapter : RecyclerView.Adapter<*>
         var similarMovieItems = mutableListOf<PortraitMovie>()
 
-        lateinit var trailerKey: String
+        var trailerKey: String? = null
 
 
         fun setInfo( movie : MovieDetail){
@@ -150,25 +151,30 @@ class MovieDetailInfoFragment : Fragment(){
             if(AllMightyDataController.trailerLoaded.containsKey(id)){
                 trailerKey = AllMightyDataController.trailerLoaded[id]!!
             }else{
+                trailerKey = null
                 RetrofitClient.getVideosById(id!!)
             }
         }
     }
 
     private fun showTrailer(){
-            val viewGroup = view?.findViewById(android.R.id.content) as? ViewGroup
-            val dialogView = LayoutInflater.from(view?.context).inflate(R.layout.trailer_dialog, viewGroup, false)
-            val trailerWebView = dialogView.findViewById(R.id.trailer_webview) as WebView
+            if(trailerKey != null){
+                val viewGroup = view?.findViewById(android.R.id.content) as? ViewGroup
+                val dialogView = LayoutInflater.from(view?.context).inflate(R.layout.trailer_dialog, viewGroup, false)
+                val trailerWebView = dialogView.findViewById(R.id.trailer_webview) as WebView
 
-            trailerWebView.settings.javaScriptEnabled = true
-            trailerWebView.settings.pluginState = WebSettings.PluginState.ON
-            trailerWebView.loadUrl("https://www.youtube.com/embed/$trailerKey?autoplay=0&vq=small")
-            trailerWebView.webChromeClient = WebChromeClient()
+                trailerWebView.settings.javaScriptEnabled = true
+                trailerWebView.settings.pluginState = WebSettings.PluginState.ON
+                trailerWebView.loadUrl("https://www.youtube.com/embed/$trailerKey?autoplay=0&vq=small")
+                trailerWebView.webChromeClient = WebChromeClient()
 
-            val alertBuilder = AlertDialog.Builder(view?.context)
-            alertBuilder.setView(dialogView)
+                val alertBuilder = AlertDialog.Builder(view?.context)
+                alertBuilder.setView(dialogView)
 
-            val alertDialog = alertBuilder.create()
-            alertDialog.show()
+                val alertDialog = alertBuilder.create()
+                alertDialog.show()
+            }else{
+                Toast.makeText(activity?.applicationContext, "No trailer available", Toast.LENGTH_SHORT).show()
+            }
     }
 }

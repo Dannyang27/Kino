@@ -17,8 +17,6 @@ import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
 
-
-
 class MainActivityAdapter(private val movies: MutableList<Movie>) :
         RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(){
 

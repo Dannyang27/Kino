@@ -207,10 +207,15 @@ object RetrofitClient{
 //                    Log.d(API, "name by ${it.name}, key = ${it.key}")
 //                    MovieDetailInfoFragment.trailerKey = it.key
 //                }
-
-                MovieDetailInfoFragment.trailerKey = response.body()?.copy()?.results?.get(0)?.key!!
-                AllMightyDataController.trailerLoaded.plus(Pair(id, MovieDetailInfoFragment.trailerKey))
-                success = true
+                val videoItem = response.body()?.copy()?.results
+                if(videoItem?.getOrNull(0) != null){
+                    val key = videoItem?.get(0).key
+                    MovieDetailInfoFragment.trailerKey = key
+                    AllMightyDataController.trailerLoaded.plus(Pair(id, key))
+                    success = true
+                }else{
+                    success = false
+                }
             }
             override fun onFailure(call: Call<Video>, t: Throwable) {
                 Log.d(API, "Could not get trailers from the Movie")
