@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Review.ReviewItem
 import com.example.ledannyyang.movies.R
+import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
 import com.example.ledannyyang.movies.RecyclerView.MovieDetail.ReviewAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 
@@ -35,6 +36,7 @@ class MovieDetailReviewFragment : Fragment(){
         reviewRecyclerView = view.findViewById<RecyclerView>(R.id.review_recyclerview).apply {
             setHasFixedSize(true)
             layoutManager = reviewViewManager
+            addItemDecoration(HorizontalDivider(this.context))
             adapter = reviewAdapter
         }
 

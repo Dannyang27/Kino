@@ -198,15 +198,12 @@ object RetrofitClient{
         return success
     }
 
+    // gets only first trailer if exist
     fun getVideosById( id: Int, language: String = "en-US"): Boolean{
         val call = service.getVideosById( id.toString(), language)
         var success = false
         call.enqueue(object : Callback<Video>{
             override fun onResponse(call: Call<Video>, response: Response<Video>) {
-//                response.body()?.copy()?.results?.iterator()?.forEach {
-//                    Log.d(API, "name by ${it.name}, key = ${it.key}")
-//                    MovieDetailInfoFragment.trailerKey = it.key
-//                }
                 val videoItem = response.body()?.copy()?.results
                 if(videoItem?.getOrNull(0) != null){
                     val key = videoItem?.get(0).key
