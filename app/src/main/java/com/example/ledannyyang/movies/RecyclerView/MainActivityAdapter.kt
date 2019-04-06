@@ -1,7 +1,6 @@
 package com.example.ledannyyang.movies.RecyclerView
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -76,8 +75,6 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
                     .load(urlImage)
                     .into(portrait)
 
-
-
             val alertBuilder = AlertDialog.Builder(it.context)
             alertBuilder.setView(dialogView)
 
@@ -86,7 +83,6 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
 
             true
         }
-
     }
 
     override fun getItemCount(): Int = movies.size
