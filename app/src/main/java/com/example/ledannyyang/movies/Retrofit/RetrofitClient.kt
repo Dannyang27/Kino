@@ -209,6 +209,7 @@ object RetrofitClient{
 //                }
 
                 MovieDetailInfoFragment.trailerKey = response.body()?.copy()?.results?.get(0)?.key!!
+                AllMightyDataController.trailerLoaded.plus(Pair(id, MovieDetailInfoFragment.trailerKey))
                 success = true
             }
             override fun onFailure(call: Call<Video>, t: Throwable) {

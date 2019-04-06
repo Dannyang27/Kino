@@ -147,7 +147,11 @@ class MovieDetailInfoFragment : Fragment(){
                 RetrofitClient.getDirector(id!!)
             }
 
-            RetrofitClient.getVideosById(id!!)
+            if(AllMightyDataController.trailerLoaded.containsKey(id)){
+                trailerKey = AllMightyDataController.trailerLoaded[id]!!
+            }else{
+                RetrofitClient.getVideosById(id!!)
+            }
         }
     }
 

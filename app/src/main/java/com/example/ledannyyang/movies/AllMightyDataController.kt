@@ -19,6 +19,7 @@ object AllMightyDataController{
 
     val movieInfoMap = mapOf<Int, MovieDetail>()
     val castInfoMap = mapOf<Int, CastDetail>()
+    val trailerLoaded = mapOf<Int, String>()
     val movieInfoRecommendedMap = mapOf<Int, List<PortraitMovie>>()
     val movieInfoSimilarMap =  mapOf<Int, List<PortraitMovie>>()
     val castFilmographyMap =  mapOf<Int, List<PortraitMovie>>()
