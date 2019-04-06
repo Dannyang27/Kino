@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CastDetailActivity"></activity>
-        <activity android:name=".Activities.MovieDetailActivity" />
+        <activity android:name=".Activities.CastDetailActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".Activities.MovieDetailActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
