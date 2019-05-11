@@ -31,7 +31,6 @@ object RetrofitClient{
     val API = "APIQUERY"
     val baseUrl = "https://api.themoviedb.org"
     val api_key = "6ee8506f55fda3da84e75f9a5f8baa76"
-    var nowplayingfetched = false
     var upcomingfetched = false
 
     val retrofit = Retrofit.Builder()
@@ -62,7 +61,7 @@ object RetrofitClient{
         return success
     }
 
-    fun getNowPlaying(language:String = "en-US", page: Int = 1, region: String = "ES") : Boolean{
+    fun getNowPlaying(items: MutableList<Movie>, language:String = "en-US", page: Int = 1, region: String = "ES") : Boolean{
 
         val call = service.getNowPlaying(language, page.toString(), region)
         var success = false
@@ -70,15 +69,13 @@ object RetrofitClient{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 val nowPlaying = response?.body()?.copy()
                 AllMightyDataController.nowPlayingPages = nowPlaying?.totalPages!!
-                nowPlaying?.results?.iterator()?.forEach {
+                nowPlaying.results?.iterator()?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                                 it.voteAverage, it.releaseDate, it.posterPath)
-                    NowPlayingController.nowPlayingItems.add(movie)
+                    items.add(movie)
                 }
-                NowPlayingController.page++
                 NowPlayingController.viewAdapter.notifyDataSetChanged()
                 success = true
-                nowplayingfetched = true
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {
                 Log.d(API, "Could not get Now Playing movies")
@@ -89,22 +86,20 @@ object RetrofitClient{
     }
 
 
-    fun getUpcoming(language: String = "en-US", page: Int = 1, region: String = "ES"): Boolean{
+    fun getUpcoming(items: MutableList<Movie>, language: String = "en-US", page: Int = 1, region: String = "ES"): Boolean{
         val call = service.getUpcoming(language, page.toString(), region)
         var success = false
         call.enqueue(object : Callback<Upcoming>{
             override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
                 val upcomingMovie = response.body()?.copy()
                 AllMightyDataController.upcomingMoviesPages = upcomingMovie?.totalPages!!
-                upcomingMovie?.results?.iterator()?.forEach {
+                upcomingMovie.results?.iterator()?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                             it.voteAverage, it.releaseDate, it.posterPath)
-                    UpcomingController.upcomingItems?.add(movie)
+                    items.add(movie)
                 }
-                UpcomingController.page++
                 UpcomingController.viewAdapter.notifyDataSetChanged()
                 success = true
-                upcomingfetched = true
             }
             override fun onFailure(call: Call<Upcoming>, t: Throwable) {
                 Log.d(API, "Could not get Upcoming Movies")
