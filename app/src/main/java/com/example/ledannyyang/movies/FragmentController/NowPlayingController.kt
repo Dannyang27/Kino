@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.ledannyyang.movies.AllMightyDataController
+import com.example.ledannyyang.movies.MainActivity
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
@@ -49,6 +50,7 @@ class NowPlayingController : Fragment(){
                 }
             })
         }
+
         return view
     }
 }

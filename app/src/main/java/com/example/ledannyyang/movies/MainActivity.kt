@@ -1,10 +1,12 @@
 package com.example.ledannyyang.movies
 
+import android.arch.persistence.room.Room
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBar
+import com.example.ledannyyang.movies.Database.MovieDatabase
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
@@ -20,6 +22,11 @@ class MainActivity : AppCompatActivity() {
     val watchListFragment = WatchListController.newInstance()
     val searchFragment = SearchController.newInstance()
     var activeFragment: Fragment = nowPlayingFragment
+
+    companion object{
+        val databaseName = "MovieDatabase"
+        lateinit var database: MovieDatabase
+    }
 
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -63,6 +70,10 @@ class MainActivity : AppCompatActivity() {
 
         toolbar = supportActionBar!!
         toolbar.title = getString(R.string.billboard_title)
+
+        database = Room.databaseBuilder(this, MovieDatabase::class.java, databaseName)
+                .fallbackToDestructiveMigration()
+                .build()
 
         navigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         supportFragmentManager.beginTransaction().add(R.id.container, upcomingFragment, "2").hide(upcomingFragment).commit()
