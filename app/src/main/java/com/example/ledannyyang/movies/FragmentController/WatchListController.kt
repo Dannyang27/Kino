@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.ledannyyang.movies.Database.AnkoDatabase.MovieRepository
-import com.example.ledannyyang.movies.Database.WatchlistDBHelper
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
@@ -31,9 +28,6 @@ class WatchListController : Fragment(){
 
         viewManager = LinearLayoutManager(activity)
         viewAdapter = MainActivityAdapter(watchlistItems)
-
-        val database = WatchlistDBHelper(activity?.applicationContext!!)
-        database.readWatchlist()
 
 
         recyclerView = view.findViewById<RecyclerView>(R.id.watchlist_rv).apply{

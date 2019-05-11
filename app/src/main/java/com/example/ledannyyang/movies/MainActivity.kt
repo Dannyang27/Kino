@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     val searchFragment = SearchController.newInstance()
     var activeFragment: Fragment = nowPlayingFragment
 
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.now_playing_item -> {

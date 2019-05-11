@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.ledannyyang.movies.Activities.MovieDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
-import com.example.ledannyyang.movies.Database.AnkoDatabase.MovieRepository
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
