@@ -8,15 +8,7 @@ import org.jetbrains.anko.db.*
 
 class AnkoDatabaseOpenHelper private constructor(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "KinoDatabase", null, 1) {
 
-    init {
-        instance = this
-    }
-    companion object {
-        private var instance: AnkoDatabaseOpenHelper? = null
 
-        @Synchronized
-        fun getInstance(ctx: Context) = instance ?: AnkoDatabaseOpenHelper(ctx.applicationContext)
-    }
 
     override fun onCreate(db: SQLiteDatabase) {
         // Here you create tables
@@ -42,5 +34,5 @@ class AnkoDatabaseOpenHelper private constructor(ctx: Context) : ManagedSQLiteOp
 }
 
 // Access property for Context
-val Context.database: AnkoDatabaseOpenHelper
-    get() = AnkoDatabaseOpenHelper.getInstance(this)
+//val Context.database: AnkoDatabaseOpenHelper
+//    get() = AnkoDatabaseOpenHelper

@@ -20,8 +20,8 @@ class NowPlayingController : Fragment(){
     private lateinit var viewManager : RecyclerView.LayoutManager
 
     companion object {
-        lateinit var viewAdapter : RecyclerView.Adapter<*>
         var nowPlayingItems = mutableListOf<Movie>()
+        lateinit var viewAdapter: RecyclerView.Adapter<*>
         var page = 1
         fun newInstance(): NowPlayingController = NowPlayingController()
     }
@@ -29,7 +29,7 @@ class NowPlayingController : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_now_playing, container, false)
 
-        viewManager = LinearLayoutManager(activity)
+        viewManager = LinearLayoutManager(activity?.applicationContext!!)
         viewAdapter = MainActivityAdapter(nowPlayingItems)
 
         if(!RetrofitClient.nowplayingfetched) {

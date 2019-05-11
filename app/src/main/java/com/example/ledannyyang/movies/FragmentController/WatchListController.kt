@@ -43,10 +43,6 @@ class WatchListController : Fragment(){
             adapter = viewAdapter
         }
 
-        watchlistItems = MovieRepository(activity?.applicationContext!!).findAll()
-
         return view
     }
-
-
 }
