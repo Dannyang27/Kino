@@ -18,11 +18,11 @@ class NowPlayingController : Fragment(){
 
     private lateinit var recyclerView : RecyclerView
     private lateinit var viewManager : RecyclerView.LayoutManager
+    var nowPlayingItems = mutableListOf<Movie>()
+    var page = 2
 
     companion object {
-        var nowPlayingItems = mutableListOf<Movie>()
         lateinit var viewAdapter: RecyclerView.Adapter<*>
-        var page = 1
         fun newInstance(): NowPlayingController = NowPlayingController()
     }
 
@@ -32,9 +32,7 @@ class NowPlayingController : Fragment(){
         viewManager = LinearLayoutManager(activity?.applicationContext!!)
         viewAdapter = MainActivityAdapter(nowPlayingItems)
 
-        if(!RetrofitClient.nowplayingfetched) {
-            val isSuccess = RetrofitClient.getNowPlaying(page = page)
-        }
+        RetrofitClient.getNowPlaying(nowPlayingItems)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.now_playing_rv).apply{
             setHasFixedSize(true)
@@ -45,11 +43,11 @@ class NowPlayingController : Fragment(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                    val isBottomReached = !recyclerView.canScrollVertically(1)
                     if (isBottomReached && AllMightyDataController.nowPlayingPages > page){
-                        RetrofitClient.getNowPlaying(page = page)
+                        RetrofitClient.getNowPlaying(nowPlayingItems, page = page)
+                        page++
                     }
                 }
             })
-
         }
         return view
     }
