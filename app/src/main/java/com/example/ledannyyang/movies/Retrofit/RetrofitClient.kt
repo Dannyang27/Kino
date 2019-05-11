@@ -3,11 +3,13 @@ package com.example.ledannyyang.movies.Retrofit
 import android.util.Log
 import com.example.ledannyyang.movies.Activities.CastDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
+import com.example.ledannyyang.movies.Database.MovieDatabase
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
+import com.example.ledannyyang.movies.MainActivity
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.CastFilmography.MovieCredit
 import com.example.ledannyyang.movies.Model.Credit.Credit
@@ -31,7 +33,6 @@ object RetrofitClient{
     val API = "APIQUERY"
     val baseUrl = "https://api.themoviedb.org"
     val api_key = "6ee8506f55fda3da84e75f9a5f8baa76"
-    var upcomingfetched = false
 
     val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -74,6 +75,7 @@ object RetrofitClient{
                                 it.voteAverage, it.releaseDate, it.posterPath)
                     items.add(movie)
                 }
+
                 NowPlayingController.viewAdapter.notifyDataSetChanged()
                 success = true
             }
