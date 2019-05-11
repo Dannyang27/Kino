@@ -15,33 +15,34 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var toolbar : ActionBar
+    val nowPlayingFragment = NowPlayingController.newInstance()
+    val upcomingFragment = UpcomingController.newInstance()
+    val watchListFragment = WatchListController.newInstance()
+    val searchFragment = SearchController.newInstance()
+    var activeFragment: Fragment = nowPlayingFragment
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.now_playing_item -> {
                 toolbar.title = getString(R.string.billboard_title)
-                val nowPlayingFragment = NowPlayingController.newInstance()
                 openFragment(nowPlayingFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.NOWPLAYING
                 return@OnNavigationItemSelectedListener true
             }
             R.id.upcoming_item -> {
                 toolbar.title = getString(R.string.upcoming_title)
-                val upcomingFragment = UpcomingController.newInstance()
                 openFragment(upcomingFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.UPCOMING
                 return@OnNavigationItemSelectedListener true
             }
             R.id.watchlist_item -> {
                 toolbar.title = getString(R.string.watch_list_item)
-                val watchlistFragment = WatchListController.newInstance()
-                openFragment(watchlistFragment)
+                openFragment(watchListFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.WATCHLIST
                 return@OnNavigationItemSelectedListener true
             }
             R.id.search_item -> {
                 toolbar.title = getString(R.string.search_title)
-                val searchFragment = SearchController.newInstance()
                 openFragment(searchFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.SEARCH
                 return@OnNavigationItemSelectedListener true
@@ -51,10 +52,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        supportFragmentManager.beginTransaction().hide(activeFragment).show(fragment).commit()
+        activeFragment = fragment
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,32 +62,10 @@ class MainActivity : AppCompatActivity() {
 
         toolbar = supportActionBar!!
         navigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
-        lateinit var fragment: Fragment
-
-        when(AllMightyDataController.movieDetailFrom){
-            MovieTypes.NOWPLAYING -> {
-                toolbar.title = getString(R.string.billboard_title)
-                fragment = NowPlayingController.newInstance()
-            }
-
-            MovieTypes.UPCOMING -> {
-                toolbar.title = getString(R.string.upcoming_title)
-                fragment = UpcomingController.newInstance()
-            }
-
-            MovieTypes.WATCHLIST -> {
-                toolbar.title = getString(R.string.watch_list_item)
-                fragment = WatchListController.newInstance()
-            }
-
-            else -> {
-                toolbar.title = getString(R.string.search_title)
-                fragment = SearchController.newInstance()
-            }
-        }
-
-        openFragment(fragment)
+        supportFragmentManager.beginTransaction().add(R.id.container, upcomingFragment, "2").hide(upcomingFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.container, watchListFragment, "3").hide(watchListFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.container, searchFragment, "4").hide(searchFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.container, nowPlayingFragment, "1").commit()
     }
 
     override fun onBackPressed() {
