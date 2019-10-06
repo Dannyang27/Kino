@@ -2,7 +2,6 @@ package com.example.ledannyyang.movies
 
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.Credit.CastItem
-import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
 import com.example.ledannyyang.movies.Model.Review.ReviewItem

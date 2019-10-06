@@ -2,9 +2,6 @@ package com.example.ledannyyang.movies.FragmentMovieDetail
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +12,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
@@ -55,7 +55,7 @@ class MovieDetailInfoFragment : Fragment(){
         fun setInfo( movie : MovieDetail){
 
             val url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
-            Picasso.with(portrait.context)
+            Picasso.get()
                     .load(url)
                     .into(portrait)
 

@@ -3,13 +3,11 @@ package com.example.ledannyyang.movies.Retrofit
 import android.util.Log
 import com.example.ledannyyang.movies.Activities.CastDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
-import com.example.ledannyyang.movies.Database.MovieDatabase
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
-import com.example.ledannyyang.movies.MainActivity
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.CastFilmography.MovieCredit
 import com.example.ledannyyang.movies.Model.Credit.Credit
@@ -25,7 +23,10 @@ import com.example.ledannyyang.movies.Model.TopRated.TopRated
 import com.example.ledannyyang.movies.Model.Upcoming.Upcoming
 import com.example.ledannyyang.movies.Model.Video.Video
 import com.example.ledannyyang.movies.Utils.StringUtils
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient{

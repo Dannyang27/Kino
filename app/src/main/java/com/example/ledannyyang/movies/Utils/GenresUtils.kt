@@ -1,7 +1,5 @@
 package com.example.ledannyyang.movies.Utils
 
-import android.util.Log
-
 
 object GenresUtils{
 

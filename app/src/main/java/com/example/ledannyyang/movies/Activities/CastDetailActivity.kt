@@ -1,12 +1,11 @@
 package com.example.ledannyyang.movies.Activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
@@ -14,7 +13,6 @@ import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.MovieDetail.MoviePortraitAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.movie_detail_cast.*
 
 class CastDetailActivity : AppCompatActivity() {
     private lateinit var castRecyclerView : RecyclerView
@@ -27,12 +25,13 @@ class CastDetailActivity : AppCompatActivity() {
         lateinit var castBdayPlace: TextView
         lateinit var castBiography: TextView
 
-        lateinit var castAdapter : RecyclerView.Adapter<*>
+        lateinit var castAdapter : MoviePortraitAdapter
         var filmographyItems = mutableListOf<PortraitMovie>()
 
         fun setCastInfo(castDetail : CastDetail){
             val url = "https://image.tmdb.org/t/p/w500/${castDetail.profilePath}"
-            Picasso.with(castPortrait.context)
+
+            Picasso.get()
                     .load(url)
                     .into(castPortrait)
 

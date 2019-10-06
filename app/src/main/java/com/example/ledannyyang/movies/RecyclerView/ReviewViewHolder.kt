@@ -1,8 +1,8 @@
 package com.example.ledannyyang.movies.RecyclerView
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ledannyyang.movies.R
 
 class ReviewViewHolder(view : View) : RecyclerView.ViewHolder(view){

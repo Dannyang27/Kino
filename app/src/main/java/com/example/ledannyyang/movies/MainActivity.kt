@@ -1,18 +1,15 @@
 package com.example.ledannyyang.movies
 
-import android.arch.persistence.room.Room
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v7.app.ActionBar
-import com.example.ledannyyang.movies.Database.MovieDatabase
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
 import com.example.ledannyyang.movies.FragmentController.WatchListController
 import com.example.ledannyyang.movies.enums.MovieTypes
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object{
         val databaseName = "MovieDatabase"
-        lateinit var database: MovieDatabase
     }
 
 
@@ -71,11 +67,9 @@ class MainActivity : AppCompatActivity() {
         toolbar = supportActionBar!!
         toolbar.title = getString(R.string.billboard_title)
 
-        database = Room.databaseBuilder(this, MovieDatabase::class.java, databaseName)
-                .fallbackToDestructiveMigration()
-                .build()
-
+        val navigationBar = findViewById<BottomNavigationView>(R.id.navigationBar)
         navigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
         supportFragmentManager.beginTransaction().add(R.id.container, upcomingFragment, "2").hide(upcomingFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.container, watchListFragment, "3").hide(watchListFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.container, searchFragment, "4").hide(searchFragment).commit()

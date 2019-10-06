@@ -1,8 +1,8 @@
 package com.example.ledannyyang.movies.RecyclerView.MovieDetail
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ledannyyang.movies.Model.Review.ReviewItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.ReviewViewHolder

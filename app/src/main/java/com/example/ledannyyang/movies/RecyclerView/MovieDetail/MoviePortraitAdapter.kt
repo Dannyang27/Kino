@@ -1,8 +1,8 @@
 package com.example.ledannyyang.movies.RecyclerView.MovieDetail
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.MoviePortraitViewHolder
@@ -24,7 +24,7 @@ class MoviePortraitAdapter(private val movies: MutableList<PortraitMovie>):
         holder.id = movie.id
 
         val url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
-        Picasso.with(holder.portrait.context)
+        Picasso.get()
                 .load(url)
                 .into(holder.portrait)
     }

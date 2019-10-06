@@ -1,9 +1,8 @@
 package com.example.ledannyyang.movies.RecyclerView.MovieDetail
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.example.ledannyyang.movies.AllMightyDataController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ledannyyang.movies.Model.Credit.CastItem
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.CastViewHolder
@@ -27,7 +26,7 @@ class CastAdapter(private val credits: MutableList<CastItem>):
         holder.id = credit.id
         holder.creditId = credit.creditId
 
-        Picasso.with(holder.portrait.context)
+        Picasso.get()
                 .load("https://image.tmdb.org/t/p/w500/${credit?.profilePath}")
                 .into(holder.portrait)
     }

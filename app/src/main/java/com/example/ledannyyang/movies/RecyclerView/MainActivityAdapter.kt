@@ -2,13 +2,13 @@ package com.example.ledannyyang.movies.RecyclerView
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ledannyyang.movies.Activities.MovieDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Movie
@@ -47,7 +47,7 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
     override fun onBindViewHolder(holder: NowPlayingViewHolder, position: Int) {
         val movie  = movies[position]
         val urlImage = AllMightyDataController.imageUrl.plus(movie.posterPath)
-        Picasso.with(holder.poster.context)
+        Picasso.get()
                 .load(urlImage)
                 .into(holder.poster)
 
@@ -68,7 +68,7 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
             val dialogView = LayoutInflater.from(it.context).inflate(R.layout.portrait_dialog, viewGroup, false)
             val portrait = dialogView.findViewById(R.id.dialog_image) as ImageView
 
-            Picasso.with(it.context)
+            Picasso.get()
                     .load(urlImage)
                     .into(portrait)
 

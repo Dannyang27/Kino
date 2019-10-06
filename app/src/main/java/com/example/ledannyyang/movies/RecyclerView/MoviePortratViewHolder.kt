@@ -1,9 +1,9 @@
 package com.example.ledannyyang.movies.RecyclerView
 
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ledannyyang.movies.Activities.MovieDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.R
