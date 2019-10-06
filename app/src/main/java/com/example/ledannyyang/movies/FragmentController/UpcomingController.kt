@@ -30,7 +30,7 @@ class UpcomingController : Fragment(){
         val view =  inflater.inflate(R.layout.fragment_upcoming, container, false)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainActivityAdapter(upcomingItems)
+        viewAdapter = MainActivityAdapter(upcomingItems, true)
 
         RetrofitClient.getUpcoming(upcomingItems, region = "GB")
 

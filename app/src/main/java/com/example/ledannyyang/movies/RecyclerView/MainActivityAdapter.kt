@@ -16,7 +16,7 @@ import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
 
-class MainActivityAdapter(private val movies: MutableList<Movie>) :
+class MainActivityAdapter(private val movies: MutableList<Movie>, val isUpcoming: Boolean = false) :
         RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(){
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
@@ -54,15 +54,22 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
                 .into(holder.poster)
 
         holder.movieId = movie.id
-        holder.releaseDate = movie.releaseDate ?: "N/A"
-
-        if(!movie.releaseDate.isNullOrEmpty()){
-            holder.year.text = movie.releaseDate.substring(0, 4)
-        }
-
+        holder.releaseDate = movie.releaseDate ?: ""
         holder.title.text = movie.title
         holder.genre.text = GenresUtils.getGenresFromString(movie.genres)
-        holder.vote.text = if(movie.score != 0.0) movie.score.toString() else "N/A"
+
+
+        if(isUpcoming){
+            holder.year.visibility = View.GONE
+            holder.vote.text = movie.releaseDate
+        }else{
+
+            if(!movie.releaseDate.isNullOrEmpty()){
+                holder.year.text = movie.releaseDate.substring(0, 4)
+            }
+
+            holder.vote.text = if(movie.score != 0.0) movie.score.toString() else "N/A"
+        }
 
         holder.itemView.setOnLongClickListener {
                 Toast.makeText(it.context, "Added to Watchlist", Toast.LENGTH_LONG).show()

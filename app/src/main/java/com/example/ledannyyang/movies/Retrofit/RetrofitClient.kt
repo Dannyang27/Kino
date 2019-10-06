@@ -71,10 +71,13 @@ object RetrofitClient{
             override fun onResponse(call: Call<SearchMovie>, response: Response<SearchMovie>) {
                 val searchMovie = response.body()?.copy()
                 val list = searchMovie?.results?.sortedByDescending { it.voteAverage }
+
                 list?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                         it.voteAverage, it.releaseDate, it.posterPath)
                     items.add(movie)
+
+                    Log.d(API, "${it.title} "  + it.posterPath)
                 }
 
                 SearchController.viewAdapter.notifyDataSetChanged()
@@ -98,7 +101,8 @@ object RetrofitClient{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 val nowPlaying = response?.body()?.copy()
                 AllMightyDataController.nowPlayingPages = nowPlaying?.totalPages!!
-                nowPlaying.results?.iterator()?.forEach {
+                val list = nowPlaying.results?.filterNot { it.posterPath == "" || it.posterPath == null }
+                list?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                                 it.voteAverage, it.releaseDate, it.posterPath)
                     items.add(movie)
@@ -123,7 +127,8 @@ object RetrofitClient{
             override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
                 val upcomingMovie = response.body()?.copy()
                 AllMightyDataController.upcomingMoviesPages = upcomingMovie?.totalPages!!
-                upcomingMovie.results?.iterator()?.forEach {
+                val list = upcomingMovie.results?.filterNot { it.posterPath == "" || it.posterPath == null }
+                list?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                             it.voteAverage, it.releaseDate, it.posterPath)
                     items.add(movie)
