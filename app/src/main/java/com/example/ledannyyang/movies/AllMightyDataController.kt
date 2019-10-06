@@ -10,6 +10,7 @@ import com.example.ledannyyang.movies.enums.MovieTypes
 object AllMightyDataController{
     var nowPlayingPages = 1
     var upcomingMoviesPages = 1
+    var releaseDate = ""
 
     val movieInfoMap = mapOf<Int, MovieDetail>()
     val castInfoMap = mapOf<Int, CastDetail>()

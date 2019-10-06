@@ -64,7 +64,7 @@ class MovieDetailInfoFragment : Fragment(){
             title.text = movie.title
             genre.text = StringUtils.removeBrackets(genres!!)
             duration.text = "${movie.runtime} min"
-            releasedDate.text = movie.releaseDate
+            releasedDate.text = AllMightyDataController.releaseDate
             homepage.text = movie.homepage ?: "N/A"
             sinopse.text = movie.overview
             userscore.text =  userscore.text.toString().plus(" ${movie.voteAverage}")

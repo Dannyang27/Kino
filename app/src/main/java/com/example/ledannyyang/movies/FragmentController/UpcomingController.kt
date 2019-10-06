@@ -32,7 +32,7 @@ class UpcomingController : Fragment(){
         viewManager = LinearLayoutManager(activity)
         viewAdapter = MainActivityAdapter(upcomingItems)
 
-        RetrofitClient.getUpcoming(upcomingItems, region = "ES")
+        RetrofitClient.getUpcoming(upcomingItems, region = "GB")
 
         recyclerView = view.findViewById<RecyclerView>(R.id.upcoming_recyclerview).apply{
             setHasFixedSize(true)
@@ -44,7 +44,7 @@ class UpcomingController : Fragment(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val isBottomReached = !recyclerView.canScrollVertically(1)
                     if (isBottomReached && AllMightyDataController.upcomingMoviesPages > page){
-                        RetrofitClient.getUpcoming(upcomingItems, page = page, region = "ES")
+                        RetrofitClient.getUpcoming(upcomingItems, page = page, region = "GB")
                         page++
                     }
                 }

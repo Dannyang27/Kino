@@ -63,7 +63,7 @@ object RetrofitClient{
         return success
     }
 
-    fun getNowPlaying(items: MutableList<Movie>, language:String = "en-US", page: Int = 1, region: String = "ES") : Boolean{
+    fun getNowPlaying(items: MutableList<Movie>, language:String = "en-US", page: Int = 1, region: String = "GB") : Boolean{
 
         val call = service.getNowPlaying(language, page.toString(), region)
         var success = false
@@ -89,7 +89,7 @@ object RetrofitClient{
     }
 
 
-    fun getUpcoming(items: MutableList<Movie>, language: String = "en-US", page: Int = 1, region: String = "ES"): Boolean{
+    fun getUpcoming(items: MutableList<Movie>, language: String = "en-US", page: Int = 1, region: String = "GB"): Boolean{
         val call = service.getUpcoming(language, page.toString(), region)
         var success = false
         call.enqueue(object : Callback<Upcoming>{

@@ -8,5 +8,5 @@ data class Movie(@PrimaryKey val id: Int,
                  val title: String,
                  val genres: String,
                  val score: Double,
-                 val year: String,
+                 val releaseDate: String,
                  val posterPath: String?)

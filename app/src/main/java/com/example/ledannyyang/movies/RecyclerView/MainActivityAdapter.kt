@@ -21,8 +21,9 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
         var movieId = -1
+        var releaseDate = ""
         val poster = view.findViewById(R.id.poster) as ImageView
-        val releaseDate = view.findViewById(R.id.release_date) as TextView
+        val year = view.findViewById(R.id.release_date) as TextView
         val title = view.findViewById(R.id.title) as TextView
         val genre = view.findViewById(R.id.genre) as TextView
         val vote = view.findViewById(R.id.vote_avg) as TextView
@@ -32,6 +33,7 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
                 Toast.makeText(it.context, "$movieId", Toast.LENGTH_LONG).show()
                 val intent = Intent(it.context, MovieDetailActivity::class.java)
                 intent.putExtra(AllMightyDataController.currentMovieID, movieId)
+                AllMightyDataController.releaseDate =  releaseDate
                 it.context.startActivity(intent)
             }
         }
@@ -52,7 +54,8 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
                 .into(holder.poster)
 
         holder.movieId = movie.id
-        holder.releaseDate.text = movie.year.substring(0, 4)
+        holder.releaseDate = movie.releaseDate
+        holder.year.text = movie.releaseDate.substring(0, 4)
         holder.title.text = movie.title
         holder.genre.text = GenresUtils.getGenresFromString(movie.genres)
         holder.vote.text = if(movie.score != 0.0) movie.score.toString() else "N/A"
