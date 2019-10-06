@@ -62,7 +62,6 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
 
         holder.itemView.setOnLongClickListener {
                 Toast.makeText(it.context, "Added to Watchlist", Toast.LENGTH_LONG).show()
-                //MovieRepository(it.context).create(movie)
                 true
         }
 

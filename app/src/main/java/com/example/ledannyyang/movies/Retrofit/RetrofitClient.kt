@@ -1,7 +1,6 @@
 package com.example.ledannyyang.movies.Retrofit
 
 import android.util.Log
-import com.example.ledannyyang.movies.Activities.CastDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
@@ -274,47 +273,6 @@ object RetrofitClient{
             }
             override fun onFailure(call: Call<Credit>, t: Throwable) {
                 Log.d(API, "Could not get Director")
-                success = false
-            }
-        })
-        return success
-    }
-
-    fun getCastDetail( id: Int, language: String = "en-US"): Boolean{
-        val call = service.getCastDetail( id.toString(), language)
-        var success= false
-        call.enqueue(object : Callback<CastDetail>{
-            override fun onResponse(call: Call<CastDetail>, response: Response<CastDetail>) {
-                val castDetail = response.body()?.copy()
-                castDetail.let {
-                    CastDetailActivity.setCastInfo(castDetail!!)
-                }
-                success = true
-            }
-            override fun onFailure(call: Call<CastDetail>, t: Throwable) {
-                Log.d(API, "Could not get Cast Details")
-                success = false
-            }
-        })
-        return success
-    }
-
-    fun getMovieCredit(creditId: String) : Boolean{
-        val call = service.getMovieCredit(creditId)
-        var success = false
-        call.enqueue(object : Callback<MovieCredit>{
-            override fun onResponse(call: Call<MovieCredit>, response: Response<MovieCredit>) {
-                var movieCredit = response.body()?.copy()
-                movieCredit.let {
-                    it?.person?.castFilmography?.forEach {
-                        CastDetailActivity.filmographyItems?.add(PortraitMovie(it.id, it.posterPath))
-                    }
-                    CastDetailActivity.castAdapter.notifyDataSetChanged()
-                    success = true
-                }
-            }
-            override fun onFailure(call: Call<MovieCredit>, t: Throwable) {
-                Log.d(API, "Could not get Movie Credits")
                 success = false
             }
         })

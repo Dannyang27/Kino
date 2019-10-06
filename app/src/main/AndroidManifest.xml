@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ledannyyang.movies"
-    >
+    package="com.example.ledannyyang.movies">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CastDetailActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".Activities.MovieDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.MovieDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">

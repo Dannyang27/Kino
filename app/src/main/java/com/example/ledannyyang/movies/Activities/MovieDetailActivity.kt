@@ -2,7 +2,9 @@ package com.example.ledannyyang.movies.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -24,6 +26,11 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
+
+        val movieToolbar = findViewById<Toolbar>(R.id.movie_detail_toolbar)
+        setSupportActionBar(movieToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         mPager = findViewById(R.id.movie_detail_viewpager)
         val pageAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
@@ -62,5 +69,13 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId){
+        android.R.id.home -> {
+            finish()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 }
