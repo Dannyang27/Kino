@@ -3,12 +3,11 @@ package com.example.ledannyyang.movies.Retrofit
 import android.util.Log
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
+import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
-import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
-import com.example.ledannyyang.movies.Model.CastFilmography.MovieCredit
 import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
 import com.example.ledannyyang.movies.Model.Movie
@@ -17,6 +16,7 @@ import com.example.ledannyyang.movies.Model.NowPlaying.NowPlaying
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
 import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovie
 import com.example.ledannyyang.movies.Model.Review.Review
+import com.example.ledannyyang.movies.Model.SearchMovie.SearchMovie
 import com.example.ledannyyang.movies.Model.SimilarMovie.SimilarMovie
 import com.example.ledannyyang.movies.Model.TopRated.TopRated
 import com.example.ledannyyang.movies.Model.Upcoming.Upcoming
@@ -59,6 +59,34 @@ object RetrofitClient{
                 success = false
             }
         })
+        return success
+    }
+
+    fun getSearchMovie(items: MutableList<Movie>, query: String, language:String = "en-US", page: Int = 1) : Boolean {
+
+        val call = service.getSearchMovie(language, query, page.toString())
+        var success = false
+
+        call.enqueue(object: Callback<SearchMovie>{
+            override fun onResponse(call: Call<SearchMovie>, response: Response<SearchMovie>) {
+                val searchMovie = response.body()?.copy()
+                val list = searchMovie?.results?.sortedByDescending { it.voteAverage }
+                list?.forEach {
+                    val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
+                        it.voteAverage, it.releaseDate, it.posterPath)
+                    items.add(movie)
+                }
+
+                SearchController.viewAdapter.notifyDataSetChanged()
+                success = true
+            }
+
+            override fun onFailure(call: Call<SearchMovie>, t: Throwable) {
+                Log.d(API, "Could not get Now Playing movies")
+                success = false
+            }
+        })
+
         return success
     }
 

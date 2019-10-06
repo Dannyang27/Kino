@@ -54,8 +54,12 @@ class MainActivityAdapter(private val movies: MutableList<Movie>) :
                 .into(holder.poster)
 
         holder.movieId = movie.id
-        holder.releaseDate = movie.releaseDate
-        holder.year.text = movie.releaseDate.substring(0, 4)
+        holder.releaseDate = movie.releaseDate ?: "N/A"
+
+        if(!movie.releaseDate.isNullOrEmpty()){
+            holder.year.text = movie.releaseDate.substring(0, 4)
+        }
+
         holder.title.text = movie.title
         holder.genre.text = GenresUtils.getGenresFromString(movie.genres)
         holder.vote.text = if(movie.score != 0.0) movie.score.toString() else "N/A"

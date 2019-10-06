@@ -1,13 +1,12 @@
 package com.example.ledannyyang.movies.Retrofit
 
-import com.example.ledannyyang.movies.Model.CastDetail.CastDetail
-import com.example.ledannyyang.movies.Model.CastFilmography.MovieCredit
 import com.example.ledannyyang.movies.Model.Credit.Credit
 import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlaying
 import com.example.ledannyyang.movies.Model.RecommendedMovie.RecommendedMovie
 import com.example.ledannyyang.movies.Model.Review.Review
+import com.example.ledannyyang.movies.Model.SearchMovie.SearchMovie
 import com.example.ledannyyang.movies.Model.SimilarMovie.SimilarMovie
 import com.example.ledannyyang.movies.Model.TopRated.TopRated
 import com.example.ledannyyang.movies.Model.Upcoming.Upcoming
@@ -23,6 +22,12 @@ interface GithubService {
     @GET("/3/movie/{id}?api_key=6ee8506f55fda3da84e75f9a5f8baa76")
     fun getMovieDetail(@Path("id") movieID: String,
                        @Query("language") language: String) : Call<MovieDetail>
+
+
+    @GET("/3/search/movie?api_key=6ee8506f55fda3da84e75f9a5f8baa76")
+    fun getSearchMovie(@Query("language") language: String,
+                       @Query("query") query: String,
+                       @Query("page") page: String) : Call<SearchMovie>
 
     // Gets current movies that are displayed at cinemas
     @GET("/3/movie/now_playing?api_key=6ee8506f55fda3da84e75f9a5f8baa76")
@@ -72,12 +77,4 @@ interface GithubService {
     @GET("/3/movie/{id}/credits?api_key=6ee8506f55fda3da84e75f9a5f8baa76\n")
     fun getCredits(@Path("id") movieId: String) : Call<Credit>
 
-    // returns info about the actor/actress
-    @GET("/3/person/{id}?api_key=6ee8506f55fda3da84e75f9a5f8baa76")
-    fun getCastDetail(@Path("id") castId: String,
-                      @Query("language") language: String) : Call<CastDetail>
-
-    // return cast filmography
-    @GET("/3/credit/{credit_id}?api_key=6ee8506f55fda3da84e75f9a5f8baa76")
-    fun getMovieCredit(@Path("credit_id") creditId: String) : Call<MovieCredit>
 }
