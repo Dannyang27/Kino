@@ -1,52 +1,49 @@
-package com.example.ledannyyang.movies
+package com.example.ledannyyang.movies.Activities
 
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
 import com.example.ledannyyang.movies.FragmentController.WatchListController
+import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.enums.MovieTypes
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var toolbar : ActionBar
+    private lateinit var mainToolbar : Toolbar
     val nowPlayingFragment = NowPlayingController.newInstance()
     val upcomingFragment = UpcomingController.newInstance()
     val watchListFragment = WatchListController.newInstance()
     val searchFragment = SearchController.newInstance()
     var activeFragment: Fragment = nowPlayingFragment
 
-    companion object{
-        val databaseName = "MovieDatabase"
-    }
-
-
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.now_playing_item -> {
-                toolbar.title = getString(R.string.billboard_title)
+                mainToolbar.title = getString(R.string.billboard_title)
                 openFragment(nowPlayingFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.NOWPLAYING
                 return@OnNavigationItemSelectedListener true
             }
             R.id.upcoming_item -> {
-                toolbar.title = getString(R.string.upcoming_title)
+                mainToolbar.title = getString(R.string.upcoming_title)
                 openFragment(upcomingFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.UPCOMING
                 return@OnNavigationItemSelectedListener true
             }
             R.id.watchlist_item -> {
-                toolbar.title = getString(R.string.watch_list_item)
+                mainToolbar.title = getString(R.string.watch_list_item)
                 openFragment(watchListFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.WATCHLIST
                 return@OnNavigationItemSelectedListener true
             }
             R.id.search_item -> {
-                toolbar.title = getString(R.string.search_title)
+                mainToolbar.title = getString(R.string.search_title)
                 openFragment(searchFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.SEARCH
                 return@OnNavigationItemSelectedListener true
@@ -64,8 +61,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        toolbar = supportActionBar!!
-        toolbar.title = getString(R.string.billboard_title)
+        mainToolbar = findViewById(R.id.main_toolbar)
+        mainToolbar.title = getString(R.string.billboard_title)
+
+        setSupportActionBar(mainToolbar)
 
         val navigationBar = findViewById<BottomNavigationView>(R.id.navigationBar)
         navigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)

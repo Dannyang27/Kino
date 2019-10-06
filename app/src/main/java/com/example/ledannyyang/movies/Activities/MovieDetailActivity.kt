@@ -12,7 +12,6 @@ import androidx.viewpager.widget.ViewPager
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
-import com.example.ledannyyang.movies.MainActivity
 import com.example.ledannyyang.movies.R
 import com.google.android.material.tabs.TabLayout
 
