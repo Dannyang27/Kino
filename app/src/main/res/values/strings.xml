@@ -59,4 +59,6 @@
     <string name="watchlist_clear">Watchlist cleared</string>
     <string name="emptyWatchlist">Seems your list is empty</string>
     <string name="noresult">I could not find the movie, sorry!</string>
+    <string name="morecategories">More categories</string>
+    <string name="grid">Grid</string>
 </resources>

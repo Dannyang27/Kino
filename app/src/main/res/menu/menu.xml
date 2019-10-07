@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/toprated"
-        android:title="@string/toprated"
+    <item android:id="@+id/preview"
+        android:title="@string/grid"
+        android:icon="@drawable/grid"
+        app:showAsAction="always"/>
+    <item android:id="@+id/morecategories"
+        android:title="@string/morecategories"
         app:showAsAction="collapseActionView"/>
     <item android:id="@+id/settings"
         android:title="@string/settings"
