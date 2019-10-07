@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/regions"
+        android:entryValues="@array/regions"
+        android:key="region"
+        android:title="@string/region"
+        android:summary="@string/region_summary"
+        android:layout="@layout/font_layout"
+        app:allowDividerAbove="false"
+        app:allowDividerBelow="false"/>
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="adultContent"
+        android:title="@string/adultContent"
+        android:summary="@string/adultContent_summary"
+        app:allowDividerAbove="false"
+        app:allowDividerBelow="false"/>
+
+    <Preference
+        android:key="cache"
+        android:title="@string/cache"
+        android:summary="@string/cache_summary"
+        android:layout="@layout/font_layout"
+        app:allowDividerAbove="false"
+        app:allowDividerBelow="false"/>
+
+    <Preference
+        android:key="feedback"
+        android:title="@string/feedback"
+        android:summary="@string/feedback_summary"
+        android:layout="@layout/font_layout"
+        app:allowDividerAbove="false"
+        app:allowDividerBelow="false"/>
+</PreferenceScreen>

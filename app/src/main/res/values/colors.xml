@@ -6,5 +6,6 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="whitesmoke">#dbdbdb</color>
+    <color name="settingText">#444444</color>
 
 </resources>

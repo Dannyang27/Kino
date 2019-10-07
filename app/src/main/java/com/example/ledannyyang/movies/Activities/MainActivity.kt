@@ -1,6 +1,9 @@
 package com.example.ledannyyang.movies.Activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -77,5 +80,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         //RetrofitClient.getMovieCredit("5c86e37f0e0a264310683e5a")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId){
+        R.id.toprated -> {
+            true
+        }
+
+        R.id.settings -> {
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+            true
+        }
+
+        else -> super.onOptionsItemSelected(item)
     }
 }

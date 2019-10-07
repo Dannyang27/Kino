@@ -23,7 +23,6 @@ class SearchController : Fragment(){
     companion object {
         fun newInstance(): SearchController = SearchController()
         lateinit var viewAdapter: RecyclerView.Adapter<*>
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,7 +32,7 @@ class SearchController : Fragment(){
         searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 movies.clear()
-                RetrofitClient.getSearchMovie(movies, query.toString())
+                RetrofitClient.getSearchMovie(activity?.applicationContext!!, movies, query.toString())
                 return true
             }
 

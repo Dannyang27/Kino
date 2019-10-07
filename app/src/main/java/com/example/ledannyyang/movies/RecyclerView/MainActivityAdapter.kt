@@ -30,7 +30,6 @@ class MainActivityAdapter(private val movies: MutableList<Movie>, val isUpcoming
 
         init{
             view.setOnClickListener {
-                Toast.makeText(it.context, "$movieId", Toast.LENGTH_LONG).show()
                 val intent = Intent(it.context, MovieDetailActivity::class.java)
                 intent.putExtra(AllMightyDataController.currentMovieID, movieId)
                 AllMightyDataController.releaseDate =  releaseDate

@@ -1,5 +1,6 @@
 package com.example.ledannyyang.movies.Retrofit
 
+import android.content.Context
 import android.util.Log
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
@@ -22,6 +23,7 @@ import com.example.ledannyyang.movies.Model.TopRated.TopRated
 import com.example.ledannyyang.movies.Model.Upcoming.Upcoming
 import com.example.ledannyyang.movies.Model.Video.Video
 import com.example.ledannyyang.movies.Utils.StringUtils
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,7 +66,7 @@ object RetrofitClient{
         return success
     }
 
-    fun getSearchMovie(items: MutableList<Movie>, query: String, language:String = "en-US", page: Int = 1) : Boolean {
+    fun getSearchMovie(context: Context, items: MutableList<Movie>, query: String, language:String = "en-US", page: Int = 1) : Boolean {
 
         val call = service.getSearchMovie(language, query, page.toString())
         var success = false
@@ -76,14 +78,18 @@ object RetrofitClient{
                     ?.sortedByDescending { it.voteAverage }
                     ?.filterNot { it.posterPath.isNullOrEmpty() }
 
-                list?.forEach {
-                    val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
-                        it.voteAverage, it.releaseDate, it.posterPath)
-                    items.add(movie)
-                }
+                if(list?.isEmpty()!!){
+                    context.toast("No movies found")
+                }else{
+                    list.forEach {
+                        val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
+                            it.voteAverage, it.releaseDate, it.posterPath)
+                        items.add(movie)
+                    }
 
-                SearchController.viewAdapter.notifyDataSetChanged()
-                success = true
+                    SearchController.viewAdapter.notifyDataSetChanged()
+                    success = true
+                }
             }
 
             override fun onFailure(call: Call<SearchMovie>, t: Throwable) {
