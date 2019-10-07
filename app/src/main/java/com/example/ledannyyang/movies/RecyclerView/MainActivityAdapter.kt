@@ -65,8 +65,7 @@ class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = nu
     }
 
     enum class ViewType {
-        LIST,
-        GRID
+        LIST, GRID
     }
 
     override fun getItemViewType(position: Int): Int {
