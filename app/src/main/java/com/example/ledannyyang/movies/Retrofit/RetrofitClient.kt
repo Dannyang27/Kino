@@ -81,19 +81,22 @@ object RetrofitClient{
                 if(list?.isEmpty()!!){
                     context.toast("No movies found")
                 }else{
+                    val movies = mutableListOf<Movie>()
+                    movies.addAll(items)
+
                     list.forEach {
                         val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                             it.voteAverage, it.releaseDate, it.posterPath)
-                        items.add(movie)
+                        movies.add(movie)
                     }
 
-                    SearchController.viewAdapter.notifyDataSetChanged()
+                    SearchController.updateList(movies)
                     success = true
                 }
             }
 
             override fun onFailure(call: Call<SearchMovie>, t: Throwable) {
-                Log.d(API, "Could not get Now Playing movies")
+                Log.d(API, "Could not get movies (Search)")
                 success = false
             }
         })

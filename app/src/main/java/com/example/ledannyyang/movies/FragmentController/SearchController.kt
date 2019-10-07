@@ -22,7 +22,10 @@ class SearchController : Fragment(){
 
     companion object {
         fun newInstance(): SearchController = SearchController()
-        lateinit var viewAdapter: RecyclerView.Adapter<*>
+        lateinit var viewAdapter: MainActivityAdapter
+        fun updateList(movies: MutableList<Movie>){
+            viewAdapter.updateList(movies)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
