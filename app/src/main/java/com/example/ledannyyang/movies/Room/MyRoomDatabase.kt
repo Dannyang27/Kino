@@ -65,4 +65,10 @@ abstract class MyRoomDatabase: RoomDatabase(), CoroutineScope{
             WatchListController.updateList(movieDAO().getWatchlist())
         }
     }
+
+    fun clearWatchlist(){
+        launch {
+            movieDAO().deleteWatchlist()
+        }
+    }
 }

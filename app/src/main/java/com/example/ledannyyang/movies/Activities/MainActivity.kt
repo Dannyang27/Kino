@@ -13,17 +13,24 @@ import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
 import com.example.ledannyyang.movies.FragmentController.WatchListController
 import com.example.ledannyyang.movies.R
+import com.example.ledannyyang.movies.Room.MyRoomDatabase
 import com.example.ledannyyang.movies.enums.MovieTypes
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), CoroutineScope {
+    private val job = Job()
     private lateinit var mainToolbar : Toolbar
     val nowPlayingFragment = NowPlayingController.newInstance()
     val upcomingFragment = UpcomingController.newInstance()
     val watchListFragment = WatchListController.newInstance()
     val searchFragment = SearchController.newInstance()
     var activeFragment: Fragment = nowPlayingFragment
+
+    override val coroutineContext = Dispatchers.IO + job
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
@@ -41,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.watchlist_item -> {
                 mainToolbar.title = getString(R.string.watch_list_item)
+                launch { MyRoomDatabase.getMyRoomDatabase(this@MainActivity)?.getWatchlist() }
                 openFragment(watchListFragment)
                 AllMightyDataController.movieDetailFrom = MovieTypes.WATCHLIST
                 return@OnNavigationItemSelectedListener true

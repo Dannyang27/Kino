@@ -14,6 +14,14 @@
         app:allowDividerBelow="false"/>
 
     <Preference
+        android:key="watchlist"
+        android:title="@string/watchlist"
+        android:summary="@string/watchlist_summary"
+        android:layout="@layout/font_layout"
+        app:allowDividerAbove="false"
+        app:allowDividerBelow="false"/>
+
+    <Preference
         android:key="cache"
         android:title="@string/cache"
         android:summary="@string/cache_summary"

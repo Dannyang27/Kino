@@ -54,4 +54,7 @@
     <string name="restartApp">Restart app to update changes</string>
     <string name="deleteCache">Cache deleted</string>
     <string name="sendFeedback">Feedback submitted</string>
+    <string name="watchlist_summary">All saved movies will be deleted</string>
+    <string name="watchlist">Clear Watchlist</string>
+    <string name="watchlist_clear">Watchlist cleared</string>
 </resources>
