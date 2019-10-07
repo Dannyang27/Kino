@@ -110,13 +110,17 @@ object RetrofitClient{
                 val nowPlaying = response?.body()?.copy()
                 AllMightyDataController.nowPlayingPages = nowPlaying?.totalPages!!
                 val list = nowPlaying.results?.filterNot { it.posterPath.isNullOrEmpty() }
+
+                val movies = mutableListOf<Movie>()
+                movies.addAll(items)
+
                 list?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                                 it.voteAverage, it.releaseDate, it.posterPath)
-                    items.add(movie)
+                    movies.add(movie)
                 }
 
-                NowPlayingController.viewAdapter.notifyDataSetChanged()
+                NowPlayingController.updateList(movies)
                 success = true
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {
@@ -136,16 +140,20 @@ object RetrofitClient{
                 val upcomingMovie = response.body()?.copy()
                 AllMightyDataController.upcomingMoviesPages = upcomingMovie?.totalPages!!
                 val list = upcomingMovie.results
-                            ?.filter { it.posterPath != "" || it.posterPath != null }
+                            ?.filter { it.posterPath != ""}
                             ?.filter { LocalDate.now() < LocalDate.parse(it.releaseDate, DateTimeFormatter.ISO_DATE) }
                             ?.sortedBy { it.releaseDate }
+
+                val movies = mutableListOf<Movie>()
+                movies.addAll(items)
 
                 list?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                             it.voteAverage, it.releaseDate, it.posterPath)
-                    items.add(movie)
+                    movies.add(movie)
                 }
-                UpcomingController.viewAdapter.notifyDataSetChanged()
+
+                UpcomingController.updateList(movies)
                 success = true
             }
             override fun onFailure(call: Call<Upcoming>, t: Throwable) {
