@@ -38,4 +38,5 @@
     <string name="place_bday">Denia, Alicante</string>
     <string name="biography_title">Biography</string>
     <string name="hint">Type movie title</string>
+    <string name="noreview">Aarghh, no reviews</string>
 </resources>

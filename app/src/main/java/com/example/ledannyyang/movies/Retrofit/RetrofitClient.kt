@@ -214,11 +214,19 @@ object RetrofitClient{
         var success = false
         call.enqueue(object : Callback<Review>{
             override fun onResponse(call: Call<Review>, response: Response<Review>) {
-                response.body()?.copy()?.results?.iterator()?.forEach {
-                    MovieDetailReviewFragment.reviews.add(it)
+                val reviews = response.body()?.copy()?.results
+
+                if(reviews?.isEmpty()!!){
+                    MovieDetailReviewFragment.setEmptyView()
+                }else{
+                    reviews.forEach {
+                        MovieDetailReviewFragment.reviews.add(it)
+                    }
+
+                    MovieDetailReviewFragment.reviewAdapter.notifyDataSetChanged()
+                    AllMightyDataController.movieReviewMap.plus(Pair(id, MovieDetailReviewFragment.reviews))
                 }
-                MovieDetailReviewFragment.reviewAdapter.notifyDataSetChanged()
-                AllMightyDataController.movieReviewMap.plus(Pair(id, MovieDetailReviewFragment.reviews))
+
                 success = true
             }
             override fun onFailure(call: Call<Review>, t: Throwable) {

@@ -57,6 +57,7 @@ class MovieDetailInfoFragment : Fragment(){
             val url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
             Picasso.get()
                     .load(url)
+                    .placeholder(R.drawable.nophoto)
                     .into(portrait)
 
             val genres = movie.genres?.map { it.name }
