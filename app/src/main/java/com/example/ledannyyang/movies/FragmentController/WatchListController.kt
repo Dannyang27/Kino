@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,15 +29,29 @@ class WatchListController : Fragment(), CoroutineScope{
     companion object {
         lateinit var viewAdapter : MainActivityAdapter
         var watchlistItems = mutableListOf<Movie>()
+        lateinit var layout: LinearLayout
         fun newInstance(): WatchListController = WatchListController()
 
         fun updateList(movies: MutableList<Movie>){
             viewAdapter.updateList(movies)
+            if(movies.isEmpty()){
+                setEmptyView()
+            }
+        }
+
+        fun setEmptyView(){
+            layout.visibility = View.VISIBLE
+        }
+
+        fun hideEmptyView(){
+            layout.visibility = View.GONE
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view =  inflater.inflate(R.layout.fragment_watchlist, container, false)
+
+        layout = view.findViewById(R.id.watchlist_layout)
 
         launch {
             MyRoomDatabase.getMyRoomDatabase(activity?.applicationContext!!)?.getWatchlist()!!

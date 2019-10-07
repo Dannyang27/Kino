@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,20 +23,31 @@ class SearchController : Fragment(){
 
     companion object {
         fun newInstance(): SearchController = SearchController()
+        lateinit var layout: LinearLayout
         lateinit var viewAdapter: MainActivityAdapter
         fun updateList(movies: MutableList<Movie>){
             viewAdapter.updateList(movies)
+        }
+
+        fun setEmptyView(){
+            layout.visibility = View.VISIBLE
+        }
+
+        fun hideEmptyView(){
+            layout.visibility = View.GONE
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
 
+        layout = view.findViewById(R.id.search_layout)
         val searchview = view.findViewById<SearchView>(R.id.search_searchview)
         searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
+                hideEmptyView()
                 movies.clear()
-                RetrofitClient.getSearchMovie(activity?.applicationContext!!, movies, query.toString())
+                RetrofitClient.getSearchMovie(movies, query.toString())
                 return true
             }
 

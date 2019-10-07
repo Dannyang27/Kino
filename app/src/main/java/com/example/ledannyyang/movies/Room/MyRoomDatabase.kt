@@ -62,7 +62,13 @@ abstract class MyRoomDatabase: RoomDatabase(), CoroutineScope{
 
     suspend fun getWatchlist(){
         launch {
-            WatchListController.updateList(movieDAO().getWatchlist())
+            val movies = movieDAO().getWatchlist()
+            if(movies.isEmpty()){
+                WatchListController.setEmptyView()
+            }else{
+                WatchListController.hideEmptyView()
+                WatchListController.updateList(movies)
+            }
         }
     }
 

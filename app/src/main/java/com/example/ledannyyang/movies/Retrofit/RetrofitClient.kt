@@ -1,6 +1,5 @@
 package com.example.ledannyyang.movies.Retrofit
 
-import android.content.Context
 import android.util.Log
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
@@ -23,7 +22,6 @@ import com.example.ledannyyang.movies.Model.TopRated.TopRated
 import com.example.ledannyyang.movies.Model.Upcoming.Upcoming
 import com.example.ledannyyang.movies.Model.Video.Video
 import com.example.ledannyyang.movies.Utils.StringUtils
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -66,7 +64,7 @@ object RetrofitClient{
         return success
     }
 
-    fun getSearchMovie(context: Context, items: MutableList<Movie>, query: String, language:String = "en-US", page: Int = 1) : Boolean {
+    fun getSearchMovie(items: MutableList<Movie>, query: String, language:String = "en-US", page: Int = 1) : Boolean {
 
         val call = service.getSearchMovie(language, query, page.toString())
         var success = false
@@ -79,7 +77,7 @@ object RetrofitClient{
                     ?.filterNot { it.posterPath.isNullOrEmpty() }
 
                 if(list?.isEmpty()!!){
-                    context.toast("No movies found")
+                    SearchController.setEmptyView()
                 }else{
                     val movies = mutableListOf<Movie>()
                     movies.addAll(items)

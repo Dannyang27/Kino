@@ -86,9 +86,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         supportFragmentManager.beginTransaction().add(R.id.container, nowPlayingFragment, "1").commit()
     }
 
-    override fun onBackPressed() {
-        //RetrofitClient.getMovieCredit("5c86e37f0e0a264310683e5a")
-    }
+    override fun onBackPressed() {}
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)

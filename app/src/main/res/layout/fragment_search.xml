@@ -24,4 +24,30 @@
         android:layout_below="@+id/search_searchview"
         android:padding="5dp"/>
 
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="60dp"
+        android:layout_below="@+id/search_searchview"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/emptysearch"/>
+
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/noresult"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/robotoregular"
+            android:gravity="center"
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
+
 </RelativeLayout>

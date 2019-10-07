@@ -38,7 +38,7 @@
     <string name="place_bday">Denia, Alicante</string>
     <string name="biography_title">Biography</string>
     <string name="hint">Type movie title</string>
-    <string name="noreview">Aarghh, no reviews</string>
+    <string name="noreview">Oops, there are no reviews yet</string>
     <string name="poweredbytmdb">Powered by</string>
     <string name="feedback">Send feedback</string>
     <string name="settings">Settings</string>
@@ -57,4 +57,6 @@
     <string name="watchlist_summary">All saved movies will be deleted</string>
     <string name="watchlist">Clear Watchlist</string>
     <string name="watchlist_clear">Watchlist cleared</string>
+    <string name="emptyWatchlist">Seems your list is empty</string>
+    <string name="noresult">I could not find the movie, sorry!</string>
 </resources>

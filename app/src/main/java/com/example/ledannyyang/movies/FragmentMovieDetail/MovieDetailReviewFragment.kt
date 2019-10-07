@@ -41,7 +41,6 @@ class MovieDetailReviewFragment : Fragment(){
 
         val movieId = activity?.intent?.getIntExtra( AllMightyDataController.currentMovieID, -1)
 
-
         reviewViewManager = LinearLayoutManager(activity)
         reviewAdapter = ReviewAdapter(reviews)
 
