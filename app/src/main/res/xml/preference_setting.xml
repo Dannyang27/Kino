@@ -13,14 +13,6 @@
         app:allowDividerAbove="false"
         app:allowDividerBelow="false"/>
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="adultContent"
-        android:title="@string/adultContent"
-        android:summary="@string/adultContent_summary"
-        app:allowDividerAbove="false"
-        app:allowDividerBelow="false"/>
-
     <Preference
         android:key="cache"
         android:title="@string/cache"
