@@ -1,6 +1,7 @@
 package com.example.ledannyyang.movies.FragmentController
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
 import com.example.ledannyyang.movies.RecyclerView.MainActivityAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
+import com.example.ledannyyang.movies.Utils.RegionUtils
 
 class UpcomingController : Fragment(){
 
@@ -32,7 +34,9 @@ class UpcomingController : Fragment(){
         viewManager = LinearLayoutManager(activity)
         viewAdapter = MainActivityAdapter(upcomingItems, true)
 
-        RetrofitClient.getUpcoming(upcomingItems, region = "GB")
+        val pref = PreferenceManager.getDefaultSharedPreferences(activity).getString("region", "GB")
+        val region = RegionUtils.getIso3166(pref)
+        RetrofitClient.getUpcoming(upcomingItems, region = region)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.upcoming_recyclerview).apply{
             setHasFixedSize(true)
@@ -44,7 +48,7 @@ class UpcomingController : Fragment(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val isBottomReached = !recyclerView.canScrollVertically(1)
                     if (isBottomReached && AllMightyDataController.upcomingMoviesPages > page){
-                        RetrofitClient.getUpcoming(upcomingItems, page = page, region = "GB")
+                        RetrofitClient.getUpcoming(upcomingItems, page = page, region = region)
                         page++
                     }
                 }
