@@ -1,7 +1,10 @@
 package com.example.ledannyyang.movies.Activities
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.util.DisplayMetrics
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +33,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     val searchFragment = SearchController.newInstance()
     var activeFragment: Fragment = nowPlayingFragment
 
+    var currentLayoutIcon: Int? = null
+    lateinit var pref: SharedPreferences
+
     override val coroutineContext = Dispatchers.IO + job
+
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
@@ -80,6 +87,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         val navigationBar = findViewById<BottomNavigationView>(R.id.navigationBar)
         navigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        AllMightyDataController.screenWidth = displayMetrics.widthPixels
+
         supportFragmentManager.beginTransaction().add(R.id.container, upcomingFragment, "2").hide(upcomingFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.container, watchListFragment, "3").hide(watchListFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.container, searchFragment, "4").hide(searchFragment).commit()
@@ -94,7 +105,31 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId){
-        R.id.toprated -> {
+        R.id.preview -> {
+            pref = PreferenceManager.getDefaultSharedPreferences(this)
+            val editor = pref.edit()
+
+            if(currentLayoutIcon == R.drawable.list){
+                currentLayoutIcon = R.drawable.grid
+                editor.putBoolean("gridMode", true)
+                editor.apply()
+            }else{
+                currentLayoutIcon = R.drawable.list
+                editor.putBoolean("gridMode", false)
+                editor.apply()
+            }
+
+            currentLayoutIcon?.let {
+                item.icon = getDrawable(it)
+            }
+
+            NowPlayingController.changeSpanCount()
+            UpcomingController.changeSpanCount()
+            WatchListController.changeSpanCount()
+            true
+        }
+
+        R.id.morecategories -> {
             true
         }
 

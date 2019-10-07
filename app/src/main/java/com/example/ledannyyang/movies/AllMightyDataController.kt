@@ -12,6 +12,8 @@ object AllMightyDataController{
     var upcomingMoviesPages = 1
     var releaseDate = ""
 
+    var screenWidth = -1
+
     val movieInfoMap = mapOf<Int, MovieDetail>()
     val castInfoMap = mapOf<Int, CastDetail>()
     val trailerLoaded = mapOf<Int, String>()
