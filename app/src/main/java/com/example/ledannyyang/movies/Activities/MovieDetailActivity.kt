@@ -65,14 +65,10 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId){
         android.R.id.home -> {
-            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             true
         }
         else -> super.onOptionsItemSelected(item)

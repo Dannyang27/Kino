@@ -128,6 +128,7 @@ object RetrofitClient{
                 val upcomingMovie = response.body()?.copy()
                 AllMightyDataController.upcomingMoviesPages = upcomingMovie?.totalPages!!
                 val list = upcomingMovie.results?.filterNot { it.posterPath == "" || it.posterPath == null }
+                list?.sortedBy { it.releaseDate }
                 list?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                             it.voteAverage, it.releaseDate, it.posterPath)
