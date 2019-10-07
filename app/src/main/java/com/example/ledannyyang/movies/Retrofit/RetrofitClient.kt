@@ -27,6 +27,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 object RetrofitClient{
 
@@ -70,14 +72,14 @@ object RetrofitClient{
         call.enqueue(object: Callback<SearchMovie>{
             override fun onResponse(call: Call<SearchMovie>, response: Response<SearchMovie>) {
                 val searchMovie = response.body()?.copy()
-                val list = searchMovie?.results?.sortedByDescending { it.voteAverage }
+                val list = searchMovie?.results
+                    ?.sortedByDescending { it.voteAverage }
+                    ?.filterNot { it.posterPath.isNullOrEmpty() }
 
                 list?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                         it.voteAverage, it.releaseDate, it.posterPath)
                     items.add(movie)
-
-                    Log.d(API, "${it.title} "  + it.posterPath)
                 }
 
                 SearchController.viewAdapter.notifyDataSetChanged()
@@ -101,7 +103,7 @@ object RetrofitClient{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 val nowPlaying = response?.body()?.copy()
                 AllMightyDataController.nowPlayingPages = nowPlaying?.totalPages!!
-                val list = nowPlaying.results?.filterNot { it.posterPath == "" || it.posterPath == null }
+                val list = nowPlaying.results?.filterNot { it.posterPath.isNullOrEmpty() }
                 list?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                                 it.voteAverage, it.releaseDate, it.posterPath)
@@ -127,8 +129,11 @@ object RetrofitClient{
             override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
                 val upcomingMovie = response.body()?.copy()
                 AllMightyDataController.upcomingMoviesPages = upcomingMovie?.totalPages!!
-                val list = upcomingMovie.results?.filterNot { it.posterPath == "" || it.posterPath == null }
-                list?.sortedBy { it.releaseDate }
+                val list = upcomingMovie.results
+                            ?.filter { it.posterPath != "" || it.posterPath != null }
+                            ?.filter { LocalDate.now() < LocalDate.parse(it.releaseDate, DateTimeFormatter.ISO_DATE) }
+                            ?.sortedBy { it.releaseDate }
+
                 list?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                             it.voteAverage, it.releaseDate, it.posterPath)
