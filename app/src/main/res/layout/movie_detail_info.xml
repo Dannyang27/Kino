@@ -180,10 +180,12 @@
 
 
             <LinearLayout
+                android:id="@+id/recommendedmovies_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/recommendedmovies"
@@ -200,10 +202,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/similarmovies_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/similarmovies"
@@ -220,9 +224,5 @@
             </LinearLayout>
 
         </LinearLayout>
-
-
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

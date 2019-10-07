@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +40,9 @@ class MovieDetailInfoFragment : Fragment(){
         lateinit var userscore: TextView
         lateinit var trailer : Button
 
+        lateinit var recommendedMovieLayout: LinearLayout
+        lateinit var similarMovieLayout: LinearLayout
+
         lateinit var recommendedMovieAdapter : RecyclerView.Adapter<*>
         var recommendedMovieItems = mutableListOf<PortraitMovie>()
 
@@ -50,6 +50,14 @@ class MovieDetailInfoFragment : Fragment(){
         var similarMovieItems = mutableListOf<PortraitMovie>()
 
         var trailerKey: String? = null
+
+        fun setRecommendedMovieLayout(){
+            recommendedMovieLayout.visibility = View.VISIBLE
+        }
+
+        fun setSimilarMovieLayout(){
+            similarMovieLayout.visibility = View.VISIBLE
+        }
 
 
         fun setInfo( movie : MovieDetail){
@@ -80,6 +88,9 @@ class MovieDetailInfoFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view =  inflater.inflate(R.layout.movie_detail_info, container, false)
         val movieId = activity?.intent?.getIntExtra( AllMightyDataController.currentMovieID, -1)
+
+        recommendedMovieLayout = view.findViewById(R.id.recommendedmovies_layout)
+        similarMovieLayout = view.findViewById(R.id.similarmovies_layout)
 
         title = view.findViewById(R.id.movie_info_title_lbl)
         portrait = view.findViewById(R.id.movie_info_portrait)
@@ -129,7 +140,10 @@ class MovieDetailInfoFragment : Fragment(){
 
             if(AllMightyDataController.movieInfoRecommendedMap.containsKey(id)){
                 recommendedMovieItems = AllMightyDataController.movieInfoRecommendedMap[id]?.toMutableList()!!
-                recommendedMovieAdapter.notifyDataSetChanged()
+                if(recommendedMovieItems.isNotEmpty()){
+                    setRecommendedMovieLayout()
+                    recommendedMovieAdapter.notifyDataSetChanged()
+                }
             }else{
                 recommendedMovieItems.clear()
                 RetrofitClient.getRecommendedMoviesById(id!!)
@@ -137,7 +151,10 @@ class MovieDetailInfoFragment : Fragment(){
 
             if(AllMightyDataController.movieInfoSimilarMap.containsKey(id)){
                 similarMovieItems = AllMightyDataController.movieInfoSimilarMap[id]?.toMutableList()!!
-                similarMovieAdapter.notifyDataSetChanged()
+                if(similarMovieItems.isNotEmpty()){
+                    setSimilarMovieLayout()
+                    similarMovieAdapter.notifyDataSetChanged()
+                }
             }else{
                 similarMovieItems.clear()
                 RetrofitClient.getSimilarMoviesById(id!!)

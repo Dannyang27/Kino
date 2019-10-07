@@ -176,12 +176,16 @@ object RetrofitClient{
         var success = false
         call.enqueue(object : Callback<SimilarMovie>{
             override fun onResponse(call: Call<SimilarMovie>, response: Response<SimilarMovie>) {
-                response.body()?.copy()?.results?.iterator()?.forEach {
-                    MovieDetailInfoFragment.similarMovieItems.add(PortraitMovie(it.id, it.posterPath))
+                val movies = response.body()?.copy()?.results
+                if(movies?.isNotEmpty()!!){
+                    MovieDetailInfoFragment.setSimilarMovieLayout()
+                    movies.forEach {
+                        MovieDetailInfoFragment.similarMovieItems.add(PortraitMovie(it.id, it.posterPath))
+                    }
+                    MovieDetailInfoFragment.similarMovieAdapter.notifyDataSetChanged()
+                    AllMightyDataController.movieInfoSimilarMap.plus(Pair(id, MovieDetailInfoFragment.similarMovieItems))
+                    success = true
                 }
-                MovieDetailInfoFragment.similarMovieAdapter.notifyDataSetChanged()
-                AllMightyDataController.movieInfoSimilarMap.plus(Pair(id, MovieDetailInfoFragment.similarMovieItems))
-                success = true
             }
 
             override fun onFailure(call: Call<SimilarMovie>, t: Throwable) {
@@ -198,12 +202,16 @@ object RetrofitClient{
         call.enqueue(object : Callback<RecommendedMovie>{
 
             override fun onResponse(call: Call<RecommendedMovie>, response: Response<RecommendedMovie>) {
-                response.body()?.copy()?.results?.iterator()?.forEach {
-                    MovieDetailInfoFragment.recommendedMovieItems.add(PortraitMovie(it.id, it.posterPath))
+                val movies = response.body()?.copy()?.results
+                if(movies?.isNotEmpty()!!){
+                    MovieDetailInfoFragment.setRecommendedMovieLayout()
+                    movies.forEach {
+                        MovieDetailInfoFragment.recommendedMovieItems.add(PortraitMovie(it.id, it.posterPath))
+                    }
+                    MovieDetailInfoFragment.recommendedMovieAdapter.notifyDataSetChanged()
+                    AllMightyDataController.movieInfoRecommendedMap.plus(Pair(id, MovieDetailInfoFragment.recommendedMovieItems))
+                    success = true
                 }
-                MovieDetailInfoFragment.recommendedMovieAdapter.notifyDataSetChanged()
-                AllMightyDataController.movieInfoRecommendedMap.plus(Pair(id, MovieDetailInfoFragment.recommendedMovieItems))
-                success = true
             }
 
             override fun onFailure(call: Call<RecommendedMovie>, t: Throwable) {
