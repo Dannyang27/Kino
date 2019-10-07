@@ -8,16 +8,26 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ledannyyang.movies.Activities.MovieDetailActivity
 import com.example.ledannyyang.movies.AllMightyDataController
+import com.example.ledannyyang.movies.DiffUtil.MovieDiffCallback
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
+import com.example.ledannyyang.movies.Room.MyRoomDatabase
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class MainActivityAdapter(private val movies: MutableList<Movie>, val isUpcoming: Boolean = false) :
-        RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(){
+        RecyclerView.Adapter<MainActivityAdapter.NowPlayingViewHolder>(), CoroutineScope{
+
+    private val job = Job()
+    override val coroutineContext = Dispatchers.IO + job
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
         var movieId = -1
@@ -70,8 +80,12 @@ class MainActivityAdapter(private val movies: MutableList<Movie>, val isUpcoming
             holder.vote.text = if(movie.score != 0.0) movie.score.toString() else "N/A"
         }
 
-        holder.itemView.setOnLongClickListener {
-                Toast.makeText(it.context, "Added to Watchlist", Toast.LENGTH_LONG).show()
+        holder.itemView.setOnLongClickListener { view ->
+                launch {
+                    MyRoomDatabase.getMyRoomDatabase(view.context)?.addMovie(movie)
+                }.also {
+                    Toast.makeText(view.context, "Added to Watchlist", Toast.LENGTH_LONG).show()
+                }
                 true
         }
 
@@ -95,4 +109,11 @@ class MainActivityAdapter(private val movies: MutableList<Movie>, val isUpcoming
     }
 
     override fun getItemCount(): Int = movies.size
+
+    fun updateList( newMovies: MutableList<Movie>){
+        val diffResult : DiffUtil.DiffResult = DiffUtil.calculateDiff(MovieDiffCallback(movies, newMovies))
+        movies.clear()
+        movies.addAll(newMovies)
+        diffResult.dispatchUpdatesTo(this)
+    }
 }

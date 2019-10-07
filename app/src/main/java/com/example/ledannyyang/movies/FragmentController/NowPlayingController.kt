@@ -24,8 +24,12 @@ class NowPlayingController : Fragment(){
     var page = 2
 
     companion object {
-        lateinit var viewAdapter: RecyclerView.Adapter<*>
+        lateinit var viewAdapter: MainActivityAdapter
         fun newInstance(): NowPlayingController = NowPlayingController()
+
+        fun updateList(movies: MutableList<Movie>){
+            viewAdapter.updateList(movies)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
