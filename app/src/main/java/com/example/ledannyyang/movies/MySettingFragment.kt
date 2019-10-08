@@ -1,5 +1,7 @@
 package com.example.ledannyyang.movies
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -40,7 +42,9 @@ class MySettingFragment : PreferenceFragmentCompat(){
         }
 
         sendFeedback.setOnPreferenceClickListener {
-            sendFeedback.context.toast(getString(R.string.sendFeedback))
+            val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.owner_email), null))
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.kino_feedback))
+            startActivity(Intent.createChooser(intent, getString(R.string.send_email)))
             true
         }
     }

@@ -45,6 +45,7 @@ class TopRatedActivity : AppCompatActivity(), CoroutineScope {
 
         toolbar = findViewById(R.id.top_rated_toolbar)
         toolbar.title = getString(R.string.toprated)
+        toolbar.setTitleTextColor(getColor(R.color.white))
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

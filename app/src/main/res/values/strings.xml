@@ -65,4 +65,7 @@
     <string name="view_less">View less</string>
     <string name="no_internet">No internet connection</string>
     <string name="image_transition">image_transition</string>
+    <string name="owner_email">ledanny.yang@gmail.com</string>
+    <string name="send_email">Send email using:</string>
+    <string name="kino_feedback">KINO feedback</string>
 </resources>
