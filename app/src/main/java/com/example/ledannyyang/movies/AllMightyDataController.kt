@@ -1,6 +1,7 @@
 package com.example.ledannyyang.movies
 
 import com.example.ledannyyang.movies.Model.Credit.CastItem
+import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.PortraitMovie.PortraitMovie
 import com.example.ledannyyang.movies.Model.Review.ReviewItem
@@ -20,6 +21,8 @@ object AllMightyDataController{
     val movieInfoDirectorMap: MutableMap<Int, String> = mutableMapOf()
     val movieCastMap = mapOf<Int, MutableList<CastItem>>()
     val movieReviewMap = mapOf<Int, MutableList<ReviewItem>>()
+
+    val topRatedMovies = mutableListOf<Movie>()
 
     var movieDetailFrom = MovieTypes.NOWPLAYING
 

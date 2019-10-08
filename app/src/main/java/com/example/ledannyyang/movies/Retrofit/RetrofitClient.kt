@@ -174,14 +174,16 @@ object RetrofitClient{
         call.enqueue(object: Callback<TopRated>{
             override fun onResponse(call: Call<TopRated>, response: Response<TopRated>) {
                 val list = response.body()?.copy()?.results
-                val movies = mutableListOf<Movie>()
-                movies.addAll(items)
 
                 list?.filter { it.posterPath != "" }?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                         it.voteAverage, it.releaseDate, it.posterPath)
-                    movies.add(movie)
+
+                    AllMightyDataController.topRatedMovies.add(movie)
                 }
+
+                val movies = mutableListOf<Movie>()
+                movies.addAll(AllMightyDataController.topRatedMovies)
 
                 TopRatedActivity.updateList(movies)
                 success = true

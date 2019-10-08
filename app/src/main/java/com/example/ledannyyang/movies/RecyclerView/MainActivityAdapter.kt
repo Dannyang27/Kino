@@ -1,5 +1,7 @@
 package com.example.ledannyyang.movies.RecyclerView
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +50,9 @@ class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = nu
                     val intent = Intent(it.context, MovieDetailActivity::class.java)
                     intent.putExtra(AllMightyDataController.currentMovieID, movieId)
                     AllMightyDataController.releaseDate =  releaseDate
-                    it.context.startActivity(intent)
+                    val options = ActivityOptions.makeSceneTransitionAnimation(
+                        it.context as Activity, poster as View, it.context.getString(R.string.image_transition))
+                    it.context.startActivity(intent, options.toBundle())
                 }else{
                     it.context.toast(it.context.getString(R.string.no_internet))
                 }
@@ -68,7 +72,10 @@ class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = nu
                     val intent = Intent(it.context, MovieDetailActivity::class.java)
                     intent.putExtra(AllMightyDataController.currentMovieID, movieId)
                     AllMightyDataController.releaseDate =  releaseDate
-                    it.context.startActivity(intent)
+
+                    val options = ActivityOptions.makeSceneTransitionAnimation(
+                        it.context as Activity, poster as View, it.context.getString(R.string.image_transition))
+                    it.context.startActivity(intent, options.toBundle())
                 }else{
                     it.context.toast(it.context.getString(R.string.no_internet))
                 }

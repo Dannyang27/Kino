@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
@@ -58,9 +59,15 @@ class TopRatedActivity : AppCompatActivity(), CoroutineScope {
             adapter = viewAdapter
         }
 
-        launch {
-            RetrofitClient.getTopRated(movies)
+        if(AllMightyDataController.topRatedMovies.isEmpty()){
+            launch {
+                RetrofitClient.getTopRated(movies)
+            }
+        }else{
+            updateList(AllMightyDataController.topRatedMovies)
+            viewAdapter.notifyDataSetChanged()
         }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId){

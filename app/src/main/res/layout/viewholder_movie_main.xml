@@ -23,7 +23,8 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/nophoto"
                 android:scaleType="fitXY"
-                android:padding="20px"/>
+                android:padding="20px"
+                android:transitionName="@string/image_transition"/>
         </LinearLayout>
 
         <LinearLayout
@@ -64,9 +65,5 @@
                 android:text="7.8"
                 android:textColor="@color/black"/>
         </LinearLayout>
-
-
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

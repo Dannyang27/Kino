@@ -64,4 +64,5 @@
     <string name="see_more">View more</string>
     <string name="view_less">View less</string>
     <string name="no_internet">No internet connection</string>
+    <string name="image_transition">image_transition</string>
 </resources>

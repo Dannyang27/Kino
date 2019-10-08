@@ -1,5 +1,7 @@
 package com.example.ledannyyang.movies.RecyclerView
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.view.View
 import android.widget.ImageView
@@ -16,7 +18,7 @@ class MoviePortraitViewHolder(view : View) : RecyclerView.ViewHolder(view){
         view.setOnClickListener {
             val intent = Intent(it.context, MovieDetailActivity::class.java)
             intent.putExtra(AllMightyDataController.currentMovieID, id)
-            it.context.startActivity(intent)
+            it.context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(it.context as Activity).toBundle())
         }
     }
 }
