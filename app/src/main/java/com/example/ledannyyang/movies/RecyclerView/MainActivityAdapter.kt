@@ -83,7 +83,7 @@ class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = nu
         when(viewType){
             ViewType.LIST.ordinal -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.viewholder_nowplaying, parent, false)
+                    .inflate(R.layout.viewholder_movie_main, parent, false)
 
                 return NowPlayingViewHolder(view)
             }
