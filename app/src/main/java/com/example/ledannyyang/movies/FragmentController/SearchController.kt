@@ -15,6 +15,7 @@ import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
 import com.example.ledannyyang.movies.RecyclerView.MainActivityAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
+import com.example.ledannyyang.movies.enums.MovieTypes
 
 class SearchController : Fragment(){
 
@@ -61,7 +62,7 @@ class SearchController : Fragment(){
         })
 
         viewManager = LinearLayoutManager(activity?.applicationContext!!)
-        viewAdapter = MainActivityAdapter(gridLayoutManager, movies)
+        viewAdapter = MainActivityAdapter(gridLayoutManager, movies, MovieTypes.SEARCH)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.search_recyclerview).apply {
             setHasFixedSize(true)

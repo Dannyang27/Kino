@@ -24,7 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = null, private val movies: MutableList<Movie>, val fromFragment: MovieTypes = MovieTypes.NOWPLAYING) :
+class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = null, private val movies: MutableList<Movie>, val fromFragment: MovieTypes) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(), CoroutineScope{
 
     private val job = Job()

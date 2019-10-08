@@ -16,6 +16,7 @@ import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
 import com.example.ledannyyang.movies.RecyclerView.MainActivityAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.example.ledannyyang.movies.Utils.RegionUtils
+import com.example.ledannyyang.movies.enums.MovieTypes
 
 class NowPlayingController : Fragment(){
     private lateinit var viewManager : RecyclerView.LayoutManager
@@ -52,7 +53,7 @@ class NowPlayingController : Fragment(){
         gridLayoutManager = GridLayoutManager(activity, 1)
 
         viewManager = LinearLayoutManager(activity?.applicationContext!!)
-        viewAdapter = MainActivityAdapter(gridLayoutManager, nowPlayingItems)
+        viewAdapter = MainActivityAdapter(gridLayoutManager, nowPlayingItems, MovieTypes.NOWPLAYING)
         decorator = HorizontalDivider(activity?.applicationContext!!)
 
         val regionPref = PreferenceManager.getDefaultSharedPreferences(activity).getString("region", "GB")
