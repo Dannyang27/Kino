@@ -17,6 +17,7 @@ import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
 import com.example.ledannyyang.movies.RecyclerView.MainActivityAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.example.ledannyyang.movies.Utils.RegionUtils
+import com.example.ledannyyang.movies.enums.MovieTypes
 
 class UpcomingController : Fragment(){
     private lateinit var pref: SharedPreferences
@@ -54,7 +55,7 @@ class UpcomingController : Fragment(){
         gridLayoutManager = GridLayoutManager(activity, 1)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainActivityAdapter(gridLayoutManager, upcomingItems, true)
+        viewAdapter = MainActivityAdapter(gridLayoutManager, upcomingItems, MovieTypes.UPCOMING)
         decorator = HorizontalDivider(activity?.applicationContext!!)
 
         pref = PreferenceManager.getDefaultSharedPreferences(activity)

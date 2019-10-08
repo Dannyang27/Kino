@@ -55,6 +55,7 @@ abstract class MyRoomDatabase: RoomDatabase(), CoroutineScope{
     suspend fun deleteMovie(movie: Movie){
         launch {
             movieDAO().delete(movie)
+            WatchListController.updateList(movieDAO().getWatchlist())
         }.also {
             Log.d("APIQUERY", "Movie: ${movie.title} deleted from Watchlist")
         }

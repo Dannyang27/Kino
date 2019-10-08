@@ -17,17 +17,19 @@ import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Room.MyRoomDatabase
 import com.example.ledannyyang.movies.Utils.GenresUtils
+import com.example.ledannyyang.movies.enums.MovieTypes
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = null, private val movies: MutableList<Movie>, val isUpcoming: Boolean = false) :
+class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = null, private val movies: MutableList<Movie>, val fromFragment: MovieTypes = MovieTypes.NOWPLAYING) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(), CoroutineScope{
 
     private val job = Job()
     override val coroutineContext = Dispatchers.IO + job
+    private lateinit var database: MyRoomDatabase
 
     class NowPlayingViewHolder( view : View) : RecyclerView.ViewHolder(view){
         var movieId = -1
@@ -109,7 +111,7 @@ class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = nu
             holder.genre?.text = GenresUtils.getGenresFromString(movie.genres)
 
 
-            if(isUpcoming){
+            if(fromFragment == MovieTypes.UPCOMING){
                 holder.year?.visibility = View.GONE
                 holder.vote?.text = movie.releaseDate
             }else{
@@ -137,13 +139,26 @@ class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = nu
             holder.title?.text = movie.title
         }
 
-        holder.itemView.setOnLongClickListener { view ->
-            launch {
-                MyRoomDatabase.getMyRoomDatabase(view.context)?.addMovie(movie)
-            }.also {
-                Toast.makeText(view.context, "Added to Watchlist", Toast.LENGTH_LONG).show()
+        database = MyRoomDatabase.getMyRoomDatabase(holder.itemView.context)!!
+        if(fromFragment == MovieTypes.WATCHLIST){
+            holder.itemView.setOnLongClickListener { view ->
+                launch {
+                    database.deleteMovie(movie)
+                }.also {
+                    Toast.makeText(view.context, "Removed from Watchlist", Toast.LENGTH_LONG).show()
+                }
+
+                true
             }
-            true
+        }else{
+            holder.itemView.setOnLongClickListener { view ->
+                launch {
+                    MyRoomDatabase.getMyRoomDatabase(view.context)?.addMovie(movie)
+                }.also {
+                    Toast.makeText(view.context, "Added to Watchlist", Toast.LENGTH_LONG).show()
+                }
+                true
+            }
         }
     }
 

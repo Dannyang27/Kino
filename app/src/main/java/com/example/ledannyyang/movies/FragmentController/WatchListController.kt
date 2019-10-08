@@ -14,6 +14,7 @@ import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
 import com.example.ledannyyang.movies.RecyclerView.MainActivityAdapter
 import com.example.ledannyyang.movies.Room.MyRoomDatabase
+import com.example.ledannyyang.movies.enums.MovieTypes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -75,7 +76,7 @@ class WatchListController : Fragment(), CoroutineScope{
         gridLayoutManager = GridLayoutManager(activity, 1)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainActivityAdapter(gridLayoutManager, watchlistItems)
+        viewAdapter = MainActivityAdapter(gridLayoutManager, watchlistItems, MovieTypes.WATCHLIST)
         decorator = HorizontalDivider(activity?.applicationContext!!)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.watchlist_rv).apply{
