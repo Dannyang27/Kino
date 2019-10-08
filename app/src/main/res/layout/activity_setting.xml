@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:elevation="4dp"/>
+        android:elevation="4dp"
+        android:theme="@style/ToolbarTheme"/>
 
     <FrameLayout
         android:id="@+id/setting_container"

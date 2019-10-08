@@ -17,6 +17,7 @@ class SettingActivity : AppCompatActivity() {
 
         toolbar = findViewById(R.id.setting_toolbar)
         toolbar.title = getString(R.string.setting_toolbar)
+        toolbar.setTitleTextColor(getColor(R.color.white))
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
