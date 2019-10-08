@@ -35,6 +35,15 @@
             android:fontFamily="@font/robotoregular"
             android:gravity="center"
             android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tip_add"
+            android:textSize="16sp"
+            android:fontFamily="@font/robotoregular"
+            android:gravity="center"
+            android:layout_marginTop="20dp"/>
     </LinearLayout>
 
 </RelativeLayout>

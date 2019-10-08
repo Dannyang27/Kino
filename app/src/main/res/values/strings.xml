@@ -72,4 +72,5 @@
     <string name="delete_sure">Are you sure you want to clear your watchlist?</string>
     <string name="delete_sure_cache">Are you sure you want to clear the cache?</string>
     <string name="delete_cache">Delete cache</string>
+    <string name="tip_add">Try long pressing a movie</string>
 </resources>
