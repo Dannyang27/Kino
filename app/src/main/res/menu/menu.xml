@@ -5,8 +5,8 @@
         android:title="@string/grid"
         android:icon="@drawable/grid"
         app:showAsAction="always"/>
-    <item android:id="@+id/morecategories"
-        android:title="@string/morecategories"
+    <item android:id="@+id/view_top_rated"
+        android:title="@string/toprated"
         app:showAsAction="collapseActionView"/>
     <item android:id="@+id/settings"
         android:title="@string/settings"

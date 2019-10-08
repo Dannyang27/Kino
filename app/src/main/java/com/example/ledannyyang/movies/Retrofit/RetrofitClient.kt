@@ -1,6 +1,7 @@
 package com.example.ledannyyang.movies.Retrofit
 
 import android.util.Log
+import com.example.ledannyyang.movies.Activities.TopRatedActivity
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.SearchController
@@ -165,16 +166,24 @@ object RetrofitClient{
         return success
     }
 
-    fun getTopRated(language: String = "en-US", page: Int = 1): Boolean{
+    fun getTopRated(items: MutableList<Movie>, language: String = "en-US", page: Int = 1): Boolean{
 
         val call = service.getTopRated(language, page.toString())
         var success = false
 
         call.enqueue(object: Callback<TopRated>{
             override fun onResponse(call: Call<TopRated>, response: Response<TopRated>) {
-                response.body()?.copy()?.results?.iterator()?.forEach {
-                    Log.d(API, "TopRated movie id ${it.id}, title = ${it.title}")
+                val list = response.body()?.copy()?.results
+                val movies = mutableListOf<Movie>()
+                movies.addAll(items)
+
+                list?.filter { it.posterPath != "" }?.forEach {
+                    val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
+                        it.voteAverage, it.releaseDate, it.posterPath)
+                    movies.add(movie)
                 }
+
+                TopRatedActivity.updateList(movies)
                 success = true
             }
 

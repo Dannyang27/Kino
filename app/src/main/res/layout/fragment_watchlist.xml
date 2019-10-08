@@ -5,41 +5,36 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/watchlist_swiperefresh"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/watchlist_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/watchlist_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp" />
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp" />
 
-        <LinearLayout
-            android:id="@+id/watchlist_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+    <LinearLayout
+        android:id="@+id/watchlist_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="60dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/noreview"/>
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/emptyWatchlist"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/robotoregular"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="60dp"
-            android:visibility="gone">
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/noreview"/>
-
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="@string/emptyWatchlist"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/robotoregular"
-                android:gravity="center"
-                android:layout_marginTop="20dp"/>
-        </LinearLayout>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

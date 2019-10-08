@@ -40,8 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/font_size_large"
-                        android:textStyle="bold"
-                        android:text="@string/title"/>
+                        android:textStyle="bold"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -192,6 +191,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/recommendedmovies"
+                    android:fontFamily="@font/robotobold"
                     android:textSize="@dimen/font_size_medium"
                     android:textColor="@color/black"/>
 
@@ -214,6 +214,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/similarmovies"
+                    android:fontFamily="@font/robotobold"
                     android:textSize="@dimen/font_size_medium"
                     android:textColor="@color/black"/>
 

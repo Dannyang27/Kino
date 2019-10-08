@@ -125,7 +125,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             true
         }
 
-        R.id.morecategories -> {
+        R.id.view_top_rated -> {
+            val intent = Intent(this, TopRatedActivity::class.java)
+            startActivity(intent)
             true
         }
 

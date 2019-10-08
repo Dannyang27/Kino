@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
@@ -23,7 +22,6 @@ import kotlinx.coroutines.launch
 
 class WatchListController : Fragment(), CoroutineScope{
     private val job = Job()
-    private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var viewManager : RecyclerView.LayoutManager
     override val coroutineContext = Dispatchers.IO + job
 
@@ -74,7 +72,6 @@ class WatchListController : Fragment(), CoroutineScope{
             MyRoomDatabase.getMyRoomDatabase(activity?.applicationContext!!)?.getWatchlist()!!
         }
 
-        swipeRefresh = view.findViewById(R.id.watchlist_swiperefresh)
         gridLayoutManager = GridLayoutManager(activity, 1)
 
         viewManager = LinearLayoutManager(activity)
@@ -86,16 +83,6 @@ class WatchListController : Fragment(), CoroutineScope{
             layoutManager = gridLayoutManager
             addItemDecoration(decorator)
             adapter = viewAdapter
-        }
-
-        swipeRefresh.setOnRefreshListener {
-            watchlistItems.clear()
-            viewAdapter.notifyDataSetChanged()
-            launch {
-                MyRoomDatabase.getMyRoomDatabase(activity?.applicationContext!!)?.getWatchlist()!!
-            }
-
-            swipeRefresh.isRefreshing = false
         }
 
         return view
