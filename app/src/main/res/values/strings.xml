@@ -61,4 +61,6 @@
     <string name="noresult">I could not find the movie, sorry!</string>
     <string name="morecategories">More categories</string>
     <string name="grid">Grid</string>
+    <string name="see_more">View more</string>
+    <string name="view_less">View less</string>
 </resources>
