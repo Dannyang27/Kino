@@ -10,17 +10,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.ledannyyang.movies.AllMightyDataController
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.RecyclerView.HorizontalDivider
 import com.example.ledannyyang.movies.RecyclerView.MainActivityAdapter
 import com.example.ledannyyang.movies.Retrofit.RetrofitClient
+import com.example.ledannyyang.movies.Utils.ConnectionUtils
 import com.example.ledannyyang.movies.Utils.RegionUtils
 import com.example.ledannyyang.movies.enums.MovieTypes
+import org.jetbrains.anko.toast
 
 class UpcomingController : Fragment(){
     private lateinit var pref: SharedPreferences
+    private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var viewManager : RecyclerView.LayoutManager
     private val upcomingItems = mutableListOf<Movie>()
     var page = 2
@@ -52,6 +56,7 @@ class UpcomingController : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view =  inflater.inflate(R.layout.fragment_upcoming, container, false)
 
+        swipeRefresh = view.findViewById(R.id.upcoming_swiperefresh)
         gridLayoutManager = GridLayoutManager(activity, 1)
 
         viewManager = LinearLayoutManager(activity)
@@ -80,6 +85,19 @@ class UpcomingController : Fragment(){
             })
         }
 
+        swipeRefresh.setOnRefreshListener {
+            if(ConnectionUtils.isConnectedToNetwork(activity?.applicationContext!!)) {
+                upcomingItems.clear()
+                viewAdapter.notifyDataSetChanged()
+                page = 1
+                RetrofitClient.getUpcoming(upcomingItems, page = page, region = region)
+                page++
+                swipeRefresh.isRefreshing = false
+            }else{
+                val context = swipeRefresh.context
+                context.toast(context.getString(R.string.no_internet))
+            }
+        }
         return view
     }
 }

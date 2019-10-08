@@ -16,6 +16,7 @@ import com.example.ledannyyang.movies.DiffUtil.MovieDiffCallback
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.R
 import com.example.ledannyyang.movies.Room.MyRoomDatabase
+import com.example.ledannyyang.movies.Utils.ConnectionUtils
 import com.example.ledannyyang.movies.Utils.GenresUtils
 import com.example.ledannyyang.movies.enums.MovieTypes
 import com.squareup.picasso.Picasso
@@ -23,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.toast
 
 class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = null, private val movies: MutableList<Movie>, val fromFragment: MovieTypes) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(), CoroutineScope{
@@ -42,10 +44,14 @@ class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = nu
 
         init{
             view.setOnClickListener {
-                val intent = Intent(it.context, MovieDetailActivity::class.java)
-                intent.putExtra(AllMightyDataController.currentMovieID, movieId)
-                AllMightyDataController.releaseDate =  releaseDate
-                it.context.startActivity(intent)
+                if(ConnectionUtils.isConnectedToNetwork(it.context)){
+                    val intent = Intent(it.context, MovieDetailActivity::class.java)
+                    intent.putExtra(AllMightyDataController.currentMovieID, movieId)
+                    AllMightyDataController.releaseDate =  releaseDate
+                    it.context.startActivity(intent)
+                }else{
+                    it.context.toast(it.context.getString(R.string.no_internet))
+                }
             }
         }
     }
@@ -58,10 +64,14 @@ class MainActivityAdapter(private val gridLayoutManager: GridLayoutManager? = nu
 
         init{
             view.setOnClickListener {
-                val intent = Intent(it.context, MovieDetailActivity::class.java)
-                intent.putExtra(AllMightyDataController.currentMovieID, movieId)
-                AllMightyDataController.releaseDate =  releaseDate
-                it.context.startActivity(intent)
+                if(ConnectionUtils.isConnectedToNetwork(it.context)){
+                    val intent = Intent(it.context, MovieDetailActivity::class.java)
+                    intent.putExtra(AllMightyDataController.currentMovieID, movieId)
+                    AllMightyDataController.releaseDate =  releaseDate
+                    it.context.startActivity(intent)
+                }else{
+                    it.context.toast(it.context.getString(R.string.no_internet))
+                }
             }
         }
     }
