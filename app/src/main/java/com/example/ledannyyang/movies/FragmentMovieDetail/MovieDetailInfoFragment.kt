@@ -72,7 +72,12 @@ class MovieDetailInfoFragment : Fragment(){
 
             title.text = movie.title
             genre.text = StringUtils.removeBrackets(genres!!)
-            duration.text = "${movie.runtime} min"
+            if(movie.runtime != null){
+                duration.text = "${movie.runtime} min"
+            }else{
+                duration.text = "N/A"
+            }
+
             releasedDate.text = AllMightyDataController.releaseDate
             homepage.text = movie.homepage ?: "N/A"
             sinopse.text = movie.overview

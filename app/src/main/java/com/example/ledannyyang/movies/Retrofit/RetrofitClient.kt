@@ -10,7 +10,6 @@ import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailCastFragmen
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailInfoFragment
 import com.example.ledannyyang.movies.FragmentMovieDetail.MovieDetailReviewFragment
 import com.example.ledannyyang.movies.Model.Credit.Credit
-import com.example.ledannyyang.movies.Model.ExternalSocialNetwork.ExternalSocialNetwork
 import com.example.ledannyyang.movies.Model.Movie
 import com.example.ledannyyang.movies.Model.MovieDetail.MovieDetail
 import com.example.ledannyyang.movies.Model.NowPlaying.NowPlaying
@@ -33,21 +32,17 @@ import java.time.format.DateTimeFormatter
 
 object RetrofitClient{
 
-    val API = "APIQUERY"
-    val baseUrl = "https://api.themoviedb.org"
-    val api_key = "6ee8506f55fda3da84e75f9a5f8baa76"
-
-    val retrofit = Retrofit.Builder()
+    private val API = "APIQUERY"
+    private val baseUrl = "https://api.themoviedb.org"
+    private val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    val service = retrofit.create(GithubService::class.java)
+    private val service = retrofit.create(GithubService::class.java)
 
-    fun getMovieDetail(id: Int, language:String = "en-US") : Boolean {
-
+    fun getMovieDetail(id: Int, language:String = "en-US"){
         val call = service.getMovieDetail(id.toString(), language)
-        var success = false
         call.enqueue(object : Callback<MovieDetail>{
             override fun onResponse(call: Call<MovieDetail>?, response: Response<MovieDetail>?) {
                 val movieDetail = response?.body()?.copy()
@@ -55,21 +50,15 @@ object RetrofitClient{
                     MovieDetailInfoFragment.setInfo(it!!)
                     AllMightyDataController.movieInfoMap.plus(Pair(id, it))
                 }
-                success = true
             }
             override fun onFailure(call: Call<MovieDetail>?, t: Throwable?) {
                 Log.d(API, "Could not get details movies")
-                success = false
             }
         })
-        return success
     }
 
-    fun getSearchMovie(items: MutableList<Movie>, query: String, language:String = "en-US", page: Int = 1) : Boolean {
-
+    fun getSearchMovie(items: MutableList<Movie>, query: String, language:String = "en-US", page: Int = 1){
         val call = service.getSearchMovie(language, query, page.toString())
-        var success = false
-
         call.enqueue(object: Callback<SearchMovie>{
             override fun onResponse(call: Call<SearchMovie>, response: Response<SearchMovie>) {
                 val searchMovie = response.body()?.copy()
@@ -90,23 +79,17 @@ object RetrofitClient{
                     }
 
                     SearchController.updateList(movies)
-                    success = true
                 }
             }
 
             override fun onFailure(call: Call<SearchMovie>, t: Throwable) {
                 Log.d(API, "Could not get movies (Search)")
-                success = false
             }
         })
-
-        return success
     }
 
-    fun getNowPlaying(items: MutableList<Movie>, language:String = "en-US", page: Int = 1, region: String = "GB") : Boolean{
-
+    fun getNowPlaying(items: MutableList<Movie>, language:String = "en-US", page: Int = 1, region: String = "GB"){
         val call = service.getNowPlaying(language, page.toString(), region)
-        var success = false
         call.enqueue(object : Callback<NowPlaying>{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 val nowPlaying = response?.body()?.copy()
@@ -123,14 +106,11 @@ object RetrofitClient{
                 }
 
                 NowPlayingController.updateList(movies)
-                success = true
             }
             override fun onFailure(call: Call<NowPlaying>?, t: Throwable?) {
                 Log.d(API, "Could not get Now Playing movies")
-                success = false
             }
         })
-        return success
     }
 
 
@@ -166,40 +146,30 @@ object RetrofitClient{
         return success
     }
 
-    fun getTopRated(language: String = "en-US", page: Int = 1): Boolean{
-
+    fun getTopRated(language: String = "en-US", page: Int = 1){
         val call = service.getTopRated(language, page.toString())
-        var success = false
-
         call.enqueue(object: Callback<TopRated>{
             override fun onResponse(call: Call<TopRated>, response: Response<TopRated>) {
                 val list = response.body()?.copy()?.results
-
                 list?.filter { it.posterPath != "" }?.forEach {
                     val movie = Movie(it.id, it.title, StringUtils.removeBrackets(it.genreIds.map { it.toString() }),
                         it.voteAverage, it.releaseDate, it.posterPath)
-
                     AllMightyDataController.topRatedMovies.add(movie)
                 }
 
                 val movies = mutableListOf<Movie>()
                 movies.addAll(AllMightyDataController.topRatedMovies)
-
                 TopRatedActivity.updateList(movies)
-                success = true
             }
 
             override fun onFailure(call: Call<TopRated>, t: Throwable) {
                 Log.d(API, "Could not get top rated movies")
-                success = false
             }
         })
-        return success
     }
 
-    fun getSimilarMoviesById( id: Int, language: String = "en-US", page : Int = 1): Boolean{
+    fun getSimilarMoviesById( id: Int, language: String = "en-US", page : Int = 1){
         val call = service.getSimilarMoviesById( id.toString(), language, page.toString())
-        var success = false
         call.enqueue(object : Callback<SimilarMovie>{
             override fun onResponse(call: Call<SimilarMovie>, response: Response<SimilarMovie>) {
                 val movies = response.body()?.copy()?.results
@@ -210,21 +180,17 @@ object RetrofitClient{
                     }
                     MovieDetailInfoFragment.similarMovieAdapter.notifyDataSetChanged()
                     AllMightyDataController.movieInfoSimilarMap.plus(Pair(id, MovieDetailInfoFragment.similarMovieItems))
-                    success = true
                 }
             }
 
             override fun onFailure(call: Call<SimilarMovie>, t: Throwable) {
                 Log.d(API, "Could not get Similar Movies")
-                success = false
             }
         })
-        return success
     }
 
-    fun getRecommendedMoviesById( id: Int, language: String = "en-US", page : Int = 1): Boolean{
+    fun getRecommendedMoviesById( id: Int, language: String = "en-US", page : Int = 1){
         val call = service.getRecommendedMoviesById( id.toString(), language, page.toString())
-        var success = false
         call.enqueue(object : Callback<RecommendedMovie>{
 
             override fun onResponse(call: Call<RecommendedMovie>, response: Response<RecommendedMovie>) {
@@ -236,21 +202,17 @@ object RetrofitClient{
                     }
                     MovieDetailInfoFragment.recommendedMovieAdapter.notifyDataSetChanged()
                     AllMightyDataController.movieInfoRecommendedMap.plus(Pair(id, MovieDetailInfoFragment.recommendedMovieItems))
-                    success = true
                 }
             }
 
             override fun onFailure(call: Call<RecommendedMovie>, t: Throwable) {
                 Log.d(API, "Could not get Recommended Movies")
-                success = false
             }
         })
-        return success
     }
 
-    fun getReviewsById( id: Int, language: String = "en-US", page : Int = 1) : Boolean {
+    fun getReviewsById( id: Int, language: String = "en-US", page : Int = 1){
         val call = service.getReviewsById( id.toString(), language, page.toString())
-        var success = false
         call.enqueue(object : Callback<Review>{
             override fun onResponse(call: Call<Review>, response: Response<Review>) {
                 val reviews = response.body()?.copy()?.results
@@ -265,61 +227,32 @@ object RetrofitClient{
                     MovieDetailReviewFragment.reviewAdapter.notifyDataSetChanged()
                     AllMightyDataController.movieReviewMap.plus(Pair(id, MovieDetailReviewFragment.reviews))
                 }
-
-                success = true
             }
             override fun onFailure(call: Call<Review>, t: Throwable) {
                 Log.d(API, "Could not get Reviews from the Movie")
-                success = false
             }
         })
-        return success
     }
 
-    // gets only first trailer if exist
-    fun getVideosById( id: Int, language: String = "en-US"): Boolean{
+    fun getVideosById( id: Int, language: String = "en-US"){
         val call = service.getVideosById( id.toString(), language)
-        var success = false
         call.enqueue(object : Callback<Video>{
             override fun onResponse(call: Call<Video>, response: Response<Video>) {
                 val videoItem = response.body()?.copy()?.results
                 if(videoItem?.getOrNull(0) != null){
-                    val key = videoItem?.get(0).key
+                    val key = videoItem.get(0).key
                     MovieDetailInfoFragment.trailerKey = key
                     AllMightyDataController.trailerLoaded.plus(Pair(id, key))
-                    success = true
-                }else{
-                    success = false
                 }
             }
             override fun onFailure(call: Call<Video>, t: Throwable) {
                 Log.d(API, "Could not get trailers from the Movie")
-                success = false
             }
         })
-        return success
     }
 
-    fun getExternalSocialNetwork( id: Int) : Boolean{
-        val call = service.getExternalSocialNetwork( id.toString())
-        var success = false
-        call.enqueue(object : Callback<ExternalSocialNetwork>{
-            override fun onResponse(call: Call<ExternalSocialNetwork>, response: Response<ExternalSocialNetwork>) {
-                val socialNetwork = response.body()?.copy()
-                Log.d(API, "Instagram = @${socialNetwork?.instagramId}, Twitter = @${socialNetwork?.twitterId}")
-                success = true
-            }
-            override fun onFailure(call: Call<ExternalSocialNetwork>, t: Throwable) {
-                Log.d(API, "Could not get External Social Networks")
-                success = false
-            }
-        })
-        return success
-    }
-
-    fun getCredits( id: Int): Boolean{
+    fun getCredits( id: Int){
         val call = service.getCredits( id.toString())
-        var success = false
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                 response.body()?.copy()?.cast?.filter { !it.profilePath.isNullOrBlank()}?.sortedBy { it.order }?.take(10)?.iterator()?.forEach {
@@ -328,20 +261,16 @@ object RetrofitClient{
                 }
                 MovieDetailCastFragment.castAdapter.notifyDataSetChanged()
                 AllMightyDataController.movieCastMap.plus(Pair(id, MovieDetailCastFragment.credits))
-                success = true
             }
             override fun onFailure(call: Call<Credit>, t: Throwable) {
                 Log.d(API, "Could not get Credits")
-                success = false
             }
         })
-        return success
     }
 
 
-    fun getDirector( id: Int) : Boolean{
+    fun getDirector( id: Int){
         val call = service.getCredits( id.toString())
-        var success = false
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                 val director = response.body()?.copy()?.crew?.filter { it.job.equals("Director") }?.map { it.name }
@@ -350,13 +279,10 @@ object RetrofitClient{
                     MovieDetailInfoFragment.setDirector(director)
                     AllMightyDataController.movieInfoDirectorMap.put(id, director)
                 }
-                success = true
             }
             override fun onFailure(call: Call<Credit>, t: Throwable) {
                 Log.d(API, "Could not get Director")
-                success = false
             }
         })
-        return success
     }
 }

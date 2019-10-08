@@ -68,7 +68,6 @@ class TopRatedActivity : AppCompatActivity(), CoroutineScope {
             updateList(AllMightyDataController.topRatedMovies)
             viewAdapter.notifyDataSetChanged()
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId){
