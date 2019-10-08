@@ -1,8 +1,6 @@
 package com.example.ledannyyang.movies.FragmentController
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +21,6 @@ import kotlinx.coroutines.launch
 
 class WatchListController : Fragment(), CoroutineScope{
     private val job = Job()
-    private lateinit var pref: SharedPreferences
     private lateinit var viewManager : RecyclerView.LayoutManager
 
     override val coroutineContext = Dispatchers.IO + job
@@ -75,14 +72,7 @@ class WatchListController : Fragment(), CoroutineScope{
             MyRoomDatabase.getMyRoomDatabase(activity?.applicationContext!!)?.getWatchlist()!!
         }
 
-        pref = PreferenceManager.getDefaultSharedPreferences(activity)
-        val isGridMode = pref.getBoolean("gridMode", false)
-
-        if(isGridMode){
-            gridLayoutManager = GridLayoutManager(activity, 3)
-        }else{
-            gridLayoutManager = GridLayoutManager(activity, 1)
-        }
+        gridLayoutManager = GridLayoutManager(activity, 1)
 
         viewManager = LinearLayoutManager(activity)
         viewAdapter = MainActivityAdapter(gridLayoutManager, watchlistItems)

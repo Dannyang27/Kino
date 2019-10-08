@@ -84,6 +84,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         setSupportActionBar(mainToolbar)
 
+        pref = PreferenceManager.getDefaultSharedPreferences(this)
+
         val navigationBar = findViewById<BottomNavigationView>(R.id.navigationBar)
         navigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
@@ -99,6 +101,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onBackPressed() {}
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
@@ -106,26 +109,19 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId){
         R.id.preview -> {
-            pref = PreferenceManager.getDefaultSharedPreferences(this)
             val editor = pref.edit()
 
             if(currentLayoutIcon == R.drawable.list){
                 currentLayoutIcon = R.drawable.grid
-                editor.putBoolean("gridMode", true)
-                editor.apply()
             }else{
                 currentLayoutIcon = R.drawable.list
-                editor.putBoolean("gridMode", false)
-                editor.apply()
             }
 
             currentLayoutIcon?.let {
                 item.icon = getDrawable(it)
             }
 
-            NowPlayingController.changeSpanCount()
-            UpcomingController.changeSpanCount()
-            WatchListController.changeSpanCount()
+            changeControllerSpan()
             true
         }
 
@@ -140,5 +136,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
 
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun changeControllerSpan(){
+        NowPlayingController.changeSpanCount()
+        UpcomingController.changeSpanCount()
+        WatchListController.changeSpanCount()
     }
 }

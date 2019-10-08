@@ -19,7 +19,6 @@ import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.example.ledannyyang.movies.Utils.RegionUtils
 
 class UpcomingController : Fragment(){
-
     private lateinit var pref: SharedPreferences
     private lateinit var viewManager : RecyclerView.LayoutManager
     private val upcomingItems = mutableListOf<Movie>()
@@ -52,19 +51,13 @@ class UpcomingController : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view =  inflater.inflate(R.layout.fragment_upcoming, container, false)
 
-        pref = PreferenceManager.getDefaultSharedPreferences(activity)
-        val isGridMode = pref.getBoolean("gridMode", false)
-
-        if(isGridMode){
-            gridLayoutManager = GridLayoutManager(activity, 3)
-        }else{
-            gridLayoutManager = GridLayoutManager(activity, 1)
-        }
+        gridLayoutManager = GridLayoutManager(activity, 1)
 
         viewManager = LinearLayoutManager(activity)
         viewAdapter = MainActivityAdapter(gridLayoutManager, upcomingItems, true)
         decorator = HorizontalDivider(activity?.applicationContext!!)
 
+        pref = PreferenceManager.getDefaultSharedPreferences(activity)
         val regionPref = pref.getString("region", "GB")
         val region = RegionUtils.getIso3166(regionPref)
         RetrofitClient.getUpcoming(upcomingItems, region = region)

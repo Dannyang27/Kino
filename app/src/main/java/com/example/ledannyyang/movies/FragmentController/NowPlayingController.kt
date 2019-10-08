@@ -1,6 +1,5 @@
 package com.example.ledannyyang.movies.FragmentController
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
@@ -19,8 +18,6 @@ import com.example.ledannyyang.movies.Retrofit.RetrofitClient
 import com.example.ledannyyang.movies.Utils.RegionUtils
 
 class NowPlayingController : Fragment(){
-
-    private lateinit var pref: SharedPreferences
     private lateinit var viewManager : RecyclerView.LayoutManager
     var nowPlayingItems = mutableListOf<Movie>()
     var page = 2
@@ -52,14 +49,7 @@ class NowPlayingController : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_now_playing, container, false)
 
-        pref = PreferenceManager.getDefaultSharedPreferences(activity)
-        val isGridMode = pref.getBoolean("gridMode", false)
-
-        if(isGridMode){
-            gridLayoutManager = GridLayoutManager(activity, 3)
-        }else{
-            gridLayoutManager = GridLayoutManager(activity, 1)
-        }
+        gridLayoutManager = GridLayoutManager(activity, 1)
 
         viewManager = LinearLayoutManager(activity?.applicationContext!!)
         viewAdapter = MainActivityAdapter(gridLayoutManager, nowPlayingItems)
