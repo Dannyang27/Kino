@@ -166,7 +166,7 @@ object RetrofitClient{
         return success
     }
 
-    fun getTopRated(items: MutableList<Movie>, language: String = "en-US", page: Int = 1): Boolean{
+    fun getTopRated(language: String = "en-US", page: Int = 1): Boolean{
 
         val call = service.getTopRated(language, page.toString())
         var success = false

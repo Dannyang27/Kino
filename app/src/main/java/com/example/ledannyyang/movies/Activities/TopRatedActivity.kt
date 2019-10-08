@@ -61,7 +61,7 @@ class TopRatedActivity : AppCompatActivity(), CoroutineScope {
 
         if(AllMightyDataController.topRatedMovies.isEmpty()){
             launch {
-                RetrofitClient.getTopRated(movies)
+                RetrofitClient.getTopRated()
             }
         }else{
             updateList(AllMightyDataController.topRatedMovies)
