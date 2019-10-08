@@ -1,5 +1,7 @@
 package com.example.ledannyyang.movies
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -29,15 +31,39 @@ class MySettingFragment : PreferenceFragmentCompat(){
         }
 
         clearWatchlist.setOnPreferenceClickListener {
-            MyRoomDatabase.getMyRoomDatabase(clearWatchlist.context)?.clearWatchlist()
-            WatchListController.updateList(mutableListOf())
-            clearWatchlist.context.toast(getString(R.string.watchlist_clear))
+            val builder = AlertDialog.Builder(activity)
+            builder.setTitle(getString(R.string.delete_watchlist))
+            builder.setMessage(getString(R.string.delete_sure))
+
+            builder.setPositiveButton("Continue", DialogInterface.OnClickListener { dialog, which ->
+                MyRoomDatabase.getMyRoomDatabase(clearWatchlist.context)?.clearWatchlist()
+                    WatchListController.updateList(mutableListOf())
+                    clearWatchlist.context.toast(getString(R.string.watchlist_clear))
+                    true
+            })
+
+            builder.setNegativeButton("Cancel", null)
+            val dialog = builder.create()
+            dialog.show()
+
             true
         }
 
         deleteCache.setOnPreferenceClickListener {
-            deleteCache.context.cacheDir.deleteRecursively()
-            deleteCache.context.toast(getString(R.string.deleteCache))
+            val builder = AlertDialog.Builder(activity)
+            builder.setTitle(getString(R.string.delete_cache))
+            builder.setMessage(getString(R.string.delete_sure_cache))
+
+            builder.setPositiveButton("Continue", DialogInterface.OnClickListener { dialog, which ->
+                deleteCache.context.cacheDir.deleteRecursively()
+                deleteCache.context.toast(getString(R.string.deleteCache))
+                true
+            })
+
+            builder.setNegativeButton("Cancel", null)
+            val dialog = builder.create()
+            dialog.show()
+
             true
         }
 

@@ -68,4 +68,8 @@
     <string name="owner_email">ledanny.yang@gmail.com</string>
     <string name="send_email">Send email using:</string>
     <string name="kino_feedback">KINO feedback</string>
+    <string name="delete_watchlist">Clear Watchlist</string>
+    <string name="delete_sure">Are you sure you want to clear your watchlist?</string>
+    <string name="delete_sure_cache">Are you sure you want to clear the cache?</string>
+    <string name="delete_cache">Delete cache</string>
 </resources>
