@@ -3,6 +3,7 @@ package com.example.ledannyyang.movies.Retrofit
 import android.util.Log
 import com.example.ledannyyang.movies.Activities.TopRatedActivity
 import com.example.ledannyyang.movies.AllMightyDataController
+import com.example.ledannyyang.movies.BuildConfig
 import com.example.ledannyyang.movies.FragmentController.NowPlayingController
 import com.example.ledannyyang.movies.FragmentController.SearchController
 import com.example.ledannyyang.movies.FragmentController.UpcomingController
@@ -32,6 +33,7 @@ import java.time.format.DateTimeFormatter
 
 object RetrofitClient{
 
+    private val api = BuildConfig.TMDB_API_KEY
     private val API = "APIQUERY"
     private val baseUrl = "https://api.themoviedb.org"
     private val retrofit = Retrofit.Builder()
@@ -42,7 +44,7 @@ object RetrofitClient{
     private val service = retrofit.create(GithubService::class.java)
 
     fun getMovieDetail(id: Int, language:String = "en-US"){
-        val call = service.getMovieDetail(id.toString(), language)
+        val call = service.getMovieDetail(id.toString(), api, language)
         call.enqueue(object : Callback<MovieDetail>{
             override fun onResponse(call: Call<MovieDetail>?, response: Response<MovieDetail>?) {
                 val movieDetail = response?.body()?.copy()
@@ -58,7 +60,7 @@ object RetrofitClient{
     }
 
     fun getSearchMovie(items: MutableList<Movie>, query: String, language:String = "en-US", page: Int = 1){
-        val call = service.getSearchMovie(language, query, page.toString())
+        val call = service.getSearchMovie(api, language, query, page.toString())
         call.enqueue(object: Callback<SearchMovie>{
             override fun onResponse(call: Call<SearchMovie>, response: Response<SearchMovie>) {
                 val searchMovie = response.body()?.copy()
@@ -89,7 +91,7 @@ object RetrofitClient{
     }
 
     fun getNowPlaying(items: MutableList<Movie>, language:String = "en-US", page: Int = 1, region: String = "GB"){
-        val call = service.getNowPlaying(language, page.toString(), region)
+        val call = service.getNowPlaying(api, language, page.toString(), region)
         call.enqueue(object : Callback<NowPlaying>{
             override fun onResponse(call: Call<NowPlaying>?, response: Response<NowPlaying>?) {
                 val nowPlaying = response?.body()?.copy()
@@ -111,11 +113,13 @@ object RetrofitClient{
                 Log.d(API, "Could not get Now Playing movies")
             }
         })
+
+        Log.d("APIQUERY", "Api: $api")
     }
 
 
     fun getUpcoming(items: MutableList<Movie>, language: String = "en-US", page: Int = 1, region: String = "GB"): Boolean{
-        val call = service.getUpcoming(language, page.toString(), region)
+        val call = service.getUpcoming(api, language, page.toString(), region)
         var success = false
         call.enqueue(object : Callback<Upcoming>{
             override fun onResponse(call: Call<Upcoming>, response: Response<Upcoming>) {
@@ -147,7 +151,7 @@ object RetrofitClient{
     }
 
     fun getTopRated(language: String = "en-US", page: Int = 1){
-        val call = service.getTopRated(language, page.toString())
+        val call = service.getTopRated(api, language, page.toString())
         call.enqueue(object: Callback<TopRated>{
             override fun onResponse(call: Call<TopRated>, response: Response<TopRated>) {
                 val list = response.body()?.copy()?.results
@@ -169,7 +173,7 @@ object RetrofitClient{
     }
 
     fun getSimilarMoviesById( id: Int, language: String = "en-US", page : Int = 1){
-        val call = service.getSimilarMoviesById( id.toString(), language, page.toString())
+        val call = service.getSimilarMoviesById(id.toString(), api, language, page.toString())
         call.enqueue(object : Callback<SimilarMovie>{
             override fun onResponse(call: Call<SimilarMovie>, response: Response<SimilarMovie>) {
                 val movies = response.body()?.copy()?.results
@@ -190,7 +194,7 @@ object RetrofitClient{
     }
 
     fun getRecommendedMoviesById( id: Int, language: String = "en-US", page : Int = 1){
-        val call = service.getRecommendedMoviesById( id.toString(), language, page.toString())
+        val call = service.getRecommendedMoviesById( id.toString(), api, language, page.toString())
         call.enqueue(object : Callback<RecommendedMovie>{
 
             override fun onResponse(call: Call<RecommendedMovie>, response: Response<RecommendedMovie>) {
@@ -212,7 +216,7 @@ object RetrofitClient{
     }
 
     fun getReviewsById( id: Int, language: String = "en-US", page : Int = 1){
-        val call = service.getReviewsById( id.toString(), language, page.toString())
+        val call = service.getReviewsById( id.toString(), api, language, page.toString())
         call.enqueue(object : Callback<Review>{
             override fun onResponse(call: Call<Review>, response: Response<Review>) {
                 val reviews = response.body()?.copy()?.results
@@ -235,7 +239,7 @@ object RetrofitClient{
     }
 
     fun getVideosById( id: Int, language: String = "en-US"){
-        val call = service.getVideosById( id.toString(), language)
+        val call = service.getVideosById( id.toString(), api, language)
         call.enqueue(object : Callback<Video>{
             override fun onResponse(call: Call<Video>, response: Response<Video>) {
                 val videoItem = response.body()?.copy()?.results
@@ -252,7 +256,7 @@ object RetrofitClient{
     }
 
     fun getCredits( id: Int){
-        val call = service.getCredits( id.toString())
+        val call = service.getCredits( id.toString(), api)
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                 response.body()?.copy()?.cast?.filter { !it.profilePath.isNullOrBlank()}?.sortedBy { it.order }?.take(10)?.iterator()?.forEach {
@@ -270,7 +274,7 @@ object RetrofitClient{
 
 
     fun getDirector( id: Int){
-        val call = service.getCredits( id.toString())
+        val call = service.getCredits( id.toString(), api)
         call.enqueue(object : Callback<Credit>{
             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                 val director = response.body()?.copy()?.crew?.filter { it.job.equals("Director") }?.map { it.name }
