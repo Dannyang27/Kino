@@ -51,7 +51,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="80" />
+                                                <entry key="scalingPercent" value="82" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -61,7 +61,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/kinologo.png" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/Logo cuadrado.png" />
                                     </map>
                                   </option>
                                 </PersistentState>

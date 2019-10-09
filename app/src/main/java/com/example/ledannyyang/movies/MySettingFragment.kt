@@ -25,7 +25,7 @@ class MySettingFragment : PreferenceFragmentCompat(){
         deleteCache = findPreference("cache") as Preference
         sendFeedback = findPreference("feedback") as Preference
 
-        region.setOnPreferenceChangeListener { oldValue , newValue ->
+        region.setOnPreferenceChangeListener { _ , _ ->
             region.context.toast(getString(R.string.restartApp))
             true
         }
