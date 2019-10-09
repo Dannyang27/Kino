@@ -113,8 +113,6 @@ object RetrofitClient{
                 Log.d(API, "Could not get Now Playing movies")
             }
         })
-
-        Log.d("APIQUERY", "Api: $api")
     }
 
 
